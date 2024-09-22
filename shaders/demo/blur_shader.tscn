@@ -1,0 +1,73 @@
+[gd_scene load_steps=14 format=3 uid="uid://bacpwu5kt0six"]
+
+[ext_resource type="ArrayMesh" uid="uid://bsrxmndxpa0gm" path="res://assets/gunmech_actual.obj" id="3_nylu1"]
+[ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="4_3vya3"]
+[ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_id5lp"]
+[ext_resource type="Material" uid="uid://630x4ju76elw" path="res://materials/mech_arms_toon.tres" id="4_rewi3"]
+[ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="5_g5sfg"]
+[ext_resource type="Script" path="res://spinner.gd" id="6_e50qu"]
+[ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="7_w8mca"]
+[ext_resource type="PackedScene" uid="uid://dcpvwyws4b374" path="res://effects/post_process_anime_plane.tscn" id="8_5tle5"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ikwpo"]
+material = ExtResource("4_rewi3")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y6y24"]
+radius = 1.43949
+height = 10.3948
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h4pmv"]
+
+[sub_resource type="Sky" id="Sky_081d3"]
+sky_material = SubResource("ProceduralSkyMaterial_h4pmv")
+
+[sub_resource type="Environment" id="Environment_eh4v2"]
+sky = SubResource("Sky_081d3")
+
+[node name="BlurShader" type="Node3D"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0164569, 0.00826857, 0.00779743, 0.00939916, 0.0176158, 0.00115728, -0.00638944, 0.00461673, -0.018381, -0.623015, 0, -2.71458)
+mesh = ExtResource("3_nylu1")
+surface_material_override/0 = ExtResource("4_id5lp")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.731672, 0.309193, 0.6075, -0.360334, 0.931951, -0.0403405, -0.578633, -0.189388, 0.793295, 1.45323, 0, -2.71458)
+mesh = SubResource("CapsuleMesh_ikwpo")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.75143, 0.300391, 0.587469, 0.346185, 0.578475, -0.738597, -0.561703, 0.758375, 0.330692, 2.67309, -0.0340798, -2.71596)
+mesh = SubResource("CapsuleMesh_ikwpo")
+
+[node name="Cruiser2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.40465, 1.49025e-06, 39.4955, 1.38653e-07, 40.0114, 2.50742e-07, -39.4955, 1.5837e-07, -6.40466, 97.1548, 52.7842, -226.189)
+mesh = ExtResource("4_3vya3")
+skeleton = NodePath("../vis/Camera3D")
+surface_material_override/0 = ExtResource("5_g5sfg")
+script = ExtResource("6_e50qu")
+
+[node name="explosionFX" parent="Cruiser2" instance=ExtResource("7_w8mca")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cruiser2"]
+transform = Transform3D(1, 0, 4.47035e-08, 0, 1, 0, -4.47035e-08, 0, 1, 0.0135689, 0, -0.0103493)
+collision_layer = 9
+collision_mask = 9
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cruiser2/StaticBody3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.24138, -0.00151437, 0)
+shape = SubResource("CapsuleShape3D_y6y24")
+
+[node name="Plane" parent="." instance=ExtResource("8_5tle5")]
+
+[node name="vis" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="vis"]
+transform = Transform3D(1, -2.53522e-11, -3.95812e-09, 2.53522e-11, 1, -4.42379e-09, 3.95812e-09, 4.42378e-09, 1, 0, 0, 1.35331)
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="vis"]
+environment = SubResource("Environment_eh4v2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="vis"]
+transform = Transform3D(0.810691, -0.37258, -0.451624, 0.585022, 0.485168, 0.649894, -0.0230235, -0.791073, 0.611289, 0, 0, 0)
+light_energy = 0.2

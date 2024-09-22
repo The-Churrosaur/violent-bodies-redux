@@ -1,0 +1,101 @@
+[gd_scene load_steps=15 format=3 uid="uid://prpquffa8bgi"]
+
+[ext_resource type="Script" path="res://effects/explosion_fx.gd" id="1_qtopc"]
+[ext_resource type="Material" uid="uid://d36fshnmb3ppv" path="res://materials/smoke_material.tres" id="3_mg3vs"]
+[ext_resource type="PackedScene" uid="uid://d0jdcfqgvui6p" path="res://effects/good_smoke.tscn" id="4_act7t"]
+[ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_dgfqv"]
+
+[sub_resource type="Gradient" id="Gradient_iounm"]
+offsets = PackedFloat32Array(0.0108108, 0.497297, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.955738, 0.575225, 0.603247, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n4ceg"]
+gradient = SubResource("Gradient_iounm")
+
+[sub_resource type="Curve" id="Curve_s0ysn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106481, 1), -0.126316, -0.126316, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_e3oxg"]
+curve = SubResource("Curve_s0ysn")
+
+[sub_resource type="Curve" id="Curve_r0i0o"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7pqg0"]
+curve = SubResource("Curve_r0i0o")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fp2cs"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.8
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_e3oxg")
+color = Color(0.976471, 0.811765, 0.839216, 1)
+color_ramp = SubResource("GradientTexture1D_n4ceg")
+turbulence_enabled = true
+turbulence_noise_strength = 11.16
+turbulence_noise_scale = 5.33
+turbulence_noise_speed_random = 0.57
+turbulence_influence_min = 0.74
+turbulence_influence_max = 0.74
+turbulence_initial_displacement_min = -0.2
+turbulence_initial_displacement_max = 0.2
+turbulence_influence_over_life = SubResource("CurveTexture_7pqg0")
+
+[sub_resource type="SphereMesh" id="SphereMesh_pg8aa"]
+material = ExtResource("3_mg3vs")
+radius = 20.0
+height = 40.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ehrof"]
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -11.84
+tangential_accel_max = 9.21
+scale_min = 0.2
+scale_max = 3.0
+turbulence_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_reyrv"]
+material = ExtResource("4_dgfqv")
+size = Vector3(2, 2, 2)
+
+[node name="explosionFX" type="Node3D" node_paths=PackedStringArray("bubbling", "nova", "gibs")]
+script = ExtResource("1_qtopc")
+bubbling = NodePath("bubbling")
+nova = NodePath("nova")
+gibs = NodePath("gibs")
+
+[node name="nova" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0568449, 0)
+emitting = false
+amount = 20
+lifetime = 9.02
+one_shot = true
+explosiveness = 0.55
+randomness = 0.05
+process_material = SubResource("ParticleProcessMaterial_fp2cs")
+draw_pass_1 = SubResource("SphereMesh_pg8aa")
+
+[node name="bubbling" parent="." instance=ExtResource("4_act7t")]
+
+[node name="gibs" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0349503, 0.0563288, 0.0716858)
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 0.82
+transform_align = 2
+trail_lifetime = 6.75
+process_material = SubResource("ParticleProcessMaterial_ehrof")
+draw_pass_1 = SubResource("BoxMesh_reyrv")
+
+[connection signal="finished" from="nova" to="." method="_on_nova_finished"]
+[connection signal="finished" from="bubbling" to="." method="_on_bubbling_finished"]

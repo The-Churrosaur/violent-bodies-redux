@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2f60supm40o3"]
+
+[ext_resource type="PackedScene" uid="uid://1t2q4b1xyydv" path="res://tutorial/vhud_button_test.tscn" id="1_bpu8x"]
+[ext_resource type="Script" path="res://cockpit/cockpit_console/virtual/vhud_button_flight.gd" id="2_m8h6l"]
+
+[node name="VHUDFlightButton" instance=ExtResource("1_bpu8x")]
+script = ExtResource("2_m8h6l")
+
+[node name="Label3D" parent="MeshInstance3D" index="0"]
+text = "TOGGLE FLIGHT MODE"
+
+[node name="WeaponNameLabel" parent="MeshInstance3D" index="1"]
+visible = false

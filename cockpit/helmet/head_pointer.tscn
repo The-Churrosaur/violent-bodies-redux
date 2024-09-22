@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpalp6m12ya6d"]
+
+[ext_resource type="Script" path="res://cockpit/helmet/head_pointer.gd" id="1_wxkgl"]
+[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="2_3a14k"]
+[ext_resource type="PackedScene" uid="uid://ckudjlo0a3sit" path="res://utils/blinker.tscn" id="3_3ejbo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_486bw"]
+radius = 0.02
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_glprp"]
+material = ExtResource("2_3a14k")
+height = 0.05
+radial_segments = 16
+rings = 1
+cap_bottom = false
+
+[node name="HeadPointer" type="Area3D" groups=["HeadPointer"]]
+script = ExtResource("1_wxkgl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_486bw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.409516)
+mesh = SubResource("CylinderMesh_glprp")
+
+[node name="Blinker" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_3ejbo")]
+active = true
+target = NodePath("../MeshInstance3D")
+on_time = 0.2
+off_time = 0.2

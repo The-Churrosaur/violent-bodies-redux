@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://clxk15o7wcj52"]
+
+[ext_resource type="Script" path="res://mechbody_systems/head_turret/head_sensor_manager.gd" id="1_utkoe"]
+[ext_resource type="PackedScene" uid="uid://duwrc0awyxyru" path="res://cockpit/cockpit_console/target_lock_ui.tscn" id="2_njedh"]
+
+[node name="HeadSensorManager" type="Node3D" node_paths=PackedStringArray("lock_ui")]
+script = ExtResource("1_utkoe")
+lock_ui = NodePath("TargetLockUI")
+
+[node name="TargetLockUI" parent="." instance=ExtResource("2_njedh")]

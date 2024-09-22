@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpv8glj0xbn72"]
+
+[ext_resource type="PackedScene" uid="uid://byul3rfe4u44s" path="res://my_xr_tools/xr_input_processor.tscn" id="1_nbvff"]
+[ext_resource type="Script" path="res://my_xr_tools/xr_assigned_input_processor.gd" id="2_hpwsd"]
+
+[node name="XRInputProcessor" instance=ExtResource("1_nbvff")]
+script = ExtResource("2_hpwsd")

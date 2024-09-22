@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct63cnxo5ws7a"]
+
+[ext_resource type="Script" path="res://mechbody_systems/tool_grabbing/my_mech_hand_grabbable.gd" id="1_dqrvp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l1v32"]
+
+[node name="MyMechHandGrabbable" type="RigidBody3D"]
+script = ExtResource("1_dqrvp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_l1v32")

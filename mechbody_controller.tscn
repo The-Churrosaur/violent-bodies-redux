@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvg5e6hisacwi"]
+
+[ext_resource type="PackedScene" uid="uid://byul3rfe4u44s" path="res://my_xr_tools/xr_input_processor.tscn" id="1_nv4em"]
+[ext_resource type="Script" path="res://mechbody_controller.gd" id="2_r8ium"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pcilt"]
+size = Vector3(0.1, 0.15, 0.2)
+
+[node name="MechbodyController" instance=ExtResource("1_nv4em")]
+script = ExtResource("2_r8ium")
+tranlation_mult = 0.5
+rotation_mult = 0.5
+flight_thrust_mult = 0.6
+active = false
+
+[node name="ArmCenter" type="Node3D" parent="." index="0"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ArmCenter" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.214992)
+visible = false
+mesh = SubResource("BoxMesh_pcilt")
+skeleton = NodePath("../..")
+
+[node name="ArmCenterReference" type="Node3D" parent="." index="1"]
+
+[node name="ArmAimer" type="Node3D" parent="." index="2"]
+
+[node name="HeadsetLocal" type="Node3D" parent="." index="3"]

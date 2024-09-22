@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4ikjacppc76a"]
+
+[ext_resource type="Script" path="res://tutorial/tutorial_pointer.gd" id="1_hfutl"]
+[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="2_s3v4l"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_5xanh"]
+material = ExtResource("2_s3v4l")
+size = Vector3(0.01, 0.02, 0.01)
+
+[node name="TutorialPointer" type="Node3D"]
+script = ExtResource("1_hfutl")
+lerp_weight = 3.0
+
+[node name="PointerMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, -4, 3.49691e-07, 0, -3.49691e-07, -4, 0, 0.1, 0)
+mesh = SubResource("PrismMesh_5xanh")
+skeleton = NodePath("../..")

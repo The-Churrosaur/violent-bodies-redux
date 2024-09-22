@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://c42ubvjrl313f"]
+
+[ext_resource type="Script" path="res://tutorial/tutorial_screen.gd" id="1_04m7e"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="2_1p6ii"]
+
+[node name="TutorialScreen" type="Node3D" node_paths=PackedStringArray("label", "pointer_target")]
+script = ExtResource("1_04m7e")
+label = NodePath("Label")
+pointer_target = NodePath("Label")
+
+[node name="Label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128244, 0)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "HELLO! 
+AND WELCOME TO THE
+
+-----------------
+VIOLENT BODIES
+mecha flight sim
+DEMO
+-----------------
+
+THIS IS A WORK IN
+PROGRESS :)
+
+IF YOU LIKE WHAT
+YOU SEE, FOLLOW ME ON 
+discord
+patreon
+
+THANK YOU!
+
+<[B][A]>"
+font = ExtResource("2_1p6ii")
+font_size = 100

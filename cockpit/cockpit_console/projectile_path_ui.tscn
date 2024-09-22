@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://pg6cfq624hgv"]
+
+[ext_resource type="Script" path="res://cockpit/cockpit_console/projectile_path_ui.gd" id="1_lci3y"]
+[ext_resource type="PackedScene" uid="uid://csx6fn5gci0mo" path="res://cockpit/cockpit_console/projectile_path_pip.tscn" id="2_e1fjf"]
+
+[node name="ProjectilePathUI" type="Node3D"]
+script = ExtResource("1_lci3y")
+projectile_pip = ExtResource("2_e1fjf")

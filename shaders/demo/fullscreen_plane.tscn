@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0id4v762au38"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_804ia"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="Plane" type="MeshInstance3D"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_804ia")

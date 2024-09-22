@@ -1,0 +1,33 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://da84uy4q7mtdd"]
+
+[ext_resource type="Shader" uid="uid://bn2kngykwydna" path="res://levels/clouds/skybox_shader_spatial_test.tres" id="1_fpgtv"]
+[ext_resource type="Texture2D" uid="uid://n0gqs0nok0en" path="res://levels/clouds/sky_base_noise.tres" id="2_x33b7"]
+[ext_resource type="Texture2D" uid="uid://25tvi50u6su0" path="res://levels/clouds/sky_star_noise.tres" id="3_55gml"]
+
+[sub_resource type="Gradient" id="Gradient_qpxs7"]
+offsets = PackedFloat32Array(0.0638978, 0.520767, 0.932907)
+colors = PackedColorArray(0.364706, 0.305882, 0.376471, 1, 1, 1, 1, 1, 0.364706, 0.305882, 0.376471, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1x52q"]
+gradient = SubResource("Gradient_qpxs7")
+fill_from = Vector2(0.474359, 0.957265)
+fill_to = Vector2(0.465812, 0.0940171)
+
+[resource]
+render_priority = -4
+shader = ExtResource("1_fpgtv")
+shader_parameter/inner_cutoff2 = 0.45
+shader_parameter/wave_height2 = 0.05
+shader_parameter/wave_speed2 = 10.0
+shader_parameter/rotation_speed2 = 0.001
+shader_parameter/albedo2 = Color(0.509804, 0.423529, 0.498039, 1)
+shader_parameter/inner_albedo2 = Color(0.658824, 0.560784, 0.67451, 1)
+shader_parameter/alpha_cutoff2 = 0.593
+shader_parameter/space_albedo2 = Color(0.0745098, 0.0745098, 0.0745098, 1)
+shader_parameter/star_brightness2 = 2.0
+shader_parameter/star_color2 = Color(1, 1, 1, 1)
+shader_parameter/star_cutoff2 = 0.814
+shader_parameter/alpha = 1.0
+shader_parameter/main_noise2 = ExtResource("2_x33b7")
+shader_parameter/star_noise2 = ExtResource("3_55gml")
+shader_parameter/gradient = SubResource("GradientTexture2D_1x52q")

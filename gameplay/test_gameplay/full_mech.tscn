@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhtsktjng545t"]
+
+[ext_resource type="PackedScene" uid="uid://dsh7i4eks64gc" path="res://mechbody/mechbody/mechbody.tscn" id="1_waaut"]
+[ext_resource type="PackedScene" uid="uid://dlsarb7iw7bpi" path="res://test_player.tscn" id="2_8tojb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cqkqi"]
+
+[node name="Mechbody" instance=ExtResource("1_waaut")]
+
+[node name="LimbRotator" parent="Cockpit/ArmBaseRight/RagdollArm/RagdollBitUArm" index="1"]
+debug = true
+
+[node name="seatparent" type="RigidBody3D" parent="." index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.705581, 0)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="seatparent" index="0"]
+shape = SubResource("BoxShape3D_cqkqi")
+
+[node name="XROrigin3D" parent="seatparent" index="1" instance=ExtResource("2_8tojb")]
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="." index="14"]
+linear_limit_spring_x/frequency = 20.0
+linear_limit_spring_y/frequency = 20.0
+linear_limit_spring_z/frequency = 5.0
+linear_spring_x/enabled = true
+linear_spring_x/frequency = 7.0
+linear_spring_y/enabled = true
+linear_spring_y/frequency = 7.0
+linear_spring_z/enabled = true
+linear_spring_z/frequency = 7.0
+angular_spring_x/enabled = true
+angular_spring_x/frequency = 7.0
+angular_spring_y/enabled = true
+angular_spring_y/frequency = 7.0
+angular_spring_z/enabled = true
+angular_spring_z/frequency = 7.0
+node_a = NodePath("..")
+node_b = NodePath("../seatparent")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.65933, 0)
+
+[connection signal="dropped" from="Cockpit/Handles/handlesLeft/Handles" to="Cockpit/Handles/InputManagerYokeLeft" method="_on_released"]
+[connection signal="grabbed" from="Cockpit/Handles/handlesLeft/Handles" to="Cockpit/Handles/InputManagerYokeLeft" method="_on_grabbed"]
+[connection signal="dropped" from="Cockpit/Handles/handlesRight/Handles" to="Cockpit/Handles/InputManagerYokeRight" method="_on_released"]
+[connection signal="grabbed" from="Cockpit/Handles/handlesRight/Handles" to="Cockpit/Handles/InputManagerYokeRight" method="_on_grabbed"]
+
+[editable path="Cockpit"]
+[editable path="Cockpit/ArmBaseLeft"]
+[editable path="Cockpit/ArmBaseLeft/ShoulderJoint/KinematicArm"]
+[editable path="Cockpit/ArmBaseRight"]
+[editable path="Cockpit/ArmBaseRight/ShoulderJoint/KinematicArm"]
+[editable path="Cockpit/ArmBaseRight/RagdollArm/RagdollBitUArm"]
+[editable path="Cockpit/Handles/handlesLeft"]
+[editable path="Cockpit/Handles/handlesRight"]

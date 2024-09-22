@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwtsyqg37x6vq"]
+
+[ext_resource type="PackedScene" uid="uid://dsh7i4eks64gc" path="res://mechbody/mechbody/mechbody.tscn" id="1_ji3mg"]
+[ext_resource type="Script" path="res://gameplay/test_gameplay/mech_rigid_container.gd" id="1_wghhh"]
+[ext_resource type="PackedScene" uid="uid://dlsarb7iw7bpi" path="res://test_player.tscn" id="2_hfoqc"]
+[ext_resource type="PackedScene" uid="uid://bysrkagylo8yh" path="res://mechbody/mechbody/limb_physics/hand_bit.tscn" id="4_8vmbs"]
+[ext_resource type="Script" path="res://my_xr_tools/reparenting_joint.gd" id="5_6bdt2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0oolq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cox4b"]
+
+[node name="MechRigidContainer" type="Node3D" node_paths=PackedStringArray("mechbody")]
+script = ExtResource("1_wghhh")
+mechbody = NodePath("Mechbody")
+
+[node name="Mechbody" parent="." node_paths=PackedStringArray("seat_parent", "left_hand_bit", "right_hand_bit") instance=ExtResource("1_ji3mg")]
+gravity_scale = 1.0
+seat_parent = NodePath("../seatparent/dolly")
+left_hand_bit = NodePath("../HandBitLeft")
+right_hand_bit = NodePath("../HandBitRight")
+
+[node name="seatparent" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0313884, 0.175038)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="seatparent"]
+shape = SubResource("BoxShape3D_0oolq")
+
+[node name="dolly" type="Node3D" parent="seatparent"]
+
+[node name="XROrigin3D" parent="seatparent/dolly" node_paths=PackedStringArray("dolly") instance=ExtResource("2_hfoqc")]
+dolly = NodePath("..")
+
+[node name="SeatJoint" type="JoltGeneric6DOFJoint3D" parent="."]
+linear_limit_spring_x/frequency = 20.0
+linear_limit_spring_y/frequency = 20.0
+linear_limit_spring_z/frequency = 5.0
+linear_spring_x/enabled = true
+linear_spring_x/frequency = 7.0
+linear_spring_y/enabled = true
+linear_spring_y/frequency = 7.0
+linear_spring_z/enabled = true
+linear_spring_z/frequency = 7.0
+angular_spring_x/enabled = true
+angular_spring_x/frequency = 7.0
+angular_spring_y/enabled = true
+angular_spring_y/frequency = 7.0
+angular_spring_z/enabled = true
+angular_spring_z/frequency = 7.0
+node_a = NodePath("../Mechbody")
+node_b = NodePath("../seatparent")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.65933, 0)
+script = ExtResource("5_6bdt2")
+
+[node name="HandBitLeft" parent="." node_paths=PackedStringArray("mechbody") instance=ExtResource("4_8vmbs")]
+mechbody = NodePath("../Mechbody")
+
+[node name="HandBitRight" parent="." node_paths=PackedStringArray("mechbody") instance=ExtResource("4_8vmbs")]
+mechbody = NodePath("../Mechbody")
+hands = 1
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="3"]
+linear_limit_x/upper = 3.0
+linear_limit_x/lower = 2.0
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+angular_spring_x/damping = 3.0
+angular_spring_y/damping = 3.0
+angular_spring_z/damping = 3.0
+node_a = NodePath("../../../HandBitLeft/Hand")
+node_b = NodePath("..")
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="twohand" type="JoltSliderJoint3D" parent="HandBitRight/Hand" index="4"]
+limit_enabled = true
+limit_upper = 3.0
+limit_lower = 2.5
+limit_spring_damping = 1.0
+node_a = NodePath("../../../HandBitLeft/Hand")
+node_b = NodePath("..")
+enabled = false
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -3.64236)
+
+[node name="BridgeWeapon" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.54545, -3.01815)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BridgeWeapon"]
+shape = SubResource("SphereShape3D_cox4b")
+
+[node name="JoltGeneric6DOFJoint3D2" type="JoltGeneric6DOFJoint3D" parent="BridgeWeapon"]
+linear_limit_spring_x/enabled = true
+linear_limit_spring_x/damping = 1.0
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+node_a = NodePath("../../HandBitRight/Hand")
+node_b = NodePath("..")
+enabled = false
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 0, 0)
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="BridgeWeapon"]
+linear_limit_spring_x/enabled = true
+linear_limit_spring_x/damping = 1.0
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+node_a = NodePath("../../HandBitLeft/Hand")
+node_b = NodePath("..")
+enabled = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[editable path="HandBitLeft"]
+[editable path="HandBitLeft/Hand/LimbRotator"]
+[editable path="HandBitRight"]
+[editable path="HandBitRight/Hand/LimbRotator"]

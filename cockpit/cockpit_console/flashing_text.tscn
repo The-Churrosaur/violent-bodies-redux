@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvfjoyisfdsg0"]
+
+[ext_resource type="Script" path="res://cockpit/cockpit_console/flashing_text.gd" id="1_oq71a"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="2_2ws6p"]
+[ext_resource type="PackedScene" uid="uid://ckudjlo0a3sit" path="res://utils/blinker.tscn" id="3_8unt4"]
+
+[node name="FlashingText" type="Node3D" node_paths=PackedStringArray("blinker")]
+script = ExtResource("1_oq71a")
+blinker = NodePath("Blinker")
+
+[node name="Label3D" type="Label3D" parent="."]
+unique_name_in_owner = true
+visible = false
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "TEST"
+font = ExtResource("2_2ws6p")
+font_size = 100
+
+[node name="Blinker" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_8unt4")]
+unique_name_in_owner = true
+active = true
+target = NodePath("../Label3D")
+on_time = 0.2
+off_time = 0.2

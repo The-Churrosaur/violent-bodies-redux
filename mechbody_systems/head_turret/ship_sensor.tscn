@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://duu1j4emi4xo2"]
+
+[ext_resource type="Script" path="res://mechbody_systems/head_turret/ship_sensor.gd" id="1_01nla"]
+[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="2_f88bd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a6l64"]
+radius = 5.0
+height = 1000.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v66lf"]
+material = ExtResource("2_f88bd")
+top_radius = 5.0
+bottom_radius = 5.0
+height = 1000.0
+radial_segments = 8
+
+[node name="ShipSensor" type="Node3D" node_paths=PackedStringArray("sensor_base") groups=["testgrop"]]
+script = ExtResource("1_01nla")
+sensor_strength = 100000.0
+tuning_coefficient = 0.9
+default_noise = 0.2
+sensor_base = NodePath("SensorBase")
+
+[node name="SensorArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -500)
+collision_layer = 10
+collision_mask = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SensorArea"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_a6l64")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SensorArea"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+mesh = SubResource("CylinderMesh_v66lf")
+
+[node name="SensorBase" type="Node3D" parent="."]
+
+[connection signal="body_entered" from="SensorArea" to="." method="_on_sensor_area_body_entered"]
+[connection signal="body_exited" from="SensorArea" to="." method="_on_sensor_area_body_exited"]

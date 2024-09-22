@@ -1,0 +1,186 @@
+[gd_scene load_steps=13 format=3 uid="uid://11c031wphmm0"]
+
+[ext_resource type="Script" path="res://gameplay/cockpit_test/cockpit.gd" id="1_wnyec"]
+[ext_resource type="ArrayMesh" uid="uid://d33xgs6swlxjo" path="res://assets/cockpit/cockpit.obj" id="2_cbenv"]
+[ext_resource type="PackedScene" uid="uid://c6mitjbba156w" path="res://gameplay/cockpit_test/handles_ik.tscn" id="3_x8qfj"]
+[ext_resource type="PackedScene" uid="uid://bwgffr50u1d7o" path="res://cockpit/cockpit_console/yoke_grabbable.tscn" id="5_8uayl"]
+[ext_resource type="PackedScene" uid="uid://doksrptytk60j" path="res://assets/cockpit/controller_mockup.tscn" id="5_l0hp6"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="6_6ogcc"]
+[ext_resource type="AudioStream" uid="uid://2g6jc81k77x6" path="res://assets/audio/cockpit_ambiance.wav" id="6_blmy0"]
+[ext_resource type="PackedScene" uid="uid://beupsrwwbhpm1" path="res://cockpit/cockpit_console/handles_new_left.tscn" id="7_llkvk"]
+[ext_resource type="Script" path="res://gameplay/cockpit_test/cockpit_ambiance.gd" id="7_m65vc"]
+[ext_resource type="PackedScene" uid="uid://bpvtrgjjh0twl" path="res://cockpit/cockpit_console/handles_new_right.tscn" id="8_jnry2"]
+[ext_resource type="ArrayMesh" uid="uid://opbdit1sxvh2" path="res://assets/cockpit/blockpitng.obj" id="10_3vg7a"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1lqo6"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.1
+radial_segments = 6
+
+[node name="Cockpit" type="Node3D"]
+script = ExtResource("1_wnyec")
+
+[node name="CockpitModel" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, -0.0175886, -0.0157744)
+visible = false
+mesh = ExtResource("2_cbenv")
+
+[node name="PlayerBodyReferences" type="Node3D" parent="."]
+
+[node name="HeadsetReference" type="Node3D" parent="PlayerBodyReferences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11946, 0.109797)
+
+[node name="PlayerShoulderLeft" type="Node3D" parent="PlayerBodyReferences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.98, 0.101)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBodyReferences/PlayerShoulderLeft"]
+mesh = SubResource("CylinderMesh_1lqo6")
+
+[node name="PlayerShoulderRight" type="Node3D" parent="PlayerBodyReferences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.98, 0.101)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerBodyReferences/PlayerShoulderRight"]
+mesh = SubResource("CylinderMesh_1lqo6")
+
+[node name="Handles" type="Node3D" parent="."]
+
+[node name="handlesIKLeft" parent="Handles" node_paths=PackedStringArray("handle") instance=ExtResource("3_x8qfj")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.4, 0.684, -2.306)
+handle = NodePath("../YokeGrabbableLeft")
+
+[node name="YokeRestLeft" type="Marker3D" parent="Handles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.8, 0)
+
+[node name="YokeGrabbableLeft" parent="Handles" node_paths=PackedStringArray("rest_point") instance=ExtResource("5_8uayl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.8, 0)
+rest_point = NodePath("../YokeRestLeft")
+
+[node name="ControllerMockup" parent="Handles/YokeGrabbableLeft" instance=ExtResource("5_l0hp6")]
+transform = Transform3D(1, 0, 0, 0, 0.607334, -0.794446, 0, 0.794446, 0.607334, 0, 0.031425, -0.0934435)
+visible = false
+
+[node name="VelocityLabel" type="Label3D" parent="Handles/YokeGrabbableLeft/ControllerMockup"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, -0.0128373, 0.0210975, -0.00206978)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "MOVEMENT
+STICK"
+font = ExtResource("6_6ogcc")
+font_size = 25
+
+[node name="VelocityLabel5" type="Label3D" parent="Handles/YokeGrabbableLeft/ControllerMockup"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, 0.00889517, 0.0161091, 0.0143726)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "TOGGLE WEAPONS"
+font = ExtResource("6_6ogcc")
+font_size = 14
+
+[node name="flightmod" type="Label3D" parent="Handles/YokeGrabbableLeft/ControllerMockup"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, 0.00889517, 0.0150528, 0.000407159)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "ENABLE
+FLIGHT MODE"
+font = ExtResource("6_6ogcc")
+font_size = 14
+
+[node name="VelocityLabel3" type="Label3D" parent="Handles/YokeGrabbableLeft/ControllerMockup"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, 0.0331126, -0.0223873, 0.0145738)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "GRAB
+CONTROLS"
+font = ExtResource("6_6ogcc")
+font_size = 25
+
+[node name="VelocityLabel4" type="Label3D" parent="Handles/YokeGrabbableLeft/ControllerMockup"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, 0.00159635, -0.0120227, -0.0506072)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "ACTIVATE BUTTON
+FIRE WEAPON"
+font = ExtResource("6_6ogcc")
+font_size = 25
+
+[node name="handles_new" parent="Handles/YokeGrabbableLeft" instance=ExtResource("7_llkvk")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.137, 0, 0)
+
+[node name="handlesIKRight" parent="Handles" node_paths=PackedStringArray("handle") instance=ExtResource("3_x8qfj")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.4, 0.681, -2.314)
+handle = NodePath("../YokeGrabbableRight")
+
+[node name="YokeRestRight" type="Marker3D" parent="Handles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.8, 0)
+
+[node name="YokeGrabbableRight" parent="Handles" node_paths=PackedStringArray("rest_point") instance=ExtResource("5_8uayl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.8, 0)
+rest_point = NodePath("../YokeRestRight")
+
+[node name="ControllerMockup" parent="Handles/YokeGrabbableRight" instance=ExtResource("5_l0hp6")]
+transform = Transform3D(-1, 0, 0, 0, 0.607334, -0.794446, 0, 0.794446, 0.607334, 0, 0.031425, -0.0934435)
+visible = false
+
+[node name="Node3D" type="Node3D" parent="Handles/YokeGrabbableRight/ControllerMockup"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="VelocityLabel4" type="Label3D" parent="Handles/YokeGrabbableRight/ControllerMockup/Node3D"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, -0.00159635, -0.0120227, -0.0506071)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "ACTIVATE BUTTON
+FIRE WEAPON"
+font = ExtResource("6_6ogcc")
+font_size = 25
+
+[node name="VelocityLabel" type="Label3D" parent="Handles/YokeGrabbableRight/ControllerMockup/Node3D"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, 0.00966057, 0.0210974, -0.00206971)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "HORIZONTAL
+MOVEMENT
+STICK"
+font = ExtResource("6_6ogcc")
+font_size = 25
+
+[node name="VelocityLabel5" type="Label3D" parent="Handles/YokeGrabbableRight/ControllerMockup/Node3D"]
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, -0.00475152, 0.016109, 0.0143726)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "TOGGLE WEAPONS"
+font = ExtResource("6_6ogcc")
+font_size = 14
+
+[node name="headrot" type="Label3D" parent="Handles/YokeGrabbableRight/ControllerMockup/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.0124931, 0.0210974, 0.001001)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "ENABLE
+HEAD ROTATION"
+font = ExtResource("6_6ogcc")
+font_size = 14
+
+[node name="handles_new2" parent="Handles/YokeGrabbableRight" instance=ExtResource("8_jnry2")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.137, 0, 0)
+
+[node name="CockpitAmbience" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.98378, 0.173638)
+stream = ExtResource("6_blmy0")
+autoplay = true
+script = ExtResource("7_m65vc")
+
+[node name="Blockpitng" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31182, 0.834726)
+mesh = ExtResource("10_3vg7a")

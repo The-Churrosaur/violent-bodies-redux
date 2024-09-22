@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://udvykcf2x4sy"]
+
+[ext_resource type="Script" path="res://cockpit/cockpit_console/line_drawer_3d.gd" id="1_rgupm"]
+[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="1_xrs5l"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rys6h"]
+_surfaces = [{
+"aabb": AABB(0, 0, 4.19216, 10, 10, 5),
+"attribute_data": PackedByteArray(0, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255),
+"format": 34359738377,
+"primitive": 2,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 3,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 45, 38, 134, 64, 0, 0, 32, 65, 0, 0, 0, 0, 45, 38, 134, 64, 0, 0, 0, 0, 0, 0, 32, 65, 22, 19, 19, 65)
+}]
+
+[node name="LineDrawer3d" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.19216)
+mesh = SubResource("ArrayMesh_rys6h")
+surface_material_override/0 = ExtResource("1_xrs5l")
+script = ExtResource("1_rgupm")
+points = Array[Vector3]([Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(0, 10, 5)])
+draw_every_frame = true

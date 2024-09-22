@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca7pwlknmtn1g"]
+
+[ext_resource type="PackedScene" uid="uid://ksayj6looa0t" path="res://mechbody_systems/head_turret/head_turret.tscn" id="1_4d60e"]
+[ext_resource type="PackedScene" uid="uid://duu1j4emi4xo2" path="res://mechbody_systems/head_turret/ship_sensor.tscn" id="2_vj525"]
+
+[node name="Sensorhead" instance=ExtResource("1_4d60e")]
+
+[node name="ShipSensor" parent="TurretBase" index="2" instance=ExtResource("2_vj525")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://14p2g0pvjep7"]
+
+[ext_resource type="Script" path="res://my_xr_tools/my_xr_controller.gd" id="1_4vd2d"]
+
+[node name="MyXrController" type="XRController3D"]
+script = ExtResource("1_4vd2d")

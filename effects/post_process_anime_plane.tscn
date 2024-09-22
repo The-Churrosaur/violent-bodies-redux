@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcpvwyws4b374"]
+
+[ext_resource type="Shader" uid="uid://b7ebxlpksdh2r" path="res://shaders/blur_sharpen_shader.tres" id="1_ifd56"]
+[ext_resource type="Texture2D" uid="uid://dxqk86axguaap" path="res://assets/film_grain.jpg" id="2_8oavf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_en7f7"]
+render_priority = 0
+shader = ExtResource("1_ifd56")
+shader_parameter/r_offset = Vector2(0, 0.05)
+shader_parameter/g_offset = Vector2(0.05, 0)
+shader_parameter/b_offset = Vector2(-0.05, 0)
+shader_parameter/noise_mult = 0.9
+shader_parameter/sample_distance = 8
+shader_parameter/interpolation = -0.2
+shader_parameter/desaturation = 0.4
+shader_parameter/alpha = 1.0
+shader_parameter/grain_noise = ExtResource("2_8oavf")
+
+[sub_resource type="QuadMesh" id="QuadMesh_42kpf"]
+material = SubResource("ShaderMaterial_en7f7")
+size = Vector2(2, 2)
+
+[node name="Plane" type="MeshInstance3D"]
+transform = Transform3D(1, 3.72455e-08, 4.30736e-09, 5.63125e-09, 1, -4.42379e-09, 3.37604e-09, 3.95812e-09, 1, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_42kpf")

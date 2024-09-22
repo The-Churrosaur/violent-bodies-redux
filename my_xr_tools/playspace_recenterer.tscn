@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7ws1vu7utnp6"]
+
+[ext_resource type="Script" path="res://my_xr_tools/playspace_recenterer.gd" id="1_lt8nd"]
+
+[node name="PlayspaceRecenterer" type="Node3D"]
+script = ExtResource("1_lt8nd")

@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://beupsrwwbhpm1"]
+
+[ext_resource type="PackedScene" uid="uid://dpyhqa5smx0ks" path="res://assets/blender/handles_new.blend" id="1_lcy3t"]
+
+[node name="handles_new" instance=ExtResource("1_lcy3t")]
+
+[node name="p_0047" parent="handles/Meshes/right_001" index="0"]
+visible = false
+
+[node name="p_0048" parent="handles/Meshes/right_001" index="2"]
+visible = false
+
+[node name="p_0058" parent="handles/Meshes/right_001" index="4"]
+visible = false
+
+[node name="p_0059" parent="handles/Meshes/right_001" index="6"]
+visible = false
+
+[node name="s_0041" parent="handles/Splines & Base Mesh/right" index="0"]
+visible = false
+
+[node name="s_0043" parent="handles/Splines & Base Mesh/right" index="2"]
+visible = false
+
+[node name="s_0044" parent="handles/Splines & Base Mesh/right" index="4"]
+visible = false
+
+[node name="s_0049" parent="handles/Splines & Base Mesh/right" index="6"]
+visible = false
+
+[node name="s_0050" parent="handles/Splines & Base Mesh/right" index="8"]
+visible = false

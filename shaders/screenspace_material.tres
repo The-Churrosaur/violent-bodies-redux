@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://codc81hnci4rx"]
+
+[ext_resource type="Shader" path="res://shaders/screenspace_vertex.gdshader" id="1_828jo"]
+[ext_resource type="Shader" uid="uid://b6jsfeli3qim" path="res://shaders/ir_shader.tres" id="1_r4wts"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4nkvq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xd4i2"]
+noise = SubResource("FastNoiseLite_4nkvq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h752n"]
+render_priority = -1
+shader = ExtResource("1_r4wts")
+shader_parameter/image_brightness = 1.0
+shader_parameter/tint = Color(0, 1, 0, 1)
+shader_parameter/brightness_mult = 4.0
+shader_parameter/background_noise = SubResource("NoiseTexture2D_xd4i2")
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_h752n")
+shader = ExtResource("1_828jo")

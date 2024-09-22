@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://doptv24orlqm0"]
+
+[ext_resource type="Script" path="res://gameplay/cockpit_test/mech_hand.gd" id="1_v30vb"]
+
+[node name="MechHand" type="Node3D"]
+script = ExtResource("1_v30vb")
+
+[node name="rotation_looker" type="Node3D" parent="."]

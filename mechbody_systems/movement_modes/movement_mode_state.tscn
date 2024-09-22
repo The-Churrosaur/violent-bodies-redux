@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1w0a7dufhl7i"]
+
+[ext_resource type="Script" path="res://mechbody_systems/movement_modes/movement_mode_state.gd" id="1_um40w"]
+
+[node name="MovementModeState" type="Node"]
+script = ExtResource("1_um40w")

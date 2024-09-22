@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpvtrgjjh0twl"]
+
+[ext_resource type="PackedScene" uid="uid://dpyhqa5smx0ks" path="res://assets/blender/handles_new.blend" id="1_urjlw"]
+
+[node name="handles_new" instance=ExtResource("1_urjlw")]
+
+[node name="p_0047_Mirrored" parent="handles/Meshes/right_001" index="1"]
+visible = false
+
+[node name="p_0048_Mirrored" parent="handles/Meshes/right_001" index="3"]
+visible = false
+
+[node name="p_0058_Mirrored" parent="handles/Meshes/right_001" index="5"]
+visible = false
+
+[node name="p_0059_Mirrored" parent="handles/Meshes/right_001" index="7"]
+visible = false
+
+[node name="s_0041_Mirrored" parent="handles/Splines & Base Mesh/right" index="1"]
+visible = false
+
+[node name="s_0043_Mirrored" parent="handles/Splines & Base Mesh/right" index="3"]
+visible = false
+
+[node name="s_0044_Mirrored" parent="handles/Splines & Base Mesh/right" index="5"]
+visible = false
+
+[node name="s_0049_Mirrored" parent="handles/Splines & Base Mesh/right" index="7"]
+visible = false
+
+[node name="s_0050_Mirrored" parent="handles/Splines & Base Mesh/right" index="9"]
+visible = false

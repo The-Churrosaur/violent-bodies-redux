@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6mitjbba156w"]
+
+[ext_resource type="PackedScene" uid="uid://dsoibkdj8wrds" path="res://assets/handles.blend" id="1_wlk0w"]
+[ext_resource type="Script" path="res://gameplay/cockpit_test/handles_ik.gd" id="2_ju0p0"]
+[ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="3_5gsa6"]
+
+[node name="Handle_Arms" node_paths=PackedStringArray("IK", "ik_target") instance=ExtResource("1_wlk0w")]
+script = ExtResource("2_ju0p0")
+IK = NodePath("Armature/Skeleton3D/SkeletonIK3D")
+ik_target = NodePath("IKTarget")
+
+[node name="IKTarget" type="Marker3D" parent="." index="0"]
+transform = Transform3D(0.999205, -0.0398703, 0, 0.0398703, 0.999205, 0, 0, 0, 1, -0.180841, -0.0609995, -1.23224)
+
+[node name="Cylinder_001" parent="." index="1"]
+transform = Transform3D(-1.03608e-08, -0.0402078, 0, 0.173825, -2.39657e-09, 0, 0, 0, -0.173825, -0.00111014, -0.119562, -1.58504)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="Cylinder_004" parent="." index="2"]
+transform = Transform3D(0.103373, -2.17249e-08, 0, 1.56088e-08, 0.143878, 0, 0, 0, -0.103373, -0.00111014, -0.157827, -1.58348)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="Armature" parent="." index="3"]
+transform = Transform3D(0.633975, 0, 0, 0, 0.633975, 0, 0, 0, 0.633975, 0, -0.113611, -1.58398)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-2.18557e-08, -1.11022e-16, -1.11022e-16, 1)
+bones/2/rotation = Quaternion(-0.714464, -1.56984e-16, 1.65924e-18, 0.699673)
+bones/3/rotation = Quaternion(0.0104586, 1.12177e-16, 1.09831e-16, 0.999945)
+bones/3/scale = Vector3(-0.016928, -0.0598579, -0.0279655)
+bones/4/rotation = Quaternion(-0.707107, -1.08123e-23, -1.87108e-23, 0.707107)
+bones/5/rotation = Quaternion(0.707107, -1.57009e-16, 1.8717e-23, 0.707107)
+bones/5/scale = Vector3(0.0501772, 0.0785875, 0.50493)
+bones/6/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
+
+[node name="Cube" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(-0.0169145, 0.00238603, -2.33213e-05, -0.000674924, -0.0597972, 0.000584463, 3.75877e-18, -0.00125199, -0.0279594, -0.28808, 0.140216, 0.769669)
+
+[node name="Cube" parent="Armature/Skeleton3D/Cube" index="0"]
+transform = Transform3D(1, -3.69116e-24, 5.29396e-23, -5.68532e-25, 1, 0, 2.64698e-23, 5.68434e-14, 1, 0.0691351, -0.0357925, 0.0291414)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="Cube_001" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.0515283, -0.000113917, 0.0190666, -0.00245486, -0.00477473, 0.398493, 0.000113916, -0.0513659, -0.0370843, -0.308723, -0.407829, 0.596062)
+
+[node name="Cube_001" parent="Armature/Skeleton3D/Cube_001" index="0"]
+transform = Transform3D(1, 9.70585e-24, -3.17637e-22, 9.70585e-24, 1, 0, 1.32349e-23, 4.44089e-16, 1, -0.00318538, 0.0198462, -0.00950456)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="Cube_002" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(0.0322629, 0.0545716, 0.163132, 0.0162111, -0.0493833, 0.357308, 0.0348433, -0.0275542, -0.317291, -0.198268, -0.427767, 0.382607)
+
+[node name="Cube_002" parent="Armature/Skeleton3D/Cube_002" index="0"]
+transform = Transform3D(1, 7.94094e-23, 4.23516e-22, -3.97047e-23, 1, 2.27374e-13, -3.30872e-24, 2.13163e-14, 1, -0.0182057, -0.0212798, 0.0024147)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="Cylinder_002" parent="Armature/Skeleton3D" index="3"]
+transform = Transform3D(-0.0533604, -0.0506086, 0.0248264, 0.0482873, -0.0254293, 0.0543773, 0.0269427, -0.0546563, -0.0482873, -0.325821, -0.707887, 0.631042)
+
+[node name="Cylinder_002" parent="Armature/Skeleton3D/Cylinder_002" index="0"]
+transform = Transform3D(1, 0, 0, 1.88248e-15, 1, 0, 0, 0, 1, 0.0417161, 0.0120745, 0.0158672)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="Cube_004" parent="Armature/Skeleton3D" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00175107, -0.00121927, -0.00320561)
+surface_material_override/0 = ExtResource("3_5gsa6")
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="5"]
+process_priority = 1
+root_bone = &"Bone"
+tip_bone = &"Bone.003"
+use_magnet = true
+magnet = Vector3(0, -10, 0)
+target_node = NodePath("../../../IKTarget")

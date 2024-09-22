@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwma8an75pj1"]
+
+[ext_resource type="Script" path="res://mechbody_systems/target_lead/lead_computer.gd" id="1_myhqj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hklkd"]
+radius = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23ea5"]
+albedo_color = Color(1, 1, 0.0784314, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8br5m"]
+material = SubResource("StandardMaterial3D_23ea5")
+radius = 4.0
+height = 8.0
+
+[node name="LeadComputer" type="Node"]
+script = ExtResource("1_myhqj")
+
+[node name="AimingRaycast" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+target_position = Vector3(0, 1000, 0)
+collision_mask = 16
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.819608, 0, 1, 1)
+debug_shape_thickness = 4
+
+[node name="AimPointArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AimPointArea"]
+shape = SubResource("SphereShape3D_hklkd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AimPointArea"]
+visible = false
+mesh = SubResource("SphereMesh_8br5m")

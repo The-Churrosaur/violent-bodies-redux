@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dhd30qyhyu7ae"]
+
+[ext_resource type="Shader" uid="uid://ctkrfx3xaapd3" path="res://cockpit/cockpit_console/virtual/holo_shader_distance.tres" id="1_04i7u"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_04i7u")
+shader_parameter/albedo = Color(1, 0, 0, 1)

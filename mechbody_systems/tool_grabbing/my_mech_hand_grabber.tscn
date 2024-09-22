@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sllb7mbjl2yo"]
+
+[ext_resource type="Script" path="res://mechbody_systems/tool_grabbing/my_mech_hand_grabber.gd" id="1_okqma"]
+
+[node name="MyMechHandGrabber" type="Node3D"]
+script = ExtResource("1_okqma")

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct1mqoq7ffeph"]
+
+[ext_resource type="Script" path="res://cockpit/cockpit_console/controls/flight_module_panel.gd" id="1_8mucq"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="2_m3biq"]
+
+[node name="FlightPanel" type="Label3D" node_paths=PackedStringArray("data_label", "enabled_label")]
+transform = Transform3D(0.244102, 0, 0, 0, 0.231611, -0.673907, 0, 0.0770828, 2.02489, -0.0845021, 1.5498, -0.131881)
+script = ExtResource("1_8mucq")
+data_label = NodePath("Data")
+enabled_label = NodePath("Enabled")
+
+[node name="Enabled" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000115871, 0)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "FLIGHT MODE ENGAGED"
+font = ExtResource("2_m3biq")
+font_size = 100
+
+[node name="Data" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0264483, 0)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "0
+"
+font = ExtResource("2_m3biq")
+font_size = 100

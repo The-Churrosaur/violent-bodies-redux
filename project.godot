@@ -1,0 +1,79 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="VIOLENT BODIES"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.2", "Mobile")
+config/icon="res://icon.svg"
+
+[autoload]
+
+XRToolsUserSettings="*res://addons/godot-xr-tools/user_settings/user_settings.gd"
+XRPlayerGlobals="*res://globals/xr_player_globals.gd"
+LevelGlobals="*res://globals/level_globals.tscn"
+UtilityGlobals="*res://globals/utility_globals.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg", "res://addons/godotopenxrvendors/plugin.cfg")
+
+[filesystem]
+
+import/fbx/enabled=false
+
+[layer_names]
+
+3d_physics/layer_2="xr_grabbable"
+
+[physics]
+
+3d/physics_engine="JoltPhysics3D"
+3d/default_gravity=2.0
+jolt_3d/collisions/areas_detect_static_bodies=true
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+reflections/sky_reflections/roughness_layers=2
+reflections/sky_reflections/texture_array_reflections=false
+reflections/sky_reflections/ggx_samples=8
+reflections/sky_reflections/ggx_samples.mobile=4
+reflections/reflection_atlas/reflection_count=2
+
+[shader_globals]
+
+outline_width={
+"type": "float",
+"value": 2.0
+}
+outline_color={
+"type": "color",
+"value": Color(0, 0, 0, 1)
+}
+specular_smoothness={
+"type": "float",
+"value": 0.01
+}
+fresnel_smoothness={
+"type": "float",
+"value": 0.01
+}
+diffuse_curve={
+"type": "sampler2D",
+"value": ""
+}
+
+[xr]
+
+openxr/enabled=true
+shaders/enabled=true

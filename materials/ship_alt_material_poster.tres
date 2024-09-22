@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://da2ibmtl2iam3"]
+
+[ext_resource type="Shader" uid="uid://il23fnrm68va" path="res://shaders/poster_lines.tres" id="1_78b0q"]
+[ext_resource type="Texture2D" uid="uid://ctn6q2p4ft56d" path="res://assets/shiptex.png" id="2_wble2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cnhk3"]
+noise_type = 2
+frequency = 0.0136
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b5ua2"]
+noise = SubResource("FastNoiseLite_cnhk3")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_78b0q")
+shader_parameter/ColorParameter = Color(0.713726, 0.713726, 0.713726, 1)
+shader_parameter/pit_brightness = 0.044
+shader_parameter/pit_outer = 0.51
+shader_parameter/pit_inner = 0.521
+shader_parameter/fresnel_line = Color(0, 0, 0, 1)
+shader_parameter/fresnel_cutoff = 0.853
+shader_parameter/fresnel_color = Color(0.560784, 0.560784, 0.560784, 1)
+shader_parameter/metallic = 0.429
+shader_parameter/roughness = 1.0
+shader_parameter/lambert_weigt = 0.1
+shader_parameter/attenuation_multiplier = 1.0
+shader_parameter/Albedo = ExtResource("2_wble2")
+shader_parameter/pit_noise = SubResource("NoiseTexture2D_b5ua2")

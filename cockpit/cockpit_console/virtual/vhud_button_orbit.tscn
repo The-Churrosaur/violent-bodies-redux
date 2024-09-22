@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://1lbpniy8x6b"]
+
+[ext_resource type="PackedScene" uid="uid://1t2q4b1xyydv" path="res://tutorial/vhud_button_test.tscn" id="1_bcjtv"]
+[ext_resource type="Script" path="res://cockpit/cockpit_console/virtual/vhud_button_orbit.gd" id="2_4cyta"]
+
+[node name="VHUDOrbitButton" instance=ExtResource("1_bcjtv")]
+script = ExtResource("2_4cyta")
+orbit_state_id = "orbit"
+
+[node name="Label3D" parent="MeshInstance3D" index="0"]
+text = "TOGGLE ORBIT MODE
+(TARGET LOCK)"
+
+[node name="WeaponNameLabel" parent="MeshInstance3D" index="1"]
+visible = false

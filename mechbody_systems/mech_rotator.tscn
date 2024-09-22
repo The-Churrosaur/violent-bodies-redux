@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d7shxo4pgi84"]
+
+[ext_resource type="PackedScene" uid="uid://d0ex8w8t8rocw" path="res://mechbody/mechbody/limb_physics/limb_rotator.tscn" id="1_bsnc8"]
+[ext_resource type="Script" path="res://mechbody_systems/mech_rotator.gd" id="1_wiwnu"]
+
+[node name="MechRotator" type="Node3D" node_paths=PackedStringArray("limb_rotator", "rotation_target")]
+script = ExtResource("1_wiwnu")
+limb_rotator = NodePath("LimbRotator")
+rotation_target = NodePath("RotationTarget")
+
+[node name="LimbRotator" parent="." node_paths=PackedStringArray("target") instance=ExtResource("1_bsnc8")]
+active = false
+target = NodePath("../RotationTarget")
+translation = false
+
+[node name="RotationTarget" type="Node3D" parent="."]

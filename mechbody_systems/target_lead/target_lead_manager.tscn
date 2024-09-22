@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://gki373q68bxq"]
+
+[ext_resource type="Script" path="res://mechbody_systems/target_lead/target_lead_manager.gd" id="1_e51oj"]
+[ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="2_c1aev"]
+[ext_resource type="PackedScene" uid="uid://bocowncaie7sq" path="res://cockpit/cockpit_console/target_lead_ui.tscn" id="3_cxjhh"]
+
+[node name="TargetLeadManager" type="Node3D"]
+script = ExtResource("1_e51oj")
+
+[node name="LeadComputer" parent="." instance=ExtResource("2_c1aev")]
+unique_name_in_owner = true
+
+[node name="TargetLeadUI" parent="." instance=ExtResource("3_cxjhh")]
+unique_name_in_owner = true

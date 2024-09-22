@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7hdkm6ent3xg"]
+
+[ext_resource type="PackedScene" uid="uid://dsxvsikahk5en" path="res://assets/blender/arm_tests/arms1.blend" id="1_hygqx"]
+[ext_resource type="Script" path="res://mechbody/arms_1.gd" id="2_ien4s"]
+
+[node name="ik_arms" node_paths=PackedStringArray("skeleton_ik", "skeleton") instance=ExtResource("1_hygqx")]
+script = ExtResource("2_ien4s")
+skeleton_ik = NodePath("Armature/Skeleton3D/Sphere_Armature_Skeleton3D#SkeletonIK3D")
+skeleton = NodePath("Armature/Skeleton3D")
+
+[node name="blockbotarms_001" parent="." index="0"]
+visible = false
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0.530224, -0.499086, -0.499086, -0.469776)
+bones/1/rotation = Quaternion(0.0241059, -0.0241149, 0.000876897, 0.999418)
+bones/2/rotation = Quaternion(0.506118, -0.499963, -0.499963, 0.493882)
+bones/2/scale = Vector3(1, 1, 1)
+
+[node name="Sphere_Armature_Skeleton3D#SkeletonIK3D" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="0"]
+process_priority = 1
+root_bone = &"BoneShoulder"
+tip_bone = &"BoneTip"
+use_magnet = true
+magnet = Vector3(10, -10, 0)
+target_node = NodePath("../../../Node3D")
+
+[node name="Node3D" type="Node3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.77969, 1.99319, -0.632681)

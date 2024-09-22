@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bocowncaie7sq"]
+
+[ext_resource type="Script" path="res://cockpit/cockpit_console/target_lead_ui.gd" id="1_l6am8"]
+[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="2_6awiw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_togyb"]
+material = ExtResource("2_6awiw")
+size = Vector3(5, 5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a7ri3"]
+size = Vector3(100, 100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqiop"]
+albedo_color = Color(1, 0, 1, 1)
+
+[node name="TargetLeadUI" type="Node3D"]
+script = ExtResource("1_l6am8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_togyb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_a7ri3")
+surface_material_override/0 = SubResource("StandardMaterial3D_gqiop")

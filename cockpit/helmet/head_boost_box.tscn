@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://g84k53iubkru"]
+
+[ext_resource type="Script" path="res://cockpit/helmet/head_boost_box.gd" id="1_8tr4r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_why7l"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="HeadBoostBox" type="Area3D"]
+script = ExtResource("1_8tr4r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_why7l")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

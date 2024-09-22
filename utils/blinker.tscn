@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckudjlo0a3sit"]
+
+[ext_resource type="Script" path="res://utils/blinker.gd" id="1_5fdce"]
+
+[node name="Blinker" type="Node" node_paths=PackedStringArray("on_timer", "off_timer")]
+script = ExtResource("1_5fdce")
+on_timer = NodePath("OnTimer")
+off_timer = NodePath("OffTimer")
+
+[node name="OnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="OffTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="OnTimer" to="." method="_on_on_timer_timeout"]
+[connection signal="timeout" from="OffTimer" to="." method="_on_off_timer_timeout"]

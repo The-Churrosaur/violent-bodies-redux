@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://canlurq7heofm"]
+
+[ext_resource type="Script" path="res://gameplay/mechtools/laserstupidgun.gd" id="1_ctfpx"]
+[ext_resource type="PackedScene" uid="uid://cacfluixmbnmb" path="res://gameplay/mechtools/laser.tscn" id="2_p4dkn"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wxgb2"]
+top_radius = 0.2
+height = 4.0
+radial_segments = 6
+
+[node name="lasergun" type="Node3D"]
+script = ExtResource("1_ctfpx")
+bullet_scene = ExtResource("2_p4dkn")
+
+[node name="ShotTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.715074, 0)
+text = "adfad"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1.60379)
+mesh = SubResource("CylinderMesh_wxgb2")
+
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj8xdrcrm0gr7"]
+
+[ext_resource type="Script" path="res://cockpit/helmet/headset_local.gd" id="1_ct8d4"]
+
+[node name="HeadsetLocal" type="Node3D"]
+script = ExtResource("1_ct8d4")
