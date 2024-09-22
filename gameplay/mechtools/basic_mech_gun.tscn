@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6po2ax5njo4o"]
+[gd_scene load_steps=10 format=3 uid="uid://b6po2ax5njo4o"]
 
 [ext_resource type="PackedScene" uid="uid://fk6g4bxa483y" path="res://gameplay/mechtools/mech_tool.tscn" id="1_wm0i6"]
 [ext_resource type="Script" path="res://gameplay/mechtools/basic_mech_gun.gd" id="2_mbm85"]
 [ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/mechtools/stupidgun.tscn" id="3_j5572"]
 [ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="4_dqvqm"]
 [ext_resource type="Script" path="res://utils/blinker.gd" id="5_ksrtu"]
+[ext_resource type="AudioStream" uid="uid://dkcts13kaaukt" path="res://assets/audio/audio_hero_GunCannon_DIGIJ02_20_6_370.mp3" id="6_inc6y"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_p0guc"]
 top_radius = 0.1
@@ -55,5 +56,9 @@ off_time = 0.2
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="4"]
 mesh = SubResource("BoxMesh_xb3rm")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="5"]
+stream = ExtResource("6_inc6y")
+max_polyphony = 10
 
 [connection signal="firing" from="stupidgun" to="." method="_on_stupidgun_firing"]

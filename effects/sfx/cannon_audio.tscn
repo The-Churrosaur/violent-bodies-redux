@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj446ht7bpwmh"]
+
+[ext_resource type="PackedScene" uid="uid://b7e8q1kcqf1pb" path="res://effects/sfx/spawnable_audio.tscn" id="1_5l4pg"]
+[ext_resource type="AudioStream" uid="uid://dkcts13kaaukt" path="res://assets/audio/audio_hero_GunCannon_DIGIJ02_20_6_370.mp3" id="2_8lyue"]
+
+[node name="SpawnableAudio" instance=ExtResource("1_5l4pg")]
+stream = ExtResource("2_8lyue")
+volume_db = -3.048

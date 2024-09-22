@@ -12,8 +12,11 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 @export var laser : MeshInstance3D
 @export var blinker : Blinker
 
-@export var recoil = 1000
+@export var recoil = 250
 @export var mechbody : MechBody
+
+@onready var audio_stream_player_3d = $AudioStreamPlayer3D
+
 
 func _ready():
 	super()
@@ -26,11 +29,15 @@ func _ready():
 
 func on_controller_input_pressed(action):
 	super(action)
-	if action == trigger_action: gun.pull_trigger()
+	if action == trigger_action: 
+		gun.pull_trigger()
+		#audio_stream_player_3d.play()
 
 func on_controller_input_released(action):
 	super(action)
-	if action == trigger_action: gun.release_trigger()
+	if action == trigger_action: 
+		gun.release_trigger()
+		#audio_stream_player_3d.stop()
 
 
 func _on_stupidgun_firing():
@@ -39,6 +46,12 @@ func _on_stupidgun_firing():
 	emit_recoil.emit(self, global_basis.z * recoil)
 	mechbody.right_hand_bit.hand.apply_central_impulse(global_basis.z * recoil)
 	
+	#var spawn = audio_spawn.instantiate()
+	#add_child(spawn)
+	#spawn.global_position = global_position
+	#spawn.play(0.4)
+	
+	audio_stream_player_3d.play(0.8)
 
 
 func activate(controller : MyXRGrabbable):

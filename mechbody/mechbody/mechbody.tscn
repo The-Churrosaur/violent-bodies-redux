@@ -356,7 +356,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.724767, -1.26876)
 visible = false
 trigger_action = "trigger_click"
 launching_rigidbody = NodePath("../..")
-recoil = 1000
+recoil = 250
 
 [node name="Shield" parent="LeftHandRemote" instance=ExtResource("19_rcdnm")]
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
@@ -375,7 +375,7 @@ input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141178, -1.57548)
 trigger_action = "trigger_click"
 launching_rigidbody = NodePath("../..")
-recoil = 1000
+recoil = 250
 mechbody = NodePath("../..")
 
 [node name="stupidgun" parent="RightHandRemote/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]

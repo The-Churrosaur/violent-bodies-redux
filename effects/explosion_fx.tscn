@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://prpquffa8bgi"]
+[gd_scene load_steps=16 format=3 uid="uid://prpquffa8bgi"]
 
 [ext_resource type="Script" path="res://effects/explosion_fx.gd" id="1_qtopc"]
 [ext_resource type="Material" uid="uid://d36fshnmb3ppv" path="res://materials/smoke_material.tres" id="3_mg3vs"]
 [ext_resource type="PackedScene" uid="uid://d0jdcfqgvui6p" path="res://effects/good_smoke.tscn" id="4_act7t"]
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_dgfqv"]
+[ext_resource type="AudioStream" uid="uid://dl8us1gvx5vl1" path="res://assets/audio/zapsplat_explosion_big_fireball_001_89751.mp3" id="5_rrb7s"]
 
 [sub_resource type="Gradient" id="Gradient_iounm"]
 offsets = PackedFloat32Array(0.0108108, 0.497297, 1)
@@ -67,11 +68,12 @@ turbulence_enabled = true
 material = ExtResource("4_dgfqv")
 size = Vector3(2, 2, 2)
 
-[node name="explosionFX" type="Node3D" node_paths=PackedStringArray("bubbling", "nova", "gibs")]
+[node name="explosionFX" type="Node3D" node_paths=PackedStringArray("bubbling", "nova", "gibs", "audio")]
 script = ExtResource("1_qtopc")
 bubbling = NodePath("bubbling")
 nova = NodePath("nova")
 gibs = NodePath("gibs")
+audio = NodePath("AudioStreamPlayer3D")
 
 [node name="nova" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0568449, 0)
@@ -96,6 +98,13 @@ transform_align = 2
 trail_lifetime = 6.75
 process_material = SubResource("ParticleProcessMaterial_ehrof")
 draw_pass_1 = SubResource("BoxMesh_reyrv")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_rrb7s")
+volume_db = 13.714
+max_db = 6.0
+max_distance = 858.21
+doppler_tracking = 2
 
 [connection signal="finished" from="nova" to="." method="_on_nova_finished"]
 [connection signal="finished" from="bubbling" to="." method="_on_bubbling_finished"]
