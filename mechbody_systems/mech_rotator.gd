@@ -33,14 +33,16 @@ func _physics_process(delta):
 		rotation_target.look_at(target.global_position)
 
 
-func track_target(new_target):
+func track_target(new_target, rotate_by_axis = false):
 	target = new_target
 	limb_rotator.active = true
+	limb_rotator.rotate_by_axis = rotate_by_axis
 
 
-func track_match_target(new_match_target):
+func track_match_target(new_match_target, rotate_by_axis = false):
 	match_target = new_match_target
 	limb_rotator.active = true
+	limb_rotator.rotate_by_axis = rotate_by_axis
 	use_match_target = true
 
 

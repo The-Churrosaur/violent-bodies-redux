@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://bktunb3uxfbek"]
+[gd_scene load_steps=3 format=3 uid="uid://bktunb3uxfbek"]
 
 [ext_resource type="Script" path="res://mechbody_systems/floor_detector.gd" id="1_g46a8"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_7637v"]
+
 [node name="FloorDetector" type="RayCast3D"]
+target_position = Vector3(0, -4, 0)
 script = ExtResource("1_g46a8")
+
+[node name="NormalLookat" type="Node3D" parent="."]
+
+[node name="NormalLookatRotated" type="Node3D" parent="NormalLookat"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NormalLookat/NormalLookatRotated"]
+mesh = SubResource("CylinderMesh_7637v")

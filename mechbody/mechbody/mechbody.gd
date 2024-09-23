@@ -131,7 +131,7 @@ func _on_body_exited(body):
 	if body.is_in_group("ground"): 
 		takeoff.emit()
 		is_landed = false
-		movement_mode_controller.enter_state()
+		#movement_mode_controller.enter_state()
 
 
 # -- STEP CALLBACKS

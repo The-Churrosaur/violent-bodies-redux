@@ -101,7 +101,7 @@ draw_pass_1 = SubResource("BoxMesh_reyrv")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_rrb7s")
-volume_db = 13.714
+volume_db = 27.428
 max_db = 6.0
 max_distance = 858.21
 doppler_tracking = 2

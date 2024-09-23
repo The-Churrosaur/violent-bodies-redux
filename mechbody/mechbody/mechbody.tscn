@@ -42,7 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://bktunb3uxfbek" path="res://mechbody_systems/floor_detector.tscn" id="36_lq8jm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pfxel"]
-friction = 0.28
+friction = 0.0
 absorbent = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhtti"]
@@ -72,9 +72,9 @@ height = 1.0
 [sub_resource type="BoxMesh" id="BoxMesh_nxfr1"]
 size = Vector3(5, 5, 5)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_g8pff"]
-height = 1.568
-radius = 4.0
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cjb88"]
+height = 6.0
+radius = 2.0
 
 [node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "step_push_timer", "step_fall_timer", "movement_mode_controller")]
 mass = 100.0
@@ -85,6 +85,7 @@ contact_monitor = true
 linear_damp = 0.1
 angular_damp = 2.0
 script = ExtResource("1_m8lij")
+torque_power = 50000.0
 step_power = 200000.0
 cockpit = NodePath("Cockpit")
 left_arm_targeter = NodePath("ArmTargeterLeft")
@@ -128,12 +129,13 @@ headlook_controller = NodePath("../../../HeadlookController")
 sensor_manager = NodePath("../../../HeadlookController/HeadsetLocal/HeadSensorManager")
 rotator = NodePath("../../MechRotator")
 
-[node name="Skate" parent="MechbodyController/MovementModeController" index="3" node_paths=PackedStringArray("headlook_controller", "flight_module_yaw", "mechbody", "rotator", "floor_normal_reference_node")]
+[node name="Skate" parent="MechbodyController/MovementModeController" index="3" node_paths=PackedStringArray("headlook_controller", "flight_module_yaw", "mechbody", "rotator", "floor_normal_reference_node", "floor_detector")]
 headlook_controller = NodePath("../../../HeadlookController")
 flight_module_yaw = NodePath("../../../FlightModuleTail")
 mechbody = NodePath("../../..")
 rotator = NodePath("../../MechRotator")
 floor_normal_reference_node = NodePath("../../../FloorDetector/FloorNormalReference")
+floor_detector = NodePath("../../../FloorDetector")
 
 [node name="Hover" parent="MechbodyController/MovementModeController" index="4" node_paths=PackedStringArray("rotator", "headlook_controller")]
 rotator = NodePath("../../MechRotator")
@@ -144,6 +146,7 @@ headlook_controller = NodePath("../../../HeadlookController")
 [node name="LimbRotator" parent="MechbodyController/MechRotator" index="0" node_paths=PackedStringArray("body")]
 body = NodePath("../../..")
 max_torque_impulse = 20.0
+damp = 0.8
 
 [node name="HeadlookController" parent="." node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
@@ -418,13 +421,9 @@ transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, -0.814902, 4.5444
 mesh = ExtResource("23_4d7fq")
 surface_material_override/0 = ExtResource("24_4gwjq")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38919, 0.996926)
-shape = SubResource("CylinderShape3D_g8pff")
-
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.22045, 0.996926)
-shape = SubResource("CylinderShape3D_g8pff")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.68708, 0.996926)
+shape = SubResource("CylinderShape3D_cjb88")
 
 [node name="Step" type="Node3D" parent="."]
 

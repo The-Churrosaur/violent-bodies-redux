@@ -31,6 +31,11 @@ extends Node3D
 
 @export var recoil_body : RigidBody3D ## equal and opposite
 
+@export var rotate_by_axis = false
+@export var match_x = true
+@export var match_y = false
+@export var match_z = true
+
 
 @onready var rpid = $RotationalPidController
 @onready var ppid = $PositionalPidController
@@ -40,8 +45,28 @@ extends Node3D
 func _physics_process(delta):
 	if !active: return
 	if target == null: return
-	_rotate_along_axis(delta)
+	
+	if rotate_by_axis:
+		if match_x: _rotate_local_x(delta)
+		if match_y: _rotate_local_y(delta)
+		if match_z: _rotate_local_z(delta)
+	else:
+		_rotate_along_axis(delta)
+	
 	if translation : _apply_translation()
+
+
+func _rotate_local_x(delta):
+	var error = target.rotation.x - rotation.x
+	_apply_rotation_along(basis.x, error, delta)
+
+func _rotate_local_y(delta):
+	var error = target.rotation.y - rotation.y
+	_apply_rotation_along(basis.y, -error, delta)
+
+func _rotate_local_z(delta):
+	var error = target.rotation.z - rotation.z
+	_apply_rotation_along(basis.z, error, delta)
 
 
 func _rotate_along_axis(delta):
@@ -66,7 +91,8 @@ func _rotate_along_axis(delta):
 
 func _apply_rotation_along(axis : Vector3, angle, delta):
 	var k = rpid.solve(angle)
-	body.apply_torque_impulse(axis * max_torque_impulse)
+	if debug: print("applying rotation k: ", k)
+	body.apply_torque_impulse(axis * max_torque_impulse * k)
 
 
 func _apply_translation():
