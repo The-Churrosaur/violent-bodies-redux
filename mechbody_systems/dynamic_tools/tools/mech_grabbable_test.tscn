@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfr0bhmu4861s"]
+[gd_scene load_steps=8 format=3 uid="uid://dfr0bhmu4861s"]
 
 [ext_resource type="PackedScene" uid="uid://c2p1lav7k6rqp" path="res://mechbody_systems/dynamic_tools/mech_grabbable.tscn" id="1_5jbgs"]
 [ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="2_ovxnx"]
@@ -12,8 +12,16 @@ size = Vector3(4, 4, 4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8fy8l"]
 size = Vector3(5, 5, 5)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_da43w"]
+height = 4.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fejdv"]
+radius = 1.0
+height = 4.0
+
 [node name="MechGrabbable" node_paths=PackedStringArray("kinematic_grab_point") instance=ExtResource("1_5jbgs")]
 kinematic_grab_point = NodePath("PrimaryGrab")
+two_handed = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
 shape = SubResource("BoxShape3D_8o0xn")
@@ -21,11 +29,23 @@ shape = SubResource("BoxShape3D_8o0xn")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
 mesh = SubResource("BoxMesh_sivv5")
 
-[node name="MechGrabPoint" parent="." index="2" node_paths=PackedStringArray("grabbable") instance=ExtResource("2_ovxnx")]
+[node name="SecondaryGrabArea" parent="." index="2" node_paths=PackedStringArray("grabbable") instance=ExtResource("2_ovxnx")]
 grabbable = NodePath("..")
+secondary = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MechGrabPoint" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecondaryGrabArea" index="0"]
 shape = SubResource("BoxShape3D_8fy8l")
 
 [node name="PrimaryGrab" type="Marker3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.811, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.31675, 0)
+mesh = SubResource("CapsuleMesh_da43w")
+
+[node name="PrimaryGrabArea" parent="." index="5" node_paths=PackedStringArray("grabbable") instance=ExtResource("2_ovxnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.68475, 0)
+grabbable = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PrimaryGrabArea" index="0"]
+shape = SubResource("CapsuleShape3D_fejdv")

@@ -21,3 +21,6 @@ extends RigidBody3D
 ## to disallow multiple grabbing 
 var grabbed = false
 var grabbed_secondary = false
+
+var primary_grabber : MechHand
+var secondary_grabber : MechHand

@@ -183,4 +183,10 @@ func destroyed_enemy(enemy):
 		XRPlayerGlobals.rhand.trigger_haptic_pulse("haptic", 5, 0.4, 0.1, 0)
 
 func toggle_joint():
-	dominant_hand_bit.toggle_joint()
+	current_two_hand_joint.enabled = !current_two_hand_joint.enabled
+
+func enable_current_twohand_joint():
+	current_two_hand_joint.enabled = true
+
+func disable_current_twohand_joint():
+	current_two_hand_joint.enabled = false
