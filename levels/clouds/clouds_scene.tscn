@@ -36,8 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 [node name="Base" type="Node3D" parent="."]
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188.996, -383.815, -12.7265)
-kinematic_lerp = 0.9
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188.996, -385.115, -12.7265)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Base"]
 environment = SubResource("Environment_t3im3")
@@ -128,10 +127,6 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/Cockpit/Player
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
-[connection signal="dropped" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
-[connection signal="grabbed" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
-[connection signal="dropped" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableRight" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_right_dropped"]
-[connection signal="grabbed" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableRight" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_right_grabbed"]
 [connection signal="button_pressed" from="MechRigidContainer/seatparent/dolly/XROrigin3D/XRController3DLeft/LeftHand/RestartButton" to="." method="_on_restart_button_button_pressed"]
 
 [editable path="MechRigidContainer"]

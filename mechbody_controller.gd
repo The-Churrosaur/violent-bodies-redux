@@ -88,7 +88,11 @@ func _on_input_up(action, controller):
 func _on_left_input_down(action):
 	
 	if action == "ax_button":
-		hand_manager_left.next_tool()
+		var hand = body.left_hand_remote
+		if hand.grabbable is  MechGrabbable:
+			hand.drop_grabbable()
+		else:
+			hand.grab_hovered_grabbable()
 	
 	if action == "by_button":
 		body.toggle_joint()
@@ -108,8 +112,11 @@ func _on_left_input_up(action):
 func _on_right_input_down(action):
 
 	if action == "ax_button":
-		#hand_manager_right.next_tool()
-		pass
+		var hand = body.right_hand_remote
+		if hand.grabbable is  MechGrabbable:
+			hand.drop_grabbable()
+		else:
+			hand.grab_hovered_grabbable()
 	#
 	if action == "by_button":
 		#alt_look = false

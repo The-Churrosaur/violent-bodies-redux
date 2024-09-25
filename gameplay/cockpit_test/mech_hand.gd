@@ -3,6 +3,7 @@
 ## isolated from physics hands (hand bits)
 ## in charge of hand transform
 ## point of contact for mech grabbables (tools)
+## TODO split grabbing into a separate class?
 
 class_name MechHand
 extends Node3D
@@ -14,8 +15,15 @@ extends Node3D
 @export var two_handed = false
 @export var hands : UtilityGlobals.hands
 
+@export_category("Grabbing")
+@export var lerp_parent_threshold_sq = 0.5
+
 var grabbable : MechGrabbable = null
 var hovering_grabbable : MechGrabbable = null
+
+# grabbable state flags
+enum STATE {RIGID, LERPING, FOLLOWING, NONE}
+var grabbable_state : STATE = STATE.NONE
 
 
 #region ===== CALLBACKS =====
@@ -37,27 +45,32 @@ func _physics_process(delta):
 	if two_handed:
 		if other_hand != null: look_at(other_hand.global_position)
 	
+	# grabbing behavior
 	if grabbable is MechGrabbable: 
-		if grabbable.kinematic_hold:
+		
+		match grabbable_state:
 			
-			var grab_point = grabbable.kinematic_grab_point
-			var grab_point_transform = grab_point.transform.orthonormalized().inverse()
+			STATE.LERPING:
+				_lerp_grabbable(delta)
 			
-			## parent
-			if grab_point.global_position == global_position:
-				grabbable.global_transform = global_transform * grab_point_transform
+			STATE.FOLLOWING:
+				_parent_grabbable(delta)
 			
-			## else lerp
-			else:
-				grabbable.global_transform = grabbable.global_transform.interpolate_with( \
-				global_transform * grab_point_transform, grabbable.kinematic_lerp)
+			STATE.RIGID:
+				pass
+			
+			STATE.NONE:
+				pass
+
 
 func _on_grab_detection_area_area_entered(area):
 	
 	if area is MechGrabPoint:
-		print("MECHGRABBABLE DETECED")
-		hovering_grabbable = area.grabbable
-		grab_hovered_grabbable()
+		var new_grabbable = area.grabbable
+		if new_grabbable == grabbable: return
+		if new_grabbable.grabbed: return
+		
+		hovering_grabbable = new_grabbable
 
 
 func _on_grab_detection_area_area_exited(area):
@@ -97,9 +110,52 @@ func grab_hovered_grabbable():
 	if !hovering_grabbable is MechGrabbable: return
 	
 	grabbable = hovering_grabbable
-	mechbody.current_two_hand_joint = get_hand_bit().get_joint_by_id(grabbable.two_handed_joint_id)
+	grabbable.grabbed = true
+	
+	if grabbable.kinematic_hold: 
+		grabbable.freeze = true
+	
+	if grabbable.two_handed:
+		var joint = get_hand_bit().get_joint_by_id(grabbable.two_handed_joint_id)
+		mechbody.current_two_hand_joint = joint
+	
+	if grabbable.kinematic_hold: grabbable_state = STATE.LERPING
+	else: grabbable_state = STATE.RIGID
 
+
+func drop_grabbable():
+	if !grabbable is MechGrabbable: return
+	
+	grabbable.grabbed = false
+	grabbable.freeze = false
+	hovering_grabbable = grabbable
+	grabbable = null
+	
+	grabbable_state = STATE.NONE
 
 
 #endregion
 
+#region ===== PRIVATE =====
+
+func _lerp_grabbable(delta):
+	print("lerping...")
+	var grab_point = grabbable.kinematic_grab_point
+	var grab_point_transform = grab_point.transform.orthonormalized().inverse()
+	grabbable.global_transform = grabbable.global_transform.interpolate_with( \
+	global_transform * grab_point_transform, grabbable.kinematic_lerp)
+	
+	if grab_point.global_position.distance_squared_to(global_position) < lerp_parent_threshold_sq:
+		grabbable_state = STATE.FOLLOWING
+	
+	#if grab_point.global_transform.is_equal_approx(global_transform):
+		#grabbable_state = STATE.FOLLOWING
+
+
+func _parent_grabbable(delta):
+	var grab_point = grabbable.kinematic_grab_point
+	var grab_point_transform = grab_point.transform.orthonormalized().inverse()
+	grabbable.global_transform = global_transform * grab_point_transform
+	print("parenting")
+
+#endregion
