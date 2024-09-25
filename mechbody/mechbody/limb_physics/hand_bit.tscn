@@ -48,15 +48,12 @@ max_translation_impulse = 1.6
 damp = 0.8
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
-i_tune = 0.1
-d_tune = -0.2
-log_size = 50
+i_tune = 0.2
 
 [node name="Anchor" type="RigidBody3D" parent="."]
 collision_layer = 0
 collision_mask = 0
 freeze = true
-freeze_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Anchor"]
 visible = false

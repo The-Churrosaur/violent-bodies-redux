@@ -22,6 +22,8 @@ signal takeoff()
 @export var right_arm_targeter : ArmTargeter
 @export var left_player_shoulder : Node3D
 @export var right_player_shoulder : Node3D
+@export var left_hand_remote : MechHand
+@export var right_hand_remote : MechHand
 @export var step_push_timer : Timer
 @export var step_fall_timer : Timer
 @export var movement_mode_controller : MovementModeController
@@ -175,3 +177,6 @@ func destroyed_enemy(enemy):
 	if player:
 		XRPlayerGlobals.lhand.trigger_haptic_pulse("haptic", 5, 1.0, 0.2, 0)
 		XRPlayerGlobals.rhand.trigger_haptic_pulse("haptic", 5, 0.4, 0.1, 0)
+
+func toggle_joint():
+	right_hand_bit.toggle_joint()

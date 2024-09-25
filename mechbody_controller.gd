@@ -91,7 +91,9 @@ func _on_left_input_down(action):
 		hand_manager_left.next_tool()
 	
 	if action == "by_button":
-		enter_flight()
+		body.toggle_joint()
+		var hand = body.right_hand_remote
+		hand.two_handed = !hand.two_handed
 	
 	if action == "trigger_click":
 		hand_manager_right.current_tool.input("trigger")

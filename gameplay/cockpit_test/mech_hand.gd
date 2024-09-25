@@ -8,6 +8,7 @@ extends Node3D
 @export var current_tool : MechTool
 @export var arm : ArmBase
 @export var other_hand : MechHand
+@export var two_handed = false
 
 @onready var rotation_looker = $rotation_looker
 
@@ -24,7 +25,8 @@ func _physics_process(delta):
 	#scale = Vector3.ONE
 	
 	# testing two handed
-	if other_hand != null: look_at(other_hand.global_position)
+	if two_handed:
+		if other_hand != null: look_at(other_hand.global_position)
 
 
 func trigger_tool():

@@ -6,6 +6,8 @@ extends Node3D
 @export var anchor : RigidBody3D
 @export var hands : UtilityGlobals.hands
 
+@export var current_joint : JoltJoint3D
+
 @onready var limb_rotator = $Hand/LimbRotator
 
 var target = null
@@ -28,4 +30,7 @@ func _physics_process(delta):
 	# equal and opposite
 	if limb_rotator.recoil_body == null:
 		limb_rotator.recoil_body = mechbody
-	
+
+
+func toggle_joint():
+	current_joint.enabled = !current_joint.enabled

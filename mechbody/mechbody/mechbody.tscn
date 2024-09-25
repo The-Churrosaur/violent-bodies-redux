@@ -76,7 +76,7 @@ size = Vector3(5, 5, 5)
 height = 6.0
 radius = 2.0
 
-[node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "step_push_timer", "step_fall_timer", "movement_mode_controller")]
+[node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "left_player_shoulder", "right_player_shoulder", "left_hand_remote", "right_hand_remote", "step_push_timer", "step_fall_timer", "movement_mode_controller")]
 mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_pfxel")
 gravity_scale = 0.0
@@ -86,10 +86,13 @@ linear_damp = 0.1
 angular_damp = 2.0
 script = ExtResource("1_m8lij")
 torque_power = 50000.0
-step_power = 200000.0
 cockpit = NodePath("Cockpit")
 left_arm_targeter = NodePath("ArmTargeterLeft")
 right_arm_targeter = NodePath("ArmTargeterRight")
+left_player_shoulder = NodePath("Cockpit/PlayerBodyReferences/PlayerShoulderLeft")
+right_player_shoulder = NodePath("Cockpit/PlayerBodyReferences/PlayerShoulderRight")
+left_hand_remote = NodePath("LeftHandRemote")
+right_hand_remote = NodePath("RightHandRemote")
 step_push_timer = NodePath("Step/StepPushTimer")
 step_fall_timer = NodePath("Step/StepFallTimer")
 movement_mode_controller = NodePath("MechbodyController/MovementModeController")

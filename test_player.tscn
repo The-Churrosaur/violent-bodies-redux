@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dlsarb7iw7bpi"]
+[gd_scene load_steps=15 format=3 uid="uid://dlsarb7iw7bpi"]
 
 [ext_resource type="Script" path="res://test_player.gd" id="1_bbutg"]
 [ext_resource type="PackedScene" uid="uid://dcpvwyws4b374" path="res://effects/post_process_anime_plane.tscn" id="2_vd27l"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bx1xdisoqo1f6" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_tac_glove_low.tscn" id="5_tncjn"]
 [ext_resource type="PackedScene" uid="uid://bgaiy7hiyncpy" path="res://controller_body.tscn" id="6_iait1"]
 [ext_resource type="PackedScene" uid="uid://chumpejwiub7f" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_tac_glove_low.tscn" id="6_nr3qn"]
+[ext_resource type="Script" path="res://Label3D.gd" id="8_2vewp"]
 [ext_resource type="PackedScene" uid="uid://doksrptytk60j" path="res://assets/cockpit/controller_mockup.tscn" id="8_348w2"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="9_nimxn"]
 
@@ -51,6 +52,16 @@ controller = NodePath("..")
 
 [node name="RestartButton" parent="XRController3DLeft/LeftHand" instance=ExtResource("5_owhqc")]
 transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, -0.0636607, -0.0478689, 0.140585)
+
+[node name="Label3D" type="Label3D" parent="XRController3DLeft/LeftHand/RestartButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0373603, 0)
+visible = false
+pixel_size = 0.001
+text = "enemies 
+enabled"
+font_size = 16
+outline_size = 1
+script = ExtResource("8_2vewp")
 
 [node name="ControllerMockup" parent="XRController3DLeft/LeftHand" instance=ExtResource("8_348w2")]
 transform = Transform3D(1, 0, 0, 0, 0.607334, -0.794446, 0, 0.794446, 0.607334, 0, 0.0507418, 0.0162471)
@@ -175,6 +186,7 @@ autostart = true
 [connection signal="input_float_changed" from="XRController3DLeft" to="XRController3DLeft" method="_on_input_float_changed"]
 [connection signal="input_vector2_changed" from="XRController3DLeft" to="XRController3DLeft" method="_on_input_vector_2_changed"]
 [connection signal="button_pressed" from="XRController3DLeft/LeftHand/RestartButton" to="XRController3DLeft" method="_on_restart_button_button_pressed"]
+[connection signal="button_pressed" from="XRController3DLeft/LeftHand/RestartButton" to="XRController3DLeft/LeftHand/RestartButton/Label3D" method="_on_restart_button_button_pressed"]
 [connection signal="button_pressed" from="XRController3DRight" to="XRController3DRight" method="_on_button_pressed"]
 [connection signal="input_float_changed" from="XRController3DRight" to="XRController3DRight" method="_on_input_float_changed"]
 [connection signal="input_vector2_changed" from="XRController3DRight" to="XRController3DRight" method="_on_input_vector_2_changed"]

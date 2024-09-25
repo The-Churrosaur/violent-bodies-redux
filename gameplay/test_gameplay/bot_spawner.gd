@@ -2,7 +2,7 @@ extends Node3D
 
 @export var bot_template : PackedScene
 @export var bot_target : Node3D
-@export var enabled = true
+@export var enabled = false
 
 
 
