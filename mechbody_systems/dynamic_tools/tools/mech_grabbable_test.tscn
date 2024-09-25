@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfr0bhmu4861s"]
+
+[ext_resource type="PackedScene" uid="uid://c2p1lav7k6rqp" path="res://mechbody_systems/dynamic_tools/mech_grabbable.tscn" id="1_5jbgs"]
+[ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="2_ovxnx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8o0xn"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sivv5"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8fy8l"]
+size = Vector3(3, 3, 3)
+
+[node name="MechGrabbable" node_paths=PackedStringArray("kinematic_grab_point") instance=ExtResource("1_5jbgs")]
+kinematic_grab_point = NodePath("PrimaryGrab")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_8o0xn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("BoxMesh_sivv5")
+
+[node name="MechGrabPoint" parent="." index="2" node_paths=PackedStringArray("grabbable") instance=ExtResource("2_ovxnx")]
+grabbable = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MechGrabPoint" index="0"]
+shape = SubResource("BoxShape3D_8fy8l")
+
+[node name="PrimaryGrab" type="Marker3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)

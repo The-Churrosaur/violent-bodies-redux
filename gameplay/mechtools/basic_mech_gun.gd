@@ -41,7 +41,6 @@ func on_controller_input_released(action):
 
 
 func _on_stupidgun_firing():
-	print("firing haptic")
 	grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
 	emit_recoil.emit(self, global_basis.z * recoil)
 	mechbody.right_hand_bit.hand.apply_central_impulse(global_basis.z * recoil)

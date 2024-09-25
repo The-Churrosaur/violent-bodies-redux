@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=19 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_n5fsb"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
+[ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="3_xdm3k"]
 [ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="4_0shpt"]
 [ext_resource type="Script" path="res://spinner.gd" id="5_fgcw4"]
@@ -33,6 +34,10 @@ script = ExtResource("1_n5fsb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 
 [node name="Base" type="Node3D" parent="."]
+
+[node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188.996, -383.815, -12.7265)
+kinematic_lerp = 0.9
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Base"]
 environment = SubResource("Environment_t3im3")

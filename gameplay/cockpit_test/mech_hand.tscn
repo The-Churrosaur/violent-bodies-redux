@@ -1,8 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://doptv24orlqm0"]
+[gd_scene load_steps=3 format=3 uid="uid://doptv24orlqm0"]
 
 [ext_resource type="Script" path="res://gameplay/cockpit_test/mech_hand.gd" id="1_v30vb"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_cteew"]
+radius = 1.0
+
 [node name="MechHand" type="Node3D"]
 script = ExtResource("1_v30vb")
+hands = 1
 
-[node name="rotation_looker" type="Node3D" parent="."]
+[node name="GrabDetectionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GrabDetectionArea"]
+shape = SubResource("SphereShape3D_cteew")
+
+[connection signal="area_entered" from="GrabDetectionArea" to="." method="_on_grab_detection_area_area_entered"]
+[connection signal="area_exited" from="GrabDetectionArea" to="." method="_on_grab_detection_area_area_exited"]
+[connection signal="body_entered" from="GrabDetectionArea" to="." method="_on_grab_detection_area_body_entered"]
+[connection signal="body_exited" from="GrabDetectionArea" to="." method="_on_grab_detection_area_body_exited"]

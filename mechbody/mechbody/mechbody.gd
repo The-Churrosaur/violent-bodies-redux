@@ -24,11 +24,13 @@ signal takeoff()
 @export var right_player_shoulder : Node3D
 @export var left_hand_remote : MechHand
 @export var right_hand_remote : MechHand
+
 @export var step_push_timer : Timer
 @export var step_fall_timer : Timer
 @export var movement_mode_controller : MovementModeController
 @export var left_hand_bit : HandBit
 @export var right_hand_bit : HandBit
+@export var dominant_hand_bit : HandBit
 
 # set by controller.
 # assume 0-1 but it's multiplicative
@@ -55,6 +57,8 @@ var is_landed = false
 
 var is_step_pushing = false
 var is_step_falling = false
+
+var current_two_hand_joint : MechTwoHandedJoint
 
 
 func _physics_process(delta):
@@ -179,4 +183,4 @@ func destroyed_enemy(enemy):
 		XRPlayerGlobals.rhand.trigger_haptic_pulse("haptic", 5, 0.4, 0.1, 0)
 
 func toggle_joint():
-	right_hand_bit.toggle_joint()
+	dominant_hand_bit.toggle_joint()

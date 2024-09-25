@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwtsyqg37x6vq"]
+[gd_scene load_steps=8 format=3 uid="uid://bwtsyqg37x6vq"]
 
 [ext_resource type="PackedScene" uid="uid://dsh7i4eks64gc" path="res://mechbody/mechbody/mechbody.tscn" id="1_ji3mg"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/mech_rigid_container.gd" id="1_wghhh"]
 [ext_resource type="PackedScene" uid="uid://dlsarb7iw7bpi" path="res://test_player.tscn" id="2_hfoqc"]
 [ext_resource type="PackedScene" uid="uid://bysrkagylo8yh" path="res://mechbody/mechbody/limb_physics/hand_bit.tscn" id="4_8vmbs"]
 [ext_resource type="Script" path="res://my_xr_tools/reparenting_joint.gd" id="5_6bdt2"]
+[ext_resource type="PackedScene" uid="uid://cf7icatnvo8eo" path="res://mechbody_systems/tool_grabbing/two_handed_joint.tscn" id="6_7ki1p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0oolq"]
 
@@ -12,11 +13,12 @@
 script = ExtResource("1_wghhh")
 mechbody = NodePath("Mechbody")
 
-[node name="Mechbody" parent="." node_paths=PackedStringArray("seat_parent", "left_hand_bit", "right_hand_bit") instance=ExtResource("1_ji3mg")]
+[node name="Mechbody" parent="." node_paths=PackedStringArray("seat_parent", "left_hand_bit", "right_hand_bit", "dominant_hand_bit") instance=ExtResource("1_ji3mg")]
 gravity_scale = 1.0
 seat_parent = NodePath("../seatparent/dolly")
 left_hand_bit = NodePath("../HandBitLeft")
 right_hand_bit = NodePath("../HandBitRight")
+dominant_hand_bit = NodePath("../HandBitRight")
 
 [node name="seatparent" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0313884, 0.175038)
@@ -52,28 +54,17 @@ node_b = NodePath("../seatparent")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.65933, 0)
 script = ExtResource("5_6bdt2")
 
-[node name="HandBitLeft" parent="." node_paths=PackedStringArray("mechbody", "current_joint") instance=ExtResource("4_8vmbs")]
+[node name="HandBitLeft" parent="." node_paths=PackedStringArray("mechbody", "other_hand") instance=ExtResource("4_8vmbs")]
 mechbody = NodePath("../Mechbody")
-current_joint = NodePath("../HandBitRight/Hand/JoltGeneric6DOFJoint3D")
+other_hand = NodePath("../HandBitRight")
 
-[node name="HandBitRight" parent="." node_paths=PackedStringArray("mechbody", "current_joint") instance=ExtResource("4_8vmbs")]
+[node name="HandBitRight" parent="." node_paths=PackedStringArray("mechbody", "other_hand", "joints") instance=ExtResource("4_8vmbs")]
 mechbody = NodePath("../Mechbody")
+other_hand = NodePath("../HandBitLeft")
 hands = 1
-current_joint = NodePath("Hand/JoltGeneric6DOFJoint3D")
+joints = [NodePath("Hand/JoltGeneric6DOFJoint3D")]
 
-[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="3"]
-linear_limit_x/upper = 3.0
-linear_limit_x/lower = 2.0
-angular_limit_x/enabled = false
-angular_limit_y/enabled = false
-angular_limit_z/enabled = false
-angular_spring_x/damping = 3.0
-angular_spring_y/damping = 3.0
-angular_spring_z/damping = 3.0
-node_a = NodePath("../../../HandBitLeft/Hand")
-node_b = NodePath("..")
-enabled = false
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+[node name="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="3" instance=ExtResource("6_7ki1p")]
 
 [editable path="HandBitLeft"]
 [editable path="HandBitLeft/Hand/LimbRotator"]

@@ -341,8 +341,9 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, 2.771, 1.893)
 [node name="ArmBaseRight" parent="." instance=ExtResource("14_x4iok")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, 2.771, 1.893)
 
-[node name="LeftHandRemote" parent="." node_paths=PackedStringArray("current_tool", "arm") instance=ExtResource("15_gnibp")]
+[node name="LeftHandRemote" parent="." node_paths=PackedStringArray("mechbody", "current_tool", "arm") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3, 2.194, -3.587)
+mechbody = NodePath("..")
 current_tool = NodePath("beamfx2")
 arm = NodePath("../ArmBaseLeft")
 
@@ -368,8 +369,9 @@ recoil = 250
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
 tool_name = "SHIELD"
 
-[node name="RightHandRemote" parent="." node_paths=PackedStringArray("arm", "other_hand") instance=ExtResource("15_gnibp")]
+[node name="RightHandRemote" parent="." node_paths=PackedStringArray("mechbody", "arm", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, 1.527, -3.587)
+mechbody = NodePath("..")
 arm = NodePath("../ArmBaseRight")
 other_hand = NodePath("../LeftHandRemote")
 

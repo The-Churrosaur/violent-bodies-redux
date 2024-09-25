@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1ydfqigvejyw"]
+
+[ext_resource type="Script" path="res://mechbody_systems/tool_grabbing/mech_grab_point.gd" id="1_ho83r"]
+
+[node name="MechGrabPoint" type="Area3D"]
+script = ExtResource("1_ho83r")

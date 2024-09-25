@@ -5,6 +5,9 @@ extends Node3D
 @export var enabled = false
 
 
+func _ready():
+	enabled = false
+
 
 
 func _on_timer_timeout():
