@@ -10,6 +10,7 @@ class_name MechHand
 extends Node3D
 
 @export var mechbody : MechBody
+@export var tool_manager : MechHandToolManager
 @export var current_tool : MechTool
 @export var arm : ArmBase
 @export var other_hand : MechHand
@@ -18,6 +19,7 @@ extends Node3D
 
 @export_category("Grabbing")
 @export var lerp_parent_threshold_sq = 0.5
+@export var lerp_parent_threshold_angle = PI/8
 
 var grabbing_primary = false
 var grabbing_secondary = false
@@ -168,6 +170,9 @@ func _grab_hovered_as_primary():
 	
 	if grabbable.kinematic_hold: grabbable_state = STATE.LERPING
 	else: grabbable_state = STATE.RIGID
+	
+	if grabbable.is_tool: tool_manager.set_tool_override(grabbable.tool)
+
 
 func _grab_hovered_as_secondary():
 	
@@ -187,6 +192,8 @@ func _grab_hovered_as_physics():
 func _drop_as_primary():
 	
 	if grabbable.grabbed_secondary: grabbable.secondary_grabber.drop_grabbable()
+	if grabbable.is_tool and grabbable.tool == tool_manager.current_tool: 
+		tool_manager.set_tool(tool_manager.current_index)
 	
 	grabbing_primary = false
 	grabbable.grabbed = false
@@ -213,7 +220,14 @@ func _lerp_grabbable(delta):
 	grabbable.global_transform = grabbable.global_transform.interpolate_with( \
 	global_transform * grab_point_transform, grabbable.kinematic_lerp)
 	
-	if grab_point.global_position.distance_squared_to(global_position) < lerp_parent_threshold_sq:
+	# threshold
+	
+	var distance_sq = grab_point.global_position.distance_squared_to(global_position)
+	var grab_point_quat = grab_point.global_basis.get_rotation_quaternion()
+	var self_quat = global_basis.get_rotation_quaternion()
+	var quat_dif = grab_point_quat.angle_to(self_quat)
+	
+	if distance_sq < lerp_parent_threshold_sq and quat_dif < lerp_parent_threshold_angle:
 		grabbable_state = STATE.FOLLOWING
 	
 	#if grab_point.global_transform.is_equal_approx(global_transform):

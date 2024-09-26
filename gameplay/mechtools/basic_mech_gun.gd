@@ -12,8 +12,9 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 @export var laser : MeshInstance3D
 @export var blinker : Blinker
 
-@export var recoil = 250
+@export var recoil = 20
 @export var mechbody : MechBody
+@export var hand : MechHand
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
@@ -28,6 +29,7 @@ func _ready():
 
 
 func on_controller_input_pressed(action):
+	print("gun receiving controller: ", action)
 	super(action)
 	if action == trigger_action: 
 		gun.pull_trigger()
@@ -46,7 +48,7 @@ func _on_stupidgun_firing():
 	
 	# recoil
 	var pos = muzzle.global_position - mechbody.right_hand_bit.global_position
-	mechbody.right_hand_bit.hand.apply_impulse(global_basis.z * recoil, pos)
+	launching_rigidbody.apply_impulse(global_basis.z * recoil, pos)
 	
 	#var spawn = audio_spawn.instantiate()
 	#add_child(spawn)
@@ -56,14 +58,29 @@ func _on_stupidgun_firing():
 	audio_stream_player_3d.play(0.8)
 
 
-func activate(controller : MyXRGrabbable = null):
-	super(controller)
+func activate(hand, controller : MyXRGrabbable = null):
+	
+	print("GUN ACTIVATING: ", hand, controller)
+	
+	super(hand, controller)
+	
+	self.hand = hand
+	mechbody = hand.mechbody
+	launching_rigidbody = hand.get_hand_bit().hand
+	gun.launching_rigidbody = launching_rigidbody
+	
+	print("GUN LAUNCHBODY: ", launching_rigidbody)
+	
 	#laser.visible = true
 	blinker.active = true
 	pass
 
 func deactivate():
 	super()
+	
+	self.mechbody = null
+	launching_rigidbody = null
+	
 	laser.visible = false
 	blinker.active = false
 	pass

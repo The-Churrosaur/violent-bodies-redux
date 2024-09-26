@@ -48,7 +48,7 @@ func input(action : String, value = null):
 
 
 ## can optionally pass in a grabbable controller for this tool to parse input
-func activate(controller : MyXRGrabbable = null):
+func activate(hand, controller : MyXRGrabbable = null):
 	
 	tool_active = true
 	

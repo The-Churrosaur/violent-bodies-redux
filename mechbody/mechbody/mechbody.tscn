@@ -345,15 +345,17 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, 2.771, 1.893)
 [node name="ArmBaseRight" parent="." instance=ExtResource("14_x4iok")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, 2.771, 1.893)
 
-[node name="LeftHandRemote" parent="." node_paths=PackedStringArray("mechbody", "current_tool", "arm") instance=ExtResource("15_gnibp")]
+[node name="LeftHandRemote" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3, 2.194, -3.587)
 mechbody = NodePath("..")
+tool_manager = NodePath("MechHandToolManager")
 current_tool = NodePath("beamfx2")
 arm = NodePath("../ArmBaseLeft")
 
-[node name="MechHandToolManager" parent="LeftHandRemote" node_paths=PackedStringArray("tools", "input_grabbable") instance=ExtResource("16_bccqt")]
+[node name="MechHandToolManager" parent="LeftHandRemote" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
 tools = [NodePath("../beamfx2"), NodePath("../BasicGun"), NodePath("../Shield")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableLeft")
+hand = NodePath("..")
 
 [node name="PullThruster" parent="LeftHandRemote" instance=ExtResource("17_qxjyk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
@@ -365,7 +367,6 @@ transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41
 [node name="BasicGun" parent="LeftHandRemote" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.724767, -1.26876)
 visible = false
-trigger_action = "trigger_click"
 launching_rigidbody = NodePath("../..")
 recoil = 250
 
@@ -373,19 +374,21 @@ recoil = 250
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
 tool_name = "SHIELD"
 
-[node name="RightHandRemote" parent="." node_paths=PackedStringArray("mechbody", "arm", "other_hand") instance=ExtResource("15_gnibp")]
+[node name="RightHandRemote" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "arm", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, 1.527, -3.587)
 mechbody = NodePath("..")
+tool_manager = NodePath("MechHandToolManager")
 arm = NodePath("../ArmBaseRight")
 other_hand = NodePath("../LeftHandRemote")
 
-[node name="MechHandToolManager" parent="RightHandRemote" node_paths=PackedStringArray("tools", "input_grabbable") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../BasicGun"), NodePath("../beamfx"), NodePath("../GrabberTool")]
+[node name="MechHandToolManager" parent="RightHandRemote" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
+tools = [NodePath("../beamfx"), NodePath("../GrabberTool")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
+hand = NodePath("..")
 
 [node name="BasicGun" parent="RightHandRemote" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141178, -1.57548)
-trigger_action = "trigger_click"
+visible = false
 launching_rigidbody = NodePath("../..")
 recoil = 250
 mechbody = NodePath("../..")

@@ -4,6 +4,7 @@ extends Node3D
 
 @export var tools : Array[MechTool]
 @export var input_grabbable : MyXRGrabbable
+@export var hand : MechHand
 
 
 var current_tool : MechTool
@@ -16,9 +17,8 @@ func _ready():
 
 func set_tool(index):
 	print("toolmanager setting tool: ", index)
-	if current_tool is MechTool: current_tool.deactivate()
-	current_tool = tools[index]
-	current_tool.activate(input_grabbable)
+	var tool = tools[index]
+	_set_tool(tool)
 	current_index = index
 
 
@@ -27,3 +27,19 @@ func next_tool():
 	var next_index = current_index + 1
 	if next_index >= tools.size(): next_index = 0
 	set_tool(next_index)
+
+
+func set_tool_override(tool : MechTool):
+	_set_tool(tool)
+
+
+#region ===== PRIVATE =====
+
+
+func _set_tool(tool):
+	if current_tool is MechTool: current_tool.deactivate()
+	current_tool = tool
+	current_tool.activate(hand, input_grabbable)
+
+
+#endregion

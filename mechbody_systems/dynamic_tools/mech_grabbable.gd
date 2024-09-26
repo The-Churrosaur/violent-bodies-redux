@@ -9,13 +9,17 @@ extends RigidBody3D
 @export var kinematic_grab_point : Marker3D
 
 ## how fast this grabbable will lerp to hand
-@export var kinematic_lerp = 0.01
+@export var kinematic_lerp = 0.05
 
 ## is two handed
 @export var two_handed = false
 
 ## what type of hand joint should be used to connect the second hand
 @export var two_handed_joint_id = "default"
+
+@export_category("Tool")
+@export var is_tool = false
+@export var tool : MechTool
 
 
 ## to disallow multiple grabbing 

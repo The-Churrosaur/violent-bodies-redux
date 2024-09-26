@@ -25,7 +25,7 @@ size = Vector3(0.5, 1, 5)
 [node name="BasicGun" node_paths=PackedStringArray("gun", "muzzle", "laser", "blinker") instance=ExtResource("1_wm0i6")]
 script = ExtResource("2_mbm85")
 gun = NodePath("stupidgun")
-trigger_action = "trigger"
+trigger_action = "trigger_click"
 muzzle = NodePath("MeshInstance3D")
 laser = NodePath("laser")
 blinker = NodePath("laser/Blinker")

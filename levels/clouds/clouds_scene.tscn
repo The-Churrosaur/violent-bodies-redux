@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=20 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_n5fsb"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
+[ext_resource type="PackedScene" uid="uid://notg23vl4d5l" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_gun.tscn" id="3_gyprs"]
 [ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="3_xdm3k"]
 [ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="4_0shpt"]
@@ -34,6 +35,9 @@ script = ExtResource("1_n5fsb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 
 [node name="Base" type="Node3D" parent="."]
+
+[node name="GrabbableGun" parent="Base" instance=ExtResource("3_gyprs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.83, -385.115, -12.7265)
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188.996, -385.115, -12.7265)
@@ -127,6 +131,8 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/Cockpit/Player
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
+[connection signal="dropped" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
+[connection signal="grabbed" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
 [connection signal="button_pressed" from="MechRigidContainer/seatparent/dolly/XROrigin3D/XRController3DLeft/LeftHand/RestartButton" to="." method="_on_restart_button_button_pressed"]
 
 [editable path="MechRigidContainer"]
