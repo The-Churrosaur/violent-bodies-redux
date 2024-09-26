@@ -20,7 +20,7 @@ radial_segments = 4
 rings = 1
 
 [sub_resource type="BoxMesh" id="BoxMesh_xb3rm"]
-size = Vector3(0.5, 0.5, 5)
+size = Vector3(0.5, 1, 5)
 
 [node name="BasicGun" node_paths=PackedStringArray("gun", "muzzle", "laser", "blinker") instance=ExtResource("1_wm0i6")]
 script = ExtResource("2_mbm85")
@@ -37,11 +37,11 @@ muzzle = NodePath("../muzzle")
 cycle_time = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -3.35338)
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0.334919, -3.35338)
 mesh = SubResource("CylinderMesh_p0guc")
 
 [node name="muzzle" type="Node3D" parent="." index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.78177)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.334919, -5.78177)
 
 [node name="laser" type="MeshInstance3D" parent="." index="3"]
 unique_name_in_owner = true

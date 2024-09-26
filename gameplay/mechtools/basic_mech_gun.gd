@@ -43,7 +43,10 @@ func on_controller_input_released(action):
 func _on_stupidgun_firing():
 	grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
 	emit_recoil.emit(self, global_basis.z * recoil)
-	mechbody.right_hand_bit.hand.apply_central_impulse(global_basis.z * recoil)
+	
+	# recoil
+	var pos = muzzle.global_position - mechbody.right_hand_bit.global_position
+	mechbody.right_hand_bit.hand.apply_impulse(global_basis.z * recoil, pos)
 	
 	#var spawn = audio_spawn.instantiate()
 	#add_child(spawn)
@@ -53,7 +56,7 @@ func _on_stupidgun_firing():
 	audio_stream_player_3d.play(0.8)
 
 
-func activate(controller : MyXRGrabbable):
+func activate(controller : MyXRGrabbable = null):
 	super(controller)
 	#laser.visible = true
 	blinker.active = true

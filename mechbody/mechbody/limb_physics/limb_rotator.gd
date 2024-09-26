@@ -35,6 +35,7 @@ extends Node3D
 
 @export var recoil_body : RigidBody3D ## equal and opposite
 @export var central_recoil = true 
+@export var recoil_torque_reduction = 5
 
 @export var rotate_by_axis = false
 @export var match_x = true
@@ -127,6 +128,7 @@ func _apply_translation():
 			recoil_body.apply_central_impulse(-impulse)
 			recoil_body.apply_central_impulse(-d)
 		else:
-			var pos = body.global_position - recoil_body.global_position
+			var pos = (body.global_position - recoil_body.global_position) \
+											/ recoil_torque_reduction
 			recoil_body.apply_impulse(-impulse, pos)
 			recoil_body.apply_impulse(-d, pos)

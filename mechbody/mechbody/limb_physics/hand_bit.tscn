@@ -39,6 +39,7 @@ gravity_scale = 0.0
 shape = SubResource("BoxShape3D_c072q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hand"]
+visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [node name="LimbRotator" parent="Hand" node_paths=PackedStringArray("body", "target") instance=ExtResource("2_mnakk")]
@@ -50,7 +51,7 @@ damp = 0.9
 central_recoil = false
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
-i_tune = 0.8
+i_tune = 4.0
 max_i = 50.0
 
 [node name="Anchor" type="RigidBody3D" parent="."]
@@ -63,6 +64,7 @@ visible = false
 shape = SubResource("SphereShape3D_2k7lh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Anchor"]
+visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [editable path="Hand/LimbRotator"]

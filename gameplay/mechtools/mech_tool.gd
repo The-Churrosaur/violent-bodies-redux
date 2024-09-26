@@ -1,4 +1,6 @@
 
+## can optionally parse controller inputs directly
+
 class_name MechTool
 extends Node3D
 
@@ -45,12 +47,14 @@ func input(action : String, value = null):
 	pass
 
 
-## pass in a grabbable controller for this tool to parse input
-func activate(controller : MyXRGrabbable):
+## can optionally pass in a grabbable controller for this tool to parse input
+func activate(controller : MyXRGrabbable = null):
 	
 	tool_active = true
-	grabbable_controller = controller
-	_connect_controller(grabbable_controller)
+	
+	if controller != null:
+		grabbable_controller = controller
+		_connect_controller(grabbable_controller)
 
 
 ## disconnects this tool from grabbable

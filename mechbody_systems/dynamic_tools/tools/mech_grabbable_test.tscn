@@ -4,13 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="2_ovxnx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8o0xn"]
-size = Vector3(4, 4, 4)
+size = Vector3(1, 4, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_sivv5"]
-size = Vector3(4, 4, 4)
+size = Vector3(1, 4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8fy8l"]
-size = Vector3(5, 5, 5)
+size = Vector3(2, 5, 2)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_da43w"]
 height = 4.0
