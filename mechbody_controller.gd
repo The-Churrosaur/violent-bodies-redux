@@ -110,12 +110,16 @@ func _on_left_input_up(action):
 
 
 func _on_right_input_down(action):
+	
+	print("right input down: ", action)
 
 	if action == "ax_button":
 		var hand = body.right_hand_remote
-		if hand.grabbable is  MechGrabbable:
+		if hand.grabbable is MechGrabbable:
+			print("controller grabbing")
 			hand.drop_grabbable()
 		else:
+			print("controller dropping")
 			hand.grab_hovered_grabbable()
 	#
 	if action == "by_button":

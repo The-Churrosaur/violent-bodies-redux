@@ -382,7 +382,7 @@ arm = NodePath("../ArmBaseRight")
 other_hand = NodePath("../LeftHandRemote")
 
 [node name="MechHandToolManager" parent="RightHandRemote" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../beamfx"), NodePath("../GrabberTool")]
+tools = [NodePath("../beamfx"), NodePath("../GrabberTool"), NodePath("../BasicGun")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 hand = NodePath("..")
 

@@ -127,7 +127,7 @@ func clear_inputs():
 
 func _on_body_entered(body):
 	if body.is_in_group("ground"): 
-		print("GROUNDED")
+		#print("GROUNDED")
 		landed.emit()
 		is_landed = true
 		movement_mode_controller.enter_state("skate")

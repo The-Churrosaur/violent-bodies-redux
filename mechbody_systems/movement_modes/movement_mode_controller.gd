@@ -37,7 +37,7 @@ func _ready():
 ## switches states - returns success or failure
 func enter_state(state_id = "default") -> bool:
 	
-	print("attempting to enter state: ", state_id)
+	#print("attempting to enter state: ", state_id)
 	
 	if !states.has(state_id): return false
 	

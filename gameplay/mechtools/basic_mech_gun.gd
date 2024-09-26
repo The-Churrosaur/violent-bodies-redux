@@ -47,8 +47,9 @@ func _on_stupidgun_firing():
 	emit_recoil.emit(self, global_basis.z * recoil)
 	
 	# recoil
-	var pos = muzzle.global_position - mechbody.right_hand_bit.global_position
+	var pos = muzzle.global_position - launching_rigidbody.global_position
 	launching_rigidbody.apply_impulse(global_basis.z * recoil, pos)
+	print("gun attempting to recoil: ", launching_rigidbody)
 	
 	#var spawn = audio_spawn.instantiate()
 	#add_child(spawn)
