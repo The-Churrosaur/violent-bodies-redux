@@ -29,11 +29,12 @@ trigger_action = "trigger"
 muzzle = NodePath("MeshInstance3D")
 laser = NodePath("laser")
 blinker = NodePath("laser/Blinker")
-recoil = 10000
+recoil = 10
 tool_name = "GUN"
 
 [node name="stupidgun" parent="." index="0" node_paths=PackedStringArray("muzzle") instance=ExtResource("3_j5572")]
 muzzle = NodePath("../muzzle")
+cycle_time = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -3.35338)

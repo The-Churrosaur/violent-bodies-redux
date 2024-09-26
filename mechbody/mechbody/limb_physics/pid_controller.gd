@@ -8,6 +8,7 @@ extends Node
 @export var p_tune = 0.5
 @export var i_tune = 0.5
 @export var d_tune = 0.5
+@export var max_i = 10.0
 
 ## how many iterations to record, 
 ## area and slope calculated over this span
@@ -29,6 +30,10 @@ func solve(error : float) -> float:
 	var ki = _solve_i(error)
 	var kd = _solve_d(error)
 	
+	#print("kp: ", kp)
+	#print("ki: ", ki)
+	#print("kd: ", kd)
+	
 	return kp + ki + kd
 
 
@@ -39,7 +44,7 @@ func _solve_p(error):
 func _solve_i(error):
 	var sum = 0
 	for i in input_log: sum += i
-	return sum * i_tune
+	return sum * i_tune / log_size
 
 
 

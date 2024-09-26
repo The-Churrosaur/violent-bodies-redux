@@ -33,22 +33,25 @@ anchor = NodePath("Anchor")
 collision_layer = 8
 collision_mask = 8
 physics_material_override = SubResource("PhysicsMaterial_663pm")
+gravity_scale = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hand"]
 shape = SubResource("BoxShape3D_c072q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hand"]
-visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [node name="LimbRotator" parent="Hand" node_paths=PackedStringArray("body", "target") instance=ExtResource("2_mnakk")]
+debug = true
 body = NodePath("..")
 target = NodePath("../../Anchor")
-max_translation_impulse = 1.6
-damp = 0.8
+max_translation_k = 20.0
+damp = 0.9
+central_recoil = false
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
-i_tune = 0.2
+i_tune = 0.8
+max_i = 50.0
 
 [node name="Anchor" type="RigidBody3D" parent="."]
 collision_layer = 0
@@ -60,7 +63,6 @@ visible = false
 shape = SubResource("SphereShape3D_2k7lh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Anchor"]
-visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [editable path="Hand/LimbRotator"]

@@ -21,15 +21,20 @@ extends Node3D
 ## body will attempt to match rotation of target
 @export var target : Node3D
 
+## will attempt to match rotation of target
+@export var rotate = true
+
 ## will attempt to match position of target
 @export var translation = true
 
 ## rotation torque on body
 @export var max_torque_impulse = 0.1
-@export var max_translation_impulse = 0.8
+@export var max_translation_impulse = 2.0
+@export var max_translation_k = 10.0
 @export var damp = 0.5
 
 @export var recoil_body : RigidBody3D ## equal and opposite
+@export var central_recoil = true 
 
 @export var rotate_by_axis = false
 @export var match_x = true
@@ -46,12 +51,13 @@ func _physics_process(delta):
 	if !active: return
 	if target == null: return
 	
-	if rotate_by_axis:
-		if match_x: _rotate_local_x(delta)
-		if match_y: _rotate_local_y(delta)
-		if match_z: _rotate_local_z(delta)
-	else:
-		_rotate_along_axis(delta)
+	if rotate:
+		if rotate_by_axis:
+			if match_x: _rotate_local_x(delta)
+			if match_y: _rotate_local_y(delta)
+			if match_z: _rotate_local_z(delta)
+		else:
+			_rotate_along_axis(delta)
 	
 	if translation : _apply_translation()
 
@@ -99,19 +105,28 @@ func _apply_translation():
 	
 	var towards = target.global_position - body.global_position
 	var length = towards.length()
-	var k = ppid.solve(length)
+	var k = min(ppid.solve(length), max_translation_k)
 	if debug: print("TRANS K: ", k)
 	
 	# dampening by length
 	var relative_vel = target.linear_velocity - body.linear_velocity
 	var d = damp * relative_vel / length 
 	
-	var impulse = k * towards * max_translation_impulse
+	var impulse = k * towards.normalized() * max_translation_impulse
+	
+	if debug: print("DISTANCE: ", length)
+	if debug: print("IMPULSE: ", impulse.length())
+	if debug: print("D: ", d.length())
 	
 	body.apply_central_impulse(impulse)
 	body.apply_central_impulse(d)
 	
 	# wheee
 	if recoil_body != null:
-		recoil_body.apply_central_impulse(-impulse)
-		recoil_body.apply_central_impulse(-d)
+		if central_recoil:
+			recoil_body.apply_central_impulse(-impulse)
+			recoil_body.apply_central_impulse(-d)
+		else:
+			var pos = body.global_position - recoil_body.global_position
+			recoil_body.apply_impulse(-impulse, pos)
+			recoil_body.apply_impulse(-d, pos)

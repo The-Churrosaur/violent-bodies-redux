@@ -9,4 +9,5 @@ script = ExtResource("1_rlsmf")
 [node name="RotationalPidController" parent="." instance=ExtResource("2_gdfu0")]
 
 [node name="PositionalPidController" parent="." instance=ExtResource("2_gdfu0")]
-p_tune = 0.01
+i_tune = 0.2
+d_tune = 0.2
