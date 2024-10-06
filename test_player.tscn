@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://my_xr_tools/my_xr_controller.gd" id="3_1jxnw"]
 [ext_resource type="PackedScene" uid="uid://cmx8uy0pqydls" path="res://player/demo_hand_grabber.tscn" id="4_l6r5n"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="4_mcp2j"]
-[ext_resource type="PackedScene" uid="uid://sc4fek8fkr7d" path="res://cockpit/cockpit_console/controls/xr_tools_test_button.tscn" id="5_owhqc"]
 [ext_resource type="PackedScene" uid="uid://bx1xdisoqo1f6" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_tac_glove_low.tscn" id="5_tncjn"]
 [ext_resource type="PackedScene" uid="uid://bgaiy7hiyncpy" path="res://controller_body.tscn" id="6_iait1"]
 [ext_resource type="PackedScene" uid="uid://chumpejwiub7f" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_tac_glove_low.tscn" id="6_nr3qn"]
+[ext_resource type="PackedScene" uid="uid://curgmm77p4ql3" path="res://cockpit/cockpit_console/virtual/vhud_button_tap.tscn" id="7_01gtd"]
 [ext_resource type="Script" path="res://Label3D.gd" id="8_2vewp"]
 [ext_resource type="PackedScene" uid="uid://doksrptytk60j" path="res://assets/cockpit/controller_mockup.tscn" id="8_348w2"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="9_nimxn"]
@@ -50,11 +50,11 @@ controller = NodePath("..")
 
 [node name="LeftHand" parent="XRController3DLeft" instance=ExtResource("5_tncjn")]
 
-[node name="RestartButton" parent="XRController3DLeft/LeftHand" instance=ExtResource("5_owhqc")]
-transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, -0.0636607, -0.0478689, 0.140585)
+[node name="VHUDButtonTap" parent="XRController3DLeft/LeftHand" instance=ExtResource("7_01gtd")]
+transform = Transform3D(-8.99385e-05, -3.41171e-05, -1, 1, 0.000371679, -8.99488e-05, 0.000371682, -1, 3.409e-05, -0.0712411, -0.0479016, 0.116876)
 
-[node name="Label3D" type="Label3D" parent="XRController3DLeft/LeftHand/RestartButton"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0373603, 0)
+[node name="ToggleEnemies" type="Label3D" parent="XRController3DLeft/LeftHand"]
+transform = Transform3D(2.98023e-08, -1, 0, 1, 2.98023e-08, 0, 0, 0, 1, -0.101021, -0.0478689, 0.140585)
 visible = false
 pixel_size = 0.001
 text = "enemies 
@@ -185,8 +185,7 @@ autostart = true
 [connection signal="button_pressed" from="XRController3DLeft" to="XRController3DLeft" method="_on_button_pressed"]
 [connection signal="input_float_changed" from="XRController3DLeft" to="XRController3DLeft" method="_on_input_float_changed"]
 [connection signal="input_vector2_changed" from="XRController3DLeft" to="XRController3DLeft" method="_on_input_vector_2_changed"]
-[connection signal="button_pressed" from="XRController3DLeft/LeftHand/RestartButton" to="XRController3DLeft" method="_on_restart_button_button_pressed"]
-[connection signal="button_pressed" from="XRController3DLeft/LeftHand/RestartButton" to="XRController3DLeft/LeftHand/RestartButton/Label3D" method="_on_restart_button_button_pressed"]
+[connection signal="button_clicked" from="XRController3DLeft/LeftHand/VHUDButtonTap" to="XRController3DLeft/LeftHand/ToggleEnemies" method="_on_vhud_button_tap_button_clicked"]
 [connection signal="button_pressed" from="XRController3DRight" to="XRController3DRight" method="_on_button_pressed"]
 [connection signal="input_float_changed" from="XRController3DRight" to="XRController3DRight" method="_on_input_float_changed"]
 [connection signal="input_vector2_changed" from="XRController3DRight" to="XRController3DRight" method="_on_input_vector_2_changed"]

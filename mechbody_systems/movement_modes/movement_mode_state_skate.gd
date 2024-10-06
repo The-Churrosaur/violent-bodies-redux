@@ -22,7 +22,9 @@ func _physics_process(delta):
 		mechbody.yaw_input += mechbody.roll_input * mechbody.front_input * 4
 		
 		# leave
-		if !floor_detector.is_colliding(): controller.enter_state()
+		if !floor_detector.is_colliding(): 
+			print("floor detector left floor: hovering")
+			controller.enter_state("hover")
 	
 
 

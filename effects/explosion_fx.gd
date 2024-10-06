@@ -8,6 +8,8 @@ signal explosion_ended()
 @export var bubbling : GPUParticles3D
 @export var nova : GPUParticles3D
 @export var gibs : GPUParticles3D
+@export var smoketrail : GPUParticles3D
+
 @export var audio : AudioStreamPlayer3D
 
 
@@ -15,6 +17,7 @@ func start_explosion_sequence():
 	bubbling.emitting = true
 	nova.emitting = true
 	gibs.emitting = true
+	smoketrail.emitting = true
 	audio.play()
 
 

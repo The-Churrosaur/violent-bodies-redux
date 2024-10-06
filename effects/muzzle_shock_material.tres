@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://b5rfjr7jtfm0l"]
+
+[ext_resource type="Shader" uid="uid://btwhystfqh7qc" path="res://effects/muzzle_shock.tres" id="1_5txnb"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qb8a2"]
+noise_type = 3
+frequency = 0.0152
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4ciib"]
+noise = SubResource("FastNoiseLite_qb8a2")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_5txnb")
+shader_parameter/Albedo = Color(0.937255, 0.807843, 0.980392, 1)
+shader_parameter/fresnel_cutoff = 0.8
+shader_parameter/noise_movement_speed = 0.1
+shader_parameter/alpha_scissor = 0.555
+shader_parameter/noise = SubResource("NoiseTexture2D_4ciib")

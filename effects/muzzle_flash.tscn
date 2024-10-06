@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://detlk287rrq6b"]
+
+[ext_resource type="Script" path="res://effects/muzzle_flash.gd" id="1_ok74e"]
+[ext_resource type="PackedScene" uid="uid://u05a6g5fbqgt" path="res://effects/muzzle_flash_instance.tscn" id="2_73g3i"]
+
+[node name="MuzzleFlash" type="Node3D"]
+script = ExtResource("1_ok74e")
+flash_instance = ExtResource("2_73g3i")

@@ -111,7 +111,7 @@ func _apply_translation():
 	
 	# dampening by length
 	var relative_vel = target.linear_velocity - body.linear_velocity
-	var d = damp * relative_vel / length 
+	var d = damp * relative_vel
 	
 	var impulse = k * towards.normalized() * max_translation_impulse
 	
@@ -126,7 +126,7 @@ func _apply_translation():
 	if recoil_body != null:
 		if central_recoil:
 			recoil_body.apply_central_impulse(-impulse)
-			recoil_body.apply_central_impulse(-d)
+			#recoil_body.apply_central_impulse(-d)
 		else:
 			var pos = (body.global_position - recoil_body.global_position) \
 											/ recoil_torque_reduction

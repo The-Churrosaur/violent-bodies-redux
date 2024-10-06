@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bl5dvsn5pdw0p"]
 
-[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://smoke_cloud_material.tres" id="2_kxikf"]
+[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://effects/smoke_cloud_material.tres" id="2_kxikf"]
 
 [sub_resource type="Gradient" id="Gradient_d858w"]
 offsets = PackedFloat32Array(0, 0.211382, 0.569106, 1)

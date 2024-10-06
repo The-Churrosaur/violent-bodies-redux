@@ -6,7 +6,7 @@ class_name PlayspaceRecenterer
 extends XRInputProcessor
 
 @export var default_head_reference : Node3D
-@export var global_recenter_action = "menu_button"
+@export var global_recenter_action = "by_button"
 
 
 

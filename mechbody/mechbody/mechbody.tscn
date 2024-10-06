@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://dsh7i4eks64gc"]
+[gd_scene load_steps=51 format=3 uid="uid://dsh7i4eks64gc"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/mechbody.gd" id="1_m8lij"]
 [ext_resource type="PackedScene" uid="uid://dvg5e6hisacwi" path="res://mechbody_controller.tscn" id="2_u33eb"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://cnsnlbln6h62j" path="res://mechbody_systems/tool_grabbing/grabber_tool.tscn" id="24_ia80r"]
 [ext_resource type="PackedScene" uid="uid://ksayj6looa0t" path="res://mechbody_systems/head_turret/head_turret.tscn" id="27_jujma"]
 [ext_resource type="PackedScene" uid="uid://duu1j4emi4xo2" path="res://mechbody_systems/head_turret/ship_sensor.tscn" id="32_21wed"]
+[ext_resource type="Script" path="res://cockpit/cockpit_console/movement_mode_panel.gd" id="34_ei38e"]
 [ext_resource type="PackedScene" uid="uid://bktunb3uxfbek" path="res://mechbody_systems/floor_detector.tscn" id="36_lq8jm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pfxel"]
@@ -150,6 +151,10 @@ headlook_controller = NodePath("../../../HeadlookController")
 body = NodePath("../../..")
 max_torque_impulse = 20.0
 damp = 0.8
+
+[node name="RotationalPidController" parent="MechbodyController/MechRotator/LimbRotator" index="0"]
+p_tune = 0.8
+i_tune = 0.4
 
 [node name="HeadlookController" parent="." node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
@@ -351,6 +356,7 @@ mechbody = NodePath("..")
 tool_manager = NodePath("MechHandToolManager")
 current_tool = NodePath("beamfx2")
 arm = NodePath("../ArmBaseLeft")
+hands = 0
 
 [node name="MechHandToolManager" parent="LeftHandRemote" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
 tools = [NodePath("../beamfx2"), NodePath("../BasicGun"), NodePath("../Shield")]
@@ -415,6 +421,18 @@ transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.042
 mechbody = NodePath("..")
 coefficient = 4.0
 
+[node name="MovementModePanel" type="Label3D" parent="." node_paths=PackedStringArray("movement_mode_controller")]
+transform = Transform3D(1, 0, 0, 0, 0.998198, -0.0600033, 0, 0.0600033, 0.998198, 0, 1.1888, -0.498818)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "0
+"
+font = ExtResource("7_on0n2")
+font_size = 100
+script = ExtResource("34_ei38e")
+movement_mode_controller = NodePath("../MechbodyController/MovementModeController")
+
 [node name="FlightPanel" parent="." node_paths=PackedStringArray("flight_module") instance=ExtResource("21_1vnex")]
 transform = Transform3D(1, 0, 0, 0, 0.998198, -0.0600033, 0, 0.0600033, 0.998198, 0, 0.938048, -0.497231)
 flight_module = NodePath("../FlightModule")
@@ -434,7 +452,7 @@ mesh = ExtResource("23_4d7fq")
 surface_material_override/0 = ExtResource("24_4gwjq")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.16772, 0.996926)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.05774, 0.996926)
 shape = SubResource("CylinderShape3D_cjb88")
 
 [node name="Step" type="Node3D" parent="."]
@@ -455,7 +473,8 @@ tuning_display = NodePath("../../../MechbodyController/SensorLabel2")
 sensor_strength = 1e+06
 
 [node name="FloorDetector" parent="." node_paths=PackedStringArray("floor_normal_reference") instance=ExtResource("36_lq8jm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.07607, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.16839, 0)
+hit_from_inside = true
 floor_normal_reference = NodePath("FloorNormalReference")
 
 [node name="FloorNormalReference" type="Node3D" parent="FloorDetector"]
@@ -471,6 +490,7 @@ floor_normal_reference = NodePath("FloorNormalReference")
 
 [editable path="MechbodyController/MovementModeController"]
 [editable path="MechbodyController/MechRotator"]
+[editable path="MechbodyController/MechRotator/LimbRotator"]
 [editable path="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
 [editable path="Cockpit"]
 [editable path="Cockpit/TutorialScreenManager"]

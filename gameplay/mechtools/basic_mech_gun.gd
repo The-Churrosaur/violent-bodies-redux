@@ -17,6 +17,7 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 @export var hand : MechHand
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
+@onready var muzzle_flash = $MuzzleFlash
 
 
 func _ready():
@@ -29,7 +30,6 @@ func _ready():
 
 
 func on_controller_input_pressed(action):
-	print("gun receiving controller: ", action)
 	super(action)
 	if action == trigger_action: 
 		gun.pull_trigger()
@@ -49,7 +49,6 @@ func _on_stupidgun_firing():
 	# recoil
 	var pos = muzzle.global_position - launching_rigidbody.global_position
 	launching_rigidbody.apply_impulse(global_basis.z * recoil, pos)
-	print("gun attempting to recoil: ", launching_rigidbody)
 	
 	#var spawn = audio_spawn.instantiate()
 	#add_child(spawn)
@@ -57,6 +56,7 @@ func _on_stupidgun_firing():
 	#spawn.play(0.4)
 	
 	audio_stream_player_3d.play(0.8)
+	muzzle_flash.play_fx()
 
 
 func activate(hand, controller : MyXRGrabbable = null):

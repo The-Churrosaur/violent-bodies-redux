@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://notg23vl4d5l"]
+[gd_scene load_steps=10 format=3 uid="uid://notg23vl4d5l"]
 
 [ext_resource type="PackedScene" uid="uid://c2p1lav7k6rqp" path="res://mechbody_systems/dynamic_tools/mech_grabbable.tscn" id="1_nke3x"]
 [ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="2_2v2ke"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="3_a0k6r"]
+[ext_resource type="PackedScene" uid="uid://detlk287rrq6b" path="res://effects/muzzle_flash.tscn" id="4_ra2mv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8o0xn"]
 size = Vector3(1, 4, 1)
@@ -21,6 +22,8 @@ radius = 1.5
 height = 4.0
 
 [node name="GrabbableGun" node_paths=PackedStringArray("kinematic_grab_point", "tool") instance=ExtResource("1_nke3x")]
+collision_layer = 0
+collision_mask = 8
 kinematic_grab_point = NodePath("PrimaryGrab")
 two_handed = true
 is_tool = true
@@ -55,4 +58,12 @@ shape = SubResource("CapsuleShape3D_fejdv")
 
 [node name="BasicGun" parent="." index="6" instance=ExtResource("3_a0k6r")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.63578, -0.266535)
-recoil = 250
+recoil = 50
+
+[node name="stupidgun" parent="BasicGun" index="0"]
+cycle_time = 0.1
+
+[node name="MuzzleFlash" parent="BasicGun" index="6" instance=ExtResource("4_ra2mv")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.68221e-07, -6.34114)
+
+[editable path="BasicGun"]

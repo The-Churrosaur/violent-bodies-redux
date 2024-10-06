@@ -64,11 +64,14 @@ func _physics_process(delta):
 	if movement_mode_controller.get_current_state_id() == "flight":
 		body.front_input += secondary.y * flight_thrust_mult
 	
-	body.roll_input += primary.x * rotation_mult
-	body.pitch_input += primary.y * rotation_mult
+	body.climb_input += primary.y * tranlation_mult
+	body.yaw_input += primary.x * rotation_mult
 	
-	if ry: body.climb_input += tranlation_mult
-	if rx: body.climb_input -= tranlation_mult
+	#body.roll_input += primary.x * rotation_mult
+	#body.pitch_input += primary.y * rotation_mult
+	
+	#if ry: body.climb_input += tranlation_mult
+	#if rx: body.climb_input -= tranlation_mult
 
 
 func _on_input_down(action, controller):
@@ -105,14 +108,13 @@ func _on_left_input_down(action):
 
 func _on_left_input_up(action):
 	
-	if action == "by_button":
-		exit_flight()
+	#if action == "by_button":
+		#exit_flight()
+	pass
 
 
 func _on_right_input_down(action):
 	
-	print("right input down: ", action)
-
 	if action == "ax_button":
 		var hand = body.right_hand_remote
 		if hand.grabbable is MechGrabbable:

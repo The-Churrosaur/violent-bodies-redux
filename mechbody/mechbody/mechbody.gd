@@ -59,6 +59,7 @@ var is_step_pushing = false
 var is_step_falling = false
 
 var current_two_hand_joint : MechTwoHandedJoint
+var is_two_hand_grabbing = false
 
 
 func _physics_process(delta):
@@ -83,13 +84,13 @@ func _physics_process(delta):
 	
 	# -- walking
 	
-	if walk and is_landed: 
-		
-		# start walking if not currently
-		if !is_step_falling and !is_step_pushing: _start_step()
-		
-		# push if pushing
-		if is_step_pushing: apply_central_force(up * step_power * delta)
+	#if walk and is_landed: 
+		#
+		## start walking if not currently
+		#if !is_step_falling and !is_step_pushing: _start_step()
+		#
+		## push if pushing
+		#if is_step_pushing: apply_central_force(up * step_power * delta)
 	
 	# -- angular shake
 	
@@ -127,7 +128,7 @@ func clear_inputs():
 
 func _on_body_entered(body):
 	if body.is_in_group("ground"): 
-		#print("GROUNDED")
+		print("GROUNDED")
 		landed.emit()
 		is_landed = true
 		movement_mode_controller.enter_state("skate")
@@ -185,8 +186,11 @@ func destroyed_enemy(enemy):
 func toggle_joint():
 	current_two_hand_joint.enabled = !current_two_hand_joint.enabled
 
-func enable_current_twohand_joint():
+func enable_current_twohand_joint(hand):
+	hand.add_child(current_two_hand_joint)
 	current_two_hand_joint.enabled = true
+	is_two_hand_grabbing = true
 
 func disable_current_twohand_joint():
 	current_two_hand_joint.enabled = false
+	is_two_hand_grabbing = false

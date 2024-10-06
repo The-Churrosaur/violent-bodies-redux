@@ -67,6 +67,10 @@ func _physics_process(delta):
 			
 			STATE.NONE:
 				pass
+		
+		# two handed grabbing
+		#if grabbing_primary and mechbody.is_two_hand_grabbing:
+			#mechbody.current_two_hand_joint.global_transform = global_transform
 
 
 func _on_grab_detection_area_area_entered(area):
@@ -177,7 +181,7 @@ func _grab_hovered_as_primary():
 func _grab_hovered_as_secondary():
 	
 	# tell body
-	mechbody.enable_current_twohand_joint()
+	mechbody.enable_current_twohand_joint(self)
 	
 	grabbing_secondary = true
 	grabbable = hovering_grabbable

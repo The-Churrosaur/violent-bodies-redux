@@ -5,4 +5,4 @@ shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.772549, 0.709804, 0.729412, 1)
+albedo_color = Color(0.937255, 0.807843, 0.980392, 1)

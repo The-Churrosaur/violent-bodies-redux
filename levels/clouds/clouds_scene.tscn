@@ -119,6 +119,9 @@ bot_target = NodePath("../../MechRigidContainer/Mechbody")
 
 [node name="Cloudsmesh" parent="." instance=ExtResource("11_yyhlv")]
 
+[node name="Currents" parent="Cloudsmesh" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 6.03321, -264.274, 9.14228)
+
 [node name="Camera3D" type="Camera3D" parent="Cloudsmesh/Currents" index="0"]
 transform = Transform3D(0.341667, 0.271093, -0.244484, 0, 0.334861, 0.371306, 0.365053, -0.253726, 0.228822, -63.4795, 1614.22, 282.379)
 
@@ -131,12 +134,14 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/Cockpit/Player
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
-[connection signal="button_pressed" from="MechRigidContainer/seatparent/dolly/XROrigin3D/XRController3DLeft/LeftHand/RestartButton" to="." method="_on_restart_button_button_pressed"]
+[connection signal="dropped" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
+[connection signal="grabbed" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
 
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]
 [editable path="MechRigidContainer/Mechbody/MechbodyController/MovementModeController"]
 [editable path="MechRigidContainer/Mechbody/MechbodyController/MechRotator"]
+[editable path="MechRigidContainer/Mechbody/MechbodyController/MechRotator/LimbRotator"]
 [editable path="MechRigidContainer/Mechbody/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
 [editable path="MechRigidContainer/Mechbody/Cockpit"]
 [editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager"]
