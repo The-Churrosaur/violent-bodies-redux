@@ -49,8 +49,20 @@ func _solve_i(error):
 
 
 func _solve_d(error):
-	var a = input_log.front()
-	var b = input_log.back()
-	var slope = (b-a) / log_size
-	return slope * d_tune
+	
+	var num_slopes = input_log.size() - 1
+	if num_slopes <= 0: return 0.0
+	
+	var slopes = []
+	slopes.resize(num_slopes)
+	
+	for i in range(0, num_slopes):
+		var slope = input_log[i+1] - input_log[i] # / 1
+		slopes[i] = slope
+	
+	var sum_slopes = 0
+	for slope in slopes: sum_slopes += slope
+	var avg_slope = sum_slopes/slopes.size()
+	
+	return avg_slope * d_tune
 	

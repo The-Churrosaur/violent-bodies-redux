@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjemm0ivcuagh"]
+[gd_scene load_steps=4 format=3 uid="uid://cjemm0ivcuagh"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/arm_targeter.gd" id="1_3l0lf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q04os"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4ngsj"]
+material = SubResource("StandardMaterial3D_q04os")
 
 [node name="ArmTargeter" type="Node3D"]
 script = ExtResource("1_3l0lf")
 
 [node name="ArmTarget" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ArmTarget"]
+visible = false
+mesh = SubResource("BoxMesh_4ngsj")

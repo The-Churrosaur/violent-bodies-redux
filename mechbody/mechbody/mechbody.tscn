@@ -92,18 +92,18 @@ left_arm_targeter = NodePath("ArmTargeterLeft")
 right_arm_targeter = NodePath("ArmTargeterRight")
 left_player_shoulder = NodePath("Cockpit/PlayerBodyReferences/PlayerShoulderLeft")
 right_player_shoulder = NodePath("Cockpit/PlayerBodyReferences/PlayerShoulderRight")
-left_hand_remote = NodePath("LeftHandRemote")
-right_hand_remote = NodePath("RightHandRemote")
+left_hand_remote = NodePath("LeftHand")
+right_hand_remote = NodePath("RightHand")
 step_push_timer = NodePath("Step/StepPushTimer")
 step_fall_timer = NodePath("Step/StepFallTimer")
 movement_mode_controller = NodePath("MechbodyController/MovementModeController")
 
 [node name="MechbodyController" parent="." node_paths=PackedStringArray("body", "pull_thruster", "arm_aimer_hand_remote", "hand_manager_left", "hand_manager_right", "headlook_controller", "movement_mode_controller") instance=ExtResource("2_u33eb")]
 body = NodePath("..")
-pull_thruster = NodePath("../LeftHandRemote/PullThruster")
-arm_aimer_hand_remote = NodePath("../LeftHandRemote")
-hand_manager_left = NodePath("../LeftHandRemote/MechHandToolManager")
-hand_manager_right = NodePath("../RightHandRemote/MechHandToolManager")
+pull_thruster = NodePath("../LeftHand/PullThruster")
+arm_aimer_hand_remote = NodePath("../LeftHand")
+hand_manager_left = NodePath("../LeftHand/MechHandToolManager")
+hand_manager_right = NodePath("../RightHand/MechHandToolManager")
 headlook_controller = NodePath("../HeadlookController")
 movement_mode_controller = NodePath("MovementModeController")
 
@@ -150,7 +150,6 @@ headlook_controller = NodePath("../../../HeadlookController")
 [node name="LimbRotator" parent="MechbodyController/MechRotator" index="0" node_paths=PackedStringArray("body")]
 body = NodePath("../../..")
 max_torque_impulse = 20.0
-damp = 0.8
 
 [node name="RotationalPidController" parent="MechbodyController/MechRotator/LimbRotator" index="0"]
 p_tune = 0.8
@@ -171,12 +170,12 @@ helmet = NodePath("../HeadPointer")
 lead_manager = NodePath("TargetLeadManager")
 
 [node name="TargetLeadManager" parent="HeadlookController/HeadsetLocal/HeadSensorManager" node_paths=PackedStringArray("current_weapon", "shoot_ui") instance=ExtResource("8_n8k65")]
-current_weapon = NodePath("../../../../RightHandRemote/BasicGun")
+current_weapon = NodePath("../../../../RightHand/BasicGun")
 shoot_ui = NodePath("ShootText")
 
 [node name="LeadComputer" parent="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" index="0" node_paths=PackedStringArray("launching_body", "muzzle_reference")]
 launching_body = NodePath("../../../../..")
-muzzle_reference = NodePath("../../../../../RightHandRemote/BasicGun/muzzle")
+muzzle_reference = NodePath("../../../../../RightHand/BasicGun/muzzle")
 projectile_velocity = 500.0
 
 [node name="ShootText" parent="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" instance=ExtResource("9_57rmj")]
@@ -260,12 +259,12 @@ velocity_body = NodePath("../..")
 
 [node name="VHUDButtonGrabbable2" parent="Cockpit" node_paths=PackedStringArray("tool_manager") instance=ExtResource("6_rm64o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.848, -0.417)
-tool_manager = NodePath("../../RightHandRemote/MechHandToolManager")
+tool_manager = NodePath("../../RightHand/MechHandToolManager")
 get_controller_input = false
 
 [node name="VHUDButtonGrabbable3" parent="Cockpit" node_paths=PackedStringArray("tool_manager") instance=ExtResource("6_rm64o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.848, -0.417)
-tool_manager = NodePath("../../LeftHandRemote/MechHandToolManager")
+tool_manager = NodePath("../../LeftHand/MechHandToolManager")
 get_controller_input = false
 
 [node name="VelocityLabel3" type="Label3D" parent="Cockpit/VHUDButtonGrabbable3"]
@@ -350,65 +349,68 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, 2.771, 1.893)
 [node name="ArmBaseRight" parent="." instance=ExtResource("14_x4iok")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, 2.771, 1.893)
 
-[node name="LeftHandRemote" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm") instance=ExtResource("15_gnibp")]
+[node name="LeftHand" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3, 2.194, -3.587)
 mechbody = NodePath("..")
 tool_manager = NodePath("MechHandToolManager")
 current_tool = NodePath("beamfx2")
 arm = NodePath("../ArmBaseLeft")
+arm_targeter = NodePath("../ArmTargeterLeft")
+other_hand = NodePath("../RightHand")
 hands = 0
 
-[node name="MechHandToolManager" parent="LeftHandRemote" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
+[node name="MechHandToolManager" parent="LeftHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
 tools = [NodePath("../beamfx2"), NodePath("../BasicGun"), NodePath("../Shield")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableLeft")
 hand = NodePath("..")
 
-[node name="PullThruster" parent="LeftHandRemote" instance=ExtResource("17_qxjyk")]
+[node name="PullThruster" parent="LeftHand" instance=ExtResource("17_qxjyk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 thrust = 400
 
-[node name="beamfx2" parent="LeftHandRemote" instance=ExtResource("17_jdv0r")]
+[node name="beamfx2" parent="LeftHand" instance=ExtResource("17_jdv0r")]
 transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41998, 3.439e-14, -2.41998, 1.77304, 9.53674e-07, -1.05558, -0.471303)
 
-[node name="BasicGun" parent="LeftHandRemote" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
+[node name="BasicGun" parent="LeftHand" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.724767, -1.26876)
 visible = false
 launching_rigidbody = NodePath("../..")
 recoil = 250
 
-[node name="Shield" parent="LeftHandRemote" instance=ExtResource("19_rcdnm")]
+[node name="Shield" parent="LeftHand" instance=ExtResource("19_rcdnm")]
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
 tool_name = "SHIELD"
 
-[node name="RightHandRemote" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "arm", "other_hand") instance=ExtResource("15_gnibp")]
+[node name="RightHand" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, 1.527, -3.587)
 mechbody = NodePath("..")
 tool_manager = NodePath("MechHandToolManager")
 arm = NodePath("../ArmBaseRight")
-other_hand = NodePath("../LeftHandRemote")
+arm_targeter = NodePath("../ArmTargeterRight")
+other_hand = NodePath("../LeftHand")
 
-[node name="MechHandToolManager" parent="RightHandRemote" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
+[node name="MechHandToolManager" parent="RightHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
 tools = [NodePath("../beamfx"), NodePath("../GrabberTool"), NodePath("../BasicGun")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 hand = NodePath("..")
 
-[node name="BasicGun" parent="RightHandRemote" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
+[node name="BasicGun" parent="RightHand" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141178, -1.57548)
 visible = false
 launching_rigidbody = NodePath("../..")
 recoil = 250
 mechbody = NodePath("../..")
 
-[node name="stupidgun" parent="RightHandRemote/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
+[node name="stupidgun" parent="RightHand/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
 launching_rigidbody = NodePath("../../..")
 
-[node name="beamfx" parent="RightHandRemote" instance=ExtResource("17_jdv0r")]
+[node name="beamfx" parent="RightHand" instance=ExtResource("17_jdv0r")]
 transform = Transform3D(3, 0, 0, 0, 1.73272, 2.44902, 0, -2.44902, 1.73272, 0, 0.366668, -2.3511)
 
-[node name="GrabberTool" parent="RightHandRemote" instance=ExtResource("24_ia80r")]
+[node name="GrabberTool" parent="RightHand" instance=ExtResource("24_ia80r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
 
-[node name="ProjectilePathUI" parent="RightHandRemote" node_paths=PackedStringArray("lead_computer") instance=ExtResource("9_y8a4w")]
+[node name="ProjectilePathUI" parent="RightHand" node_paths=PackedStringArray("lead_computer") instance=ExtResource("9_y8a4w")]
 lead_computer = NodePath("../../HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager/LeadComputer")
 
 [node name="FlightModule" parent="." node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
@@ -504,5 +506,5 @@ floor_normal_reference = NodePath("FloorNormalReference")
 [editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
 [editable path="Cockpit/TutorialScreenManager/BACKBUTTON"]
 [editable path="Cockpit/TutorialScreenManager/FORBUTTON"]
-[editable path="RightHandRemote/BasicGun"]
+[editable path="RightHand/BasicGun"]
 [editable path="HeadTurret"]

@@ -13,6 +13,7 @@ extends Node3D
 @export var tool_manager : MechHandToolManager
 @export var current_tool : MechTool
 @export var arm : ArmBase
+@export var arm_targeter : ArmTargeter
 @export var other_hand : MechHand
 @export var two_handed = false
 @export var hands : UtilityGlobals.hands
@@ -183,10 +184,17 @@ func _grab_hovered_as_secondary():
 	# tell body
 	mechbody.enable_current_twohand_joint(self)
 	
+	# tell other hand
+	other_hand._otherhand_grabbed_secondary()
+	
+	
 	grabbing_secondary = true
 	grabbable = hovering_grabbable
 	grabbable.grabbed_secondary = true
 	grabbable.secondary_grabber = self
+	
+	# prevents unwanted rotation as the hand bit pushes back against gun rotation
+	get_hand_bit().limb_rotator.rotate = false
 
 
 func _grab_hovered_as_physics():
@@ -211,10 +219,29 @@ func _drop_as_secondary():
 	# tell body
 	mechbody.disable_current_twohand_joint()
 	
+	# tell other hand
+	other_hand._otherhand_dropped_secondary()
+	
 	grabbing_secondary = false
 	grabbable.grabbed_secondary = false
 	grabbable.secondary_grabber = null
 	grabbable = null
+	
+	get_hand_bit().limb_rotator.rotate = true
+
+
+# called by other hand on successful grab as secondary
+func _otherhand_grabbed_secondary():
+	arm_targeter.alt_lookat_target = other_hand
+
+
+func _otherhand_dropped_secondary():
+	arm_targeter.alt_lookat_target = null
+
+
+
+# -- PHYSICS HELPERS
+
 
 
 func _lerp_grabbable(delta):

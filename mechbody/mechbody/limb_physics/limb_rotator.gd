@@ -31,7 +31,9 @@ extends Node3D
 @export var max_torque_impulse = 0.1
 @export var max_translation_impulse = 2.0
 @export var max_translation_k = 10.0
-@export var damp = 0.5
+## multiplies velocity delta from recoil body
+@export var relative_damp = 0.5
+@export var constant_damp = 0.1
 
 @export var recoil_body : RigidBody3D ## equal and opposite
 @export var central_recoil = true 
@@ -109,9 +111,12 @@ func _apply_translation():
 	var k = min(ppid.solve(length), max_translation_k)
 	if debug: print("TRANS K: ", k)
 	
-	# dampening by length
+	# doing an interesting thing where damping is inverse to length
+	# and also weighted by relative vel
 	var relative_vel = target.linear_velocity - body.linear_velocity
-	var d = damp * relative_vel
+	var d = relative_damp * relative_vel / length
+	
+	#var d = -constant_damp * towards / length
 	
 	var impulse = k * towards.normalized() * max_translation_impulse
 	
@@ -126,7 +131,7 @@ func _apply_translation():
 	if recoil_body != null:
 		if central_recoil:
 			recoil_body.apply_central_impulse(-impulse)
-			#recoil_body.apply_central_impulse(-d)
+			recoil_body.apply_central_impulse(-d)
 		else:
 			var pos = (body.global_position - recoil_body.global_position) \
 											/ recoil_torque_reduction

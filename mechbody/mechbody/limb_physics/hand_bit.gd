@@ -17,7 +17,7 @@ extends Node3D
 @export var joints : Array[MechTwoHandedJoint]
 
 
-@onready var limb_rotator = $Hand/LimbRotator
+@onready var limb_rotator : LimbRotator = $Hand/LimbRotator
 
 
 var target = null

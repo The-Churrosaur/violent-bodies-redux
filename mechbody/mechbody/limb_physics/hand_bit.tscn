@@ -46,12 +46,14 @@ mesh = SubResource("SphereMesh_wgu1x")
 body = NodePath("..")
 target = NodePath("../../Anchor")
 max_translation_k = 20.0
-damp = 0.9
 central_recoil = false
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
-i_tune = 0.4
+p_tune = 4.0
+i_tune = 0.1
+d_tune = 1.0
 max_i = 50.0
+log_size = 5
 
 [node name="Anchor" type="RigidBody3D" parent="."]
 collision_layer = 0

@@ -62,6 +62,8 @@ body = NodePath("StaticBody3D")
 collider = NodePath("../House/HouseBody/HouseCollider")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MultiMeshInstance3D"]
+collision_layer = 9
+collision_mask = 9
 
 [node name="HouseCollider" type="CollisionShape3D" parent="MultiMeshInstance3D/StaticBody3D"]
 transform = Transform3D(0, 0, -3.65626, 0, 3.65626, 0, 3.65626, 0, 0, -71.8729, 466.709, 753.866)
@@ -602,6 +604,8 @@ body = NodePath("StaticBody3D")
 collider = NodePath("../House/HouseBody/HouseCollider")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MultiMeshInstance3D2" groups=["ground"]]
+collision_layer = 9
+collision_mask = 9
 
 [node name="HouseCollider" type="CollisionShape3D" parent="MultiMeshInstance3D2/StaticBody3D"]
 transform = Transform3D(3.99843, 0, -5.74688, 0, 7.001, 0, 5.74688, 0, 3.99843, 573.392, 0, -508.862)

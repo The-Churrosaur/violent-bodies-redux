@@ -2,27 +2,24 @@
 
 [ext_resource type="Script" path="res://mechbody_systems/tool_grabbing/two_handed_joint.gd" id="1_qedol"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if142"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4iu4"]
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ygq4h"]
-material = SubResource("StandardMaterial3D_if142")
-size = Vector3(1, 1, 2)
+[sub_resource type="CylinderMesh" id="CylinderMesh_dj0fe"]
+material = SubResource("StandardMaterial3D_i4iu4")
+top_radius = 0.2
+radial_segments = 4
 
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D"]
-linear_limit_x/upper = 3.0
-linear_limit_x/lower = 2.0
 angular_limit_x/enabled = false
 angular_limit_y/enabled = false
 angular_limit_z/enabled = false
 angular_spring_x/damping = 3.0
 angular_spring_y/damping = 3.0
 angular_spring_z/damping = 3.0
-node_a = NodePath("../../../HandBitLeft/Hand")
-node_b = NodePath("..")
 enabled = false
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_qedol")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_ygq4h")
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_dj0fe")
