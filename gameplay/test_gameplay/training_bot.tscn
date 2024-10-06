@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_7u7ub"]
 [ext_resource type="ArrayMesh" uid="uid://bsrxmndxpa0gm" path="res://assets/gunmech_actual.obj" id="3_pxub6"]
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_j6s1e"]
-[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://effects/smoke_cloud_material.tres" id="4_w4uku"]
+[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://materials/smoke_cloud_material.tres" id="4_w4uku"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="6_f3m75"]
 [ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/test_gameplay/health_module.tscn" id="8_27lgs"]
 [ext_resource type="PackedScene" uid="uid://bisjoacj4bgel" path="res://gameplay/mechtools/enemystupidgun.tscn" id="8_62xk6"]

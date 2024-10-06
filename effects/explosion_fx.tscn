@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d0jdcfqgvui6p" path="res://effects/good_smoke.tscn" id="4_act7t"]
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_dgfqv"]
 [ext_resource type="AudioStream" uid="uid://dl8us1gvx5vl1" path="res://assets/audio/zapsplat_explosion_big_fireball_001_89751.mp3" id="5_rrb7s"]
-[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://effects/smoke_cloud_material.tres" id="5_wp61e"]
+[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://materials/smoke_cloud_material.tres" id="5_wp61e"]
 
 [sub_resource type="Gradient" id="Gradient_iounm"]
 offsets = PackedFloat32Array(0.0108108, 0.497297, 1)
@@ -102,7 +102,7 @@ emission_sphere_radius = 1.0
 spread = 180.0
 initial_velocity_max = 1.0
 gravity = Vector3(0, 0, 0)
-scale_max = 10.0
+scale_max = 15.0
 scale_curve = SubResource("CurveTexture_vwhsl")
 color_ramp = SubResource("GradientTexture1D_kyoo3")
 turbulence_enabled = true

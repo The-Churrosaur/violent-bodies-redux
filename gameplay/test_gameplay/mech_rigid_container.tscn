@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwtsyqg37x6vq"]
+[gd_scene load_steps=8 format=3 uid="uid://bwtsyqg37x6vq"]
 
 [ext_resource type="PackedScene" uid="uid://dsh7i4eks64gc" path="res://mechbody/mechbody/mechbody.tscn" id="1_ji3mg"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/mech_rigid_container.gd" id="1_wghhh"]
@@ -8,10 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cf7icatnvo8eo" path="res://mechbody_systems/tool_grabbing/two_handed_joint.tscn" id="6_7ki1p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0oolq"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_tovng"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_uxh3k"]
 
 [node name="MechRigidContainer" type="Node3D" node_paths=PackedStringArray("mechbody")]
 script = ExtResource("1_wghhh")
@@ -69,22 +65,7 @@ other_hand = NodePath("../HandBitLeft")
 hands = 1
 joints = [NodePath("Hand/JoltGeneric6DOFJoint3D")]
 
-[node name="TEST" parent="HandBitRight/Hand" index="3" instance=ExtResource("6_7ki1p")]
-linear_limit_spring_x/enabled = true
-linear_limit_spring_x/frequency = 1.0
-linear_limit_spring_x/damping = 1.0
-linear_limit_spring_y/enabled = true
-linear_limit_spring_y/frequency = 1.0
-linear_limit_spring_y/damping = 1.0
-linear_limit_spring_z/enabled = true
-linear_limit_spring_z/frequency = 1.0
-linear_limit_spring_z/damping = 1.0
-node_a = NodePath("../../RigidBody3D")
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-visible = false
-id = "HGHJKJL"
-
-[node name="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="4" instance=ExtResource("6_7ki1p")]
+[node name="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="3" instance=ExtResource("6_7ki1p")]
 linear_limit_spring_x/enabled = true
 linear_limit_spring_x/frequency = 2.0
 linear_limit_spring_x/damping = 2.0
@@ -96,16 +77,7 @@ linear_limit_spring_z/frequency = 2.0
 linear_limit_spring_z/damping = 2.0
 node_a = NodePath("..")
 node_b = NodePath("../../../HandBitLeft/Hand")
-
-[node name="RigidBody3D" type="RigidBody3D" parent="HandBitRight"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HandBitRight/RigidBody3D"]
-shape = SubResource("SphereShape3D_tovng")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HandBitRight/RigidBody3D"]
-mesh = SubResource("SphereMesh_uxh3k")
+visible = false
 
 [editable path="HandBitLeft"]
 [editable path="HandBitLeft/Hand/LimbRotator"]
