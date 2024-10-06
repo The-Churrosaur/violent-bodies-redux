@@ -27,6 +27,7 @@ var grabbing_secondary = false
 var grabbable : MechGrabbable = null
 var hovering_grabbable : MechGrabbable = null
 var hovering_area : MechGrabPoint = null
+@onready var hand_reference_tracker = $HandReferenceTracker
 
 # grabbable state flags
 enum STATE {RIGID, LERPING, FOLLOWING, NONE}
@@ -44,7 +45,9 @@ func _ready():
 func _physics_process(delta):
 	# keeps self parented to hand
 	# just testing
-	global_transform = arm.hand_reference.global_transform
+	hand_reference_tracker.global_transform = arm.hand_reference.global_transform
+	global_transform = hand_reference_tracker.global_transform
+	#global_transform = get_hand_bit().hand.global_transform
 	#trigger_tool()
 	#scale = Vector3.ONE
 	
@@ -59,7 +62,10 @@ func _physics_process(delta):
 			STATE.FOLLOWING:
 				
 				if grabbable.grabbed_secondary:
-					if other_hand != null: look_at(other_hand.global_position)
+					if other_hand != null: 
+						look_at(other_hand.global_position)
+						rotation.z = arm.hand_reference.rotation.z
+				
 				
 				_parent_grabbable(delta)
 			
@@ -185,7 +191,7 @@ func _grab_hovered_as_secondary():
 	mechbody.enable_current_twohand_joint(self)
 	
 	# tell other hand
-	other_hand._otherhand_grabbed_secondary()
+	#other_hand._otherhand_grabbed_secondary()
 	
 	
 	grabbing_secondary = true
@@ -194,7 +200,7 @@ func _grab_hovered_as_secondary():
 	grabbable.secondary_grabber = self
 	
 	# prevents unwanted rotation as the hand bit pushes back against gun rotation
-	get_hand_bit().limb_rotator.rotate = false
+	#get_hand_bit().limb_rotator.rotate = false
 
 
 func _grab_hovered_as_physics():
@@ -216,27 +222,30 @@ func _drop_as_primary():
 
 func _drop_as_secondary():
 	
+	print("DROPPING AS SECONDARY")
+	
 	# tell body
 	mechbody.disable_current_twohand_joint()
 	
 	# tell other hand
-	other_hand._otherhand_dropped_secondary()
+	#other_hand._otherhand_dropped_secondary()
 	
 	grabbing_secondary = false
 	grabbable.grabbed_secondary = false
 	grabbable.secondary_grabber = null
 	grabbable = null
 	
-	get_hand_bit().limb_rotator.rotate = true
+	#get_hand_bit().limb_rotator.rotate = true
 
 
 # called by other hand on successful grab as secondary
-func _otherhand_grabbed_secondary():
-	arm_targeter.alt_lookat_target = other_hand
-
-
-func _otherhand_dropped_secondary():
-	arm_targeter.alt_lookat_target = null
+#func _otherhand_grabbed_secondary():
+	#arm_targeter.alt_lookat_target = other_hand
+	#pass
+#
+#
+#func _otherhand_dropped_secondary():
+	#arm_targeter.alt_lookat_target = null
 
 
 

@@ -55,11 +55,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.65933, 0)
 script = ExtResource("5_6bdt2")
 
 [node name="HandBitLeft" parent="." node_paths=PackedStringArray("mechbody", "other_hand") instance=ExtResource("4_8vmbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.44749)
 mechbody = NodePath("../Mechbody")
 other_hand = NodePath("../HandBitRight")
 
 [node name="HandBitRight" parent="." node_paths=PackedStringArray("mechbody", "other_hand", "joints") instance=ExtResource("4_8vmbs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61841, 0, 0)
 mechbody = NodePath("../Mechbody")
 other_hand = NodePath("../HandBitLeft")
 hands = 1

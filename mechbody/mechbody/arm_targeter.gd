@@ -13,6 +13,7 @@ extends Node3D
 ## will target rotation (disabled for two-handed secondary grip)
 @export var rotate_target = true
 ## if not null, arm target rotation will look at this target (for two-handed)
+## WARNING - may mess up z axis (wrist) rotation
 @export var alt_lookat_target : Node3D = null
 
 @export_group("References")
