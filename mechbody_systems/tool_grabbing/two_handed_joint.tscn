@@ -11,11 +11,20 @@ top_radius = 0.2
 radial_segments = 4
 
 [node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D"]
-angular_limit_x/enabled = false
-angular_limit_y/enabled = false
-angular_limit_z/enabled = false
+linear_limit_spring_x/enabled = true
+linear_limit_spring_x/frequency = 2.0
+linear_limit_spring_x/damping = 2.0
+linear_limit_spring_y/enabled = true
+linear_limit_spring_y/frequency = 2.0
+linear_limit_spring_y/damping = 2.0
+linear_limit_spring_z/enabled = true
+linear_limit_spring_z/frequency = 2.0
+linear_limit_spring_z/damping = 2.0
+angular_spring_x/frequency = 1.0
 angular_spring_x/damping = 3.0
+angular_spring_y/frequency = 1.0
 angular_spring_y/damping = 3.0
+angular_spring_z/frequency = 1.0
 angular_spring_z/damping = 3.0
 enabled = false
 script = ExtResource("1_qedol")
