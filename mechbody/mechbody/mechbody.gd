@@ -61,8 +61,14 @@ var is_step_falling = false
 var current_two_hand_joint : MechTwoHandedJoint
 var is_two_hand_grabbing = false
 
+## relative to rotation
+var local_velocity : Vector3
+
 
 func _physics_process(delta):
+	
+	local_velocity = global_basis.inverse() * linear_velocity
+	print(local_velocity)
 	
 	fore = transform.basis.z
 	right = transform.basis.x 
@@ -106,11 +112,16 @@ func _physics_process(delta):
 	clear_inputs()
 
 
+## simple, impulsive boosts
+
 func boost_forwards(mult = 1.0):
 	apply_central_impulse(fore * -thrust_power * mult)
 
 func boost_up(mult = 1.0):
 	apply_central_impulse(up * thrust_power * mult)
+
+func boost_strafe(mult = 1.0):
+	apply_central_impulse(right * thrust_power * mult)
 
 
 func clear_inputs():
@@ -183,13 +194,16 @@ func destroyed_enemy(enemy):
 		XRPlayerGlobals.lhand.trigger_haptic_pulse("haptic", 5, 1.0, 0.2, 0)
 		XRPlayerGlobals.rhand.trigger_haptic_pulse("haptic", 5, 0.4, 0.1, 0)
 
+
 func toggle_joint():
 	current_two_hand_joint.enabled = !current_two_hand_joint.enabled
+
 
 func enable_current_twohand_joint(hand):
 	hand.add_child(current_two_hand_joint)
 	current_two_hand_joint.enabled = true
 	is_two_hand_grabbing = true
+
 
 func disable_current_twohand_joint():
 	current_two_hand_joint.enabled = false

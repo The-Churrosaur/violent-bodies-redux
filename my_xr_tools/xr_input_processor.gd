@@ -16,6 +16,8 @@ extends Node3D
 ## approved controller
 @export var controller_filter : MyXRController
 
+var left = XRPlayerGlobals.CONTROLLERS.LEFT
+var right = XRPlayerGlobals.CONTROLLERS.RIGHT
 
 
 # CALLBACKS --------------------------------------------------------------------
@@ -106,16 +108,16 @@ func _is_filtered_pressed(action) -> bool:
 
 
 func _get_left_input(action) -> Variant:
-	return _get_input(action, "left")
+	return _get_input(action, left)
 
 
 func _get_right_input(action) -> Variant:
-	return _get_input(action, "right")
+	return _get_input(action, right)
 
 
 func _left_button_pressed(action) -> bool:
-	return _is_pressed(action, "left")
+	return _is_pressed(action, left)
 
 
 func _right_button_pressed(action) -> bool:
-	return _is_pressed(action, "right")
+	return _is_pressed(action, right)

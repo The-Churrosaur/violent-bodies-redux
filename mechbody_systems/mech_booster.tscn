@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfy62cmsx6bx5"]
+
+[ext_resource type="Script" path="res://mechbody_systems/mech_booster.gd" id="1_0gn2o"]
+
+[node name="MechBooster" type="Node3D"]
+script = ExtResource("1_0gn2o")

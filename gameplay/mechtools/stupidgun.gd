@@ -115,7 +115,14 @@ func _set_projectile():
 	bullet.global_transform = muzzle.global_transform
 	bullet.global_rotation = global_rotation
 	bullet.linear_velocity = launching_rigidbody.linear_velocity
-	bullet.apply_central_force(-global_transform.basis.z * launch_force)
+	
+
+	print("applying bullet impulse: ", launch_force)
+	bullet.apply_central_impulse(-global_transform.basis.z * launch_force)
+	
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	print(bullet.linear_velocity.length())
 
 
 

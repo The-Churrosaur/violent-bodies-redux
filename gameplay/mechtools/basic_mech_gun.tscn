@@ -3,16 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://fk6g4bxa483y" path="res://gameplay/mechtools/mech_tool.tscn" id="1_wm0i6"]
 [ext_resource type="Script" path="res://gameplay/mechtools/basic_mech_gun.gd" id="2_mbm85"]
 [ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/mechtools/stupidgun.tscn" id="3_j5572"]
-[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="4_dqvqm"]
-[ext_resource type="Script" path="res://utils/blinker.gd" id="5_ksrtu"]
 [ext_resource type="AudioStream" uid="uid://dkcts13kaaukt" path="res://assets/audio/audio_hero_GunCannon_DIGIJ02_20_6_370.mp3" id="6_inc6y"]
+[ext_resource type="PackedScene" uid="uid://detlk287rrq6b" path="res://effects/muzzle_flash.tscn" id="7_qcljm"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_p0guc"]
 top_radius = 0.1
 bottom_radius = 0.25
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5lty"]
+albedo_color = Color(0, 0.541176, 1, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_o2lxq"]
-material = ExtResource("4_dqvqm")
+material = SubResource("StandardMaterial3D_s5lty")
 top_radius = 0.1
 bottom_radius = 0.1
 height = 1000.0
@@ -22,13 +26,13 @@ rings = 1
 [sub_resource type="BoxMesh" id="BoxMesh_xb3rm"]
 size = Vector3(0.5, 1, 5)
 
-[node name="BasicGun" node_paths=PackedStringArray("gun", "muzzle", "laser", "blinker") instance=ExtResource("1_wm0i6")]
+[node name="BasicGun" node_paths=PackedStringArray("gun", "muzzle", "laser", "muzzle_flash") instance=ExtResource("1_wm0i6")]
 script = ExtResource("2_mbm85")
 gun = NodePath("stupidgun")
 trigger_action = "trigger_click"
 muzzle = NodePath("MeshInstance3D")
 laser = NodePath("laser")
-blinker = NodePath("laser/Blinker")
+muzzle_flash = NodePath("MuzzleFlash")
 recoil = 10
 tool_name = "GUN"
 
@@ -44,16 +48,9 @@ mesh = SubResource("CylinderMesh_p0guc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.334919, -5.78177)
 
 [node name="laser" type="MeshInstance3D" parent="." index="3"]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -500)
 visible = false
 mesh = SubResource("CylinderMesh_o2lxq")
-
-[node name="Blinker" type="Node" parent="laser" index="0" node_paths=PackedStringArray("target")]
-script = ExtResource("5_ksrtu")
-target = NodePath("..")
-on_time = 0.2
-off_time = 0.2
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="4"]
 mesh = SubResource("BoxMesh_xb3rm")
@@ -62,4 +59,8 @@ mesh = SubResource("BoxMesh_xb3rm")
 stream = ExtResource("6_inc6y")
 max_polyphony = 10
 
+[node name="MuzzleFlash" parent="." index="6" instance=ExtResource("7_qcljm")]
+
 [connection signal="firing" from="stupidgun" to="." method="_on_stupidgun_firing"]
+
+[editable path="stupidgun"]

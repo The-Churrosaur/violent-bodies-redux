@@ -12,7 +12,8 @@ extends XRInputProcessor
 
 func _on_input_down(action, controller):
 	super(action, controller)
-	if action == global_recenter_action: recenter()
+	if controller.type == XRPlayerGlobals.CONTROLLERS.LEFT:
+		if action == global_recenter_action: recenter()
 
 
 func recenter(reference = default_head_reference):

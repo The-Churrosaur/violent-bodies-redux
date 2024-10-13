@@ -89,6 +89,7 @@ text = "dasfe"
 font_size = 200
 
 [node name="HealthModule" parent="." instance=ExtResource("8_27lgs")]
+health = 100
 
 [node name="DamageFx" parent="." instance=ExtResource("9_s1n2a")]
 transform = Transform3D(0.000283132, 0.00794356, 0.999968, -0.00163949, 0.999967, -0.00794309, -0.999999, -0.00163718, 0.000296158, 0, 0, 0)

@@ -13,6 +13,7 @@ extends XRInputProcessor
 @export var flight_effects : Node3D
 @export var pull_thruster : PullThruster
 @export var arm_aimer_hand_remote : Node3D
+@export var mech_booster : MechBooster
 
 @export var hand_manager_left : MechHandToolManager
 @export var hand_manager_right : MechHandToolManager
@@ -77,15 +78,15 @@ func _physics_process(delta):
 func _on_input_down(action, controller):
 	super(action, controller)
 	
-	if controller.type == "left": _on_left_input_down(action)
-	if controller.type == "right": _on_right_input_down(action)
+	if controller.type == left: _on_left_input_down(action)
+	if controller.type == right: _on_right_input_down(action)
 
 
 func _on_input_up(action, controller):
 	super(action, controller)
 	
-	if controller.type == "left": _on_left_input_up(action)
-	if controller.type == "right": _on_right_input_up(action)
+	if controller.type == left: _on_left_input_up(action)
+	if controller.type == right: _on_right_input_up(action)
 
 
 func _on_left_input_down(action):
@@ -98,9 +99,7 @@ func _on_left_input_down(action):
 			hand.grab_hovered_grabbable()
 	
 	if action == "by_button":
-		body.toggle_joint()
-		var hand = body.right_hand_remote
-		hand.two_handed = !hand.two_handed
+		pass
 	
 	if action == "trigger_click":
 		hand_manager_right.current_tool.input("trigger")
@@ -125,9 +124,8 @@ func _on_right_input_down(action):
 			hand.grab_hovered_grabbable()
 	#
 	if action == "by_button":
-		#alt_look = false
-		#headlook_controller.enabled = true
-		#headlook_hold = true
+		headlook_controller.lean_boost = true
+		
 		if movement_mode_controller.get_current_state_id() == "skate":
 			body.boost_up(0.01)
 	
@@ -137,11 +135,8 @@ func _on_right_input_down(action):
 
 func _on_right_input_up(action):
 	
-	#if action == "by_button":
-		#alt_look = true
-		#headlook_controller.enabled = false
-		#headlook_hold = false
-	pass
+	if action == "by_button":
+		headlook_controller.lean_boost = false
 
 
 func _on_yoke_grabbable_left_grabbed(grabber):

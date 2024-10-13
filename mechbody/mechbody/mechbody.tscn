@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dsh7i4eks64gc"]
+[gd_scene load_steps=52 format=3 uid="uid://dsh7i4eks64gc"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/mechbody.gd" id="1_m8lij"]
 [ext_resource type="PackedScene" uid="uid://dvg5e6hisacwi" path="res://mechbody_controller.tscn" id="2_u33eb"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d7shxo4pgi84" path="res://mechbody_systems/mech_rotator.tscn" id="4_sgfu2"]
 [ext_resource type="PackedScene" uid="uid://csi3y137kmq17" path="res://cockpit/helmet/headlook_mask.tscn" id="4_usege"]
 [ext_resource type="PackedScene" uid="uid://dpalp6m12ya6d" path="res://cockpit/helmet/head_pointer.tscn" id="5_axe8k"]
+[ext_resource type="PackedScene" uid="uid://bfy62cmsx6bx5" path="res://mechbody_systems/mech_booster.tscn" id="5_pl81u"]
 [ext_resource type="PackedScene" uid="uid://1t2q4b1xyydv" path="res://tutorial/vhud_button_test.tscn" id="6_rm64o"]
 [ext_resource type="PackedScene" uid="uid://11c031wphmm0" path="res://gameplay/cockpit_test/cockpit.tscn" id="6_te8af"]
 [ext_resource type="PackedScene" uid="uid://clxk15o7wcj52" path="res://mechbody_systems/head_turret/head_sensor_manager.tscn" id="6_yw0ob"]
@@ -98,10 +99,11 @@ step_push_timer = NodePath("Step/StepPushTimer")
 step_fall_timer = NodePath("Step/StepFallTimer")
 movement_mode_controller = NodePath("MechbodyController/MovementModeController")
 
-[node name="MechbodyController" parent="." node_paths=PackedStringArray("body", "pull_thruster", "arm_aimer_hand_remote", "hand_manager_left", "hand_manager_right", "headlook_controller", "movement_mode_controller") instance=ExtResource("2_u33eb")]
+[node name="MechbodyController" parent="." node_paths=PackedStringArray("body", "pull_thruster", "arm_aimer_hand_remote", "mech_booster", "hand_manager_left", "hand_manager_right", "headlook_controller", "movement_mode_controller") instance=ExtResource("2_u33eb")]
 body = NodePath("..")
 pull_thruster = NodePath("../LeftHand/PullThruster")
 arm_aimer_hand_remote = NodePath("../LeftHand")
+mech_booster = NodePath("MechBooster")
 hand_manager_left = NodePath("../LeftHand/MechHandToolManager")
 hand_manager_right = NodePath("../RightHand/MechHandToolManager")
 headlook_controller = NodePath("../HeadlookController")
@@ -155,12 +157,16 @@ max_torque_impulse = 20.0
 p_tune = 0.8
 i_tune = 0.4
 
-[node name="HeadlookController" parent="." node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs") instance=ExtResource("3_flh8s")]
+[node name="MechBooster" parent="MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
+mechbody = NodePath("../..")
+
+[node name="HeadlookController" parent="." node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
 body = NodePath("..")
 headset_local = NodePath("HeadsetLocal")
 cockpit_headset_reference = NodePath("../Cockpit/PlayerBodyReferences/HeadsetReference")
 cockpit_inputs = NodePath("../Cockpit/GlobalCockpitInputProcessor")
+mech_booster = NodePath("../MechbodyController/MechBooster")
 
 [node name="HeadsetLocal" parent="HeadlookController" instance=ExtResource("4_08ba4")]
 
@@ -507,4 +513,5 @@ floor_normal_reference = NodePath("FloorNormalReference")
 [editable path="Cockpit/TutorialScreenManager/BACKBUTTON"]
 [editable path="Cockpit/TutorialScreenManager/FORBUTTON"]
 [editable path="RightHand/BasicGun"]
+[editable path="RightHand/BasicGun/stupidgun"]
 [editable path="HeadTurret"]

@@ -64,7 +64,7 @@ func get_time_lead(time : float) -> Vector3:
 	
 	pos = pos + muzzle_reference.global_position
 	pos = (1/2 * gravity * time * time) + pos
-	pos = (launching_body.linear_velocity * time / 10) + pos
+	#pos = (launching_body.linear_velocity * time / 10) + pos
 	
 	#print(pos)
 	

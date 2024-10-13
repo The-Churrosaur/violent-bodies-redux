@@ -39,7 +39,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.43259, 0, 0)
 tracker = &"left_hand"
 pose = &"aim"
 script = ExtResource("3_1jxnw")
-type = "left"
 hand_grabber = NodePath("MyXrHandGrabber")
 
 [node name="MyXrHandGrabber" parent="XRController3DLeft" node_paths=PackedStringArray("controller") instance=ExtResource("4_l6r5n")]
@@ -112,7 +111,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75625, 0, 0)
 tracker = &"right_hand"
 pose = &"aim"
 script = ExtResource("3_1jxnw")
-type = "right"
+type = 1
 hand_grabber = NodePath("MyXrHandGrabber")
 
 [node name="MyXrHandGrabber" parent="XRController3DRight" node_paths=PackedStringArray("controller") instance=ExtResource("4_l6r5n")]

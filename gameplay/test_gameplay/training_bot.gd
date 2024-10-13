@@ -63,13 +63,13 @@ func _on_area_3d_area_entered(area):
 	if area.is_in_group("laser"): 
 		$Label3D.text = "hit by laser"
 		if area is DamageArea : 
-			health.change_health(-area.damage)
+			_damage(area.damage)
 		else:
-			health.change_health(-1)
+			_damage()
 		
-		$DamageFx.play()
-		
-
+func _damage(amount = 1):
+	health.change_health(-amount)
+	$DamageFx.play()
 
 func explode():
 	freeze = true

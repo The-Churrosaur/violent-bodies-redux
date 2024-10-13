@@ -7,6 +7,7 @@ extends Node3D
 @export var pitch_disabled = false
 @export var roll_disabled = false
 @export var yaw_disabled = false
+@export var lean_boost = false
 
 @export_group("references")
 @export var body : MechBody
@@ -14,8 +15,9 @@ extends Node3D
 # look rotation / movement is in relation to this node 
 @export var cockpit_headset_reference : Node3D
 @export var cockpit_inputs : GlobalCockpitInputProcessor
+@export var mech_booster : MechBooster
 
-@export_group("headset tracking movement")
+@export_group("headset tracking movement parameters")
 @export var look_rotation = true
 @export var look_pitch = PI/16
 @export var look_yaw = PI/16
@@ -26,6 +28,7 @@ extends Node3D
 @export var lean_roll_mult = 6.0
 @export var lean_input_mult = 1
 @export var lean_pitch_mult = 3.0
+@export var lean_boost_threshold = 0.1
 
 
 # toggled by sticks and deadzones - disables headlook regardless of enabled
@@ -42,6 +45,7 @@ var head_velocity: Vector3
 func _ready():
 	cockpit_inputs.stick_grabbed.connect(_on_cockpit_stick_grabbed)
 	cockpit_inputs.stick_released.connect(_on_cockpit_stick_released)
+
 
 func _physics_process(delta):
 	
@@ -67,25 +71,38 @@ func _physics_process(delta):
 	if abs(x) > look_pitch:
 		body.pitch_input -= x * look_pitch_mult
 	
-	# LEAN ROLL / pitch
+	# LEAN ROLL / pitch / boost
 	
-	var headset_pos = cockpit_headset_reference.to_local(headset_local.global_position)
-	var headset_xz = Vector2(headset_pos.x, -headset_pos.z)
+	var headset_xz = get_headset_xz()
 	
 	if headset_xz.length_squared() > lean_deadzone * lean_deadzone:
+		
+		var h_x = headset_xz.x
+		var h_y = headset_xz.y
+		
 		body.roll_input += headset_xz.x * lean_roll_mult
 		
 		# dont pitch with forward lean
 		# nvm
-		var h_y = headset_xz.y
 		#h_y= clamp(h_y, -1, 0)
 		body.pitch_input += h_y * lean_pitch_mult
+		
+		if lean_boost:
+			if abs(h_y) > lean_boost_threshold: 
+				print("leaning boost")
+				mech_booster.boost_fore(sign(h_y)) # sign 'normalizes' float
+			elif abs(h_x) > lean_boost_threshold:
+				mech_booster.boost_strafe(sign(h_x))
 	
 	# overrides
 	if pitch_disabled: body.pitch_input = 0
 	if yaw_disabled: body.yaw_input = 0
 	if roll_disabled: body.roll_input = 0
-	
+
+
+func get_headset_xz():
+	var headset_pos = cockpit_headset_reference.to_local(headset_local.global_position)
+	return Vector2(headset_pos.x, -headset_pos.z)
 
 
 func _on_cockpit_stick_grabbed(controller):

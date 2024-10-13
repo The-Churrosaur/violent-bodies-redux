@@ -11,7 +11,10 @@ signal controller_vec2_changed(action : String, value : Vector2, controller : My
 signal nodes_set()
 
 
-## dictionary of controllers - controller name string -> controller.
+## controller type enums - append as necessary
+enum CONTROLLERS {LEFT, RIGHT}
+
+## dictionary of controllers - controller enum -> controller.
 ## set by controllers on set_xr_nodes
 var controllers = {}
 
@@ -81,7 +84,7 @@ func set_xr_nodes(lhand : MyXRController,\
 
 
 ## query controller input
-func get_input(action : String, controller_type : String) -> Variant:
+func get_input(action : String, controller_type : CONTROLLERS) -> Variant:
 	if !is_nodes_set: return null
 	if !controllers.has(controller_type): return null
 	
@@ -90,7 +93,7 @@ func get_input(action : String, controller_type : String) -> Variant:
 
 
 ## query controller input
-func is_pressed(action : String, controller_type : String) -> bool:
+func is_pressed(action : String, controller_type : CONTROLLERS) -> bool:
 	if !is_nodes_set: return false
 	if !controllers.has(controller_type): return false
 	

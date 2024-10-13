@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=21 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_n5fsb"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
 [ext_resource type="PackedScene" uid="uid://notg23vl4d5l" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_gun.tscn" id="3_gyprs"]
+[ext_resource type="PackedScene" uid="uid://dfqvdp77a4ugs" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_laser.tscn" id="3_jru3v"]
 [ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="3_xdm3k"]
 [ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="4_0shpt"]
@@ -36,11 +37,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 
 [node name="Base" type="Node3D" parent="."]
 
+[node name="GrabbableGun2" parent="Base" instance=ExtResource("3_jru3v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -385.115, -12.7265)
+
 [node name="GrabbableGun" parent="Base" instance=ExtResource("3_gyprs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.83, -385.115, -12.7265)
 
+[node name="MuzzleFlash2" parent="Base/GrabbableGun/BasicGun" index="6"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.68221e-07, -6.34114)
+
+[node name="MuzzleFlash" parent="Base/GrabbableGun/BasicGun" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 188.996, -385.115, -12.7265)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Base"]
 environment = SubResource("Environment_t3im3")
@@ -134,6 +143,9 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/Cockpit/Player
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
+[connection signal="dropped" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
+[connection signal="grabbed" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
+
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]
 [editable path="MechRigidContainer/Mechbody/MechbodyController/MovementModeController"]
@@ -152,11 +164,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 [editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
 [editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/BACKBUTTON"]
 [editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/FORBUTTON"]
-[editable path="MechRigidContainer/Mechbody/RightHandRemote/BasicGun"]
+[editable path="MechRigidContainer/Mechbody/RightHand/BasicGun"]
+[editable path="MechRigidContainer/Mechbody/RightHand/BasicGun/stupidgun"]
 [editable path="MechRigidContainer/Mechbody/HeadTurret"]
 [editable path="MechRigidContainer/seatparent/dolly/XROrigin3D"]
 [editable path="MechRigidContainer/HandBitLeft"]
 [editable path="MechRigidContainer/HandBitLeft/Hand/LimbRotator"]
 [editable path="MechRigidContainer/HandBitRight"]
 [editable path="MechRigidContainer/HandBitRight/Hand/LimbRotator"]
+[editable path="Base/GrabbableGun"]
+[editable path="Base/GrabbableGun/BasicGun"]
+[editable path="Base/GrabbableGun/BasicGun/stupidgun"]
 [editable path="Cloudsmesh"]

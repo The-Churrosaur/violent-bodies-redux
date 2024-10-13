@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://boq146xyfcaf1"]
+
+[ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="1_j3i52"]
+[ext_resource type="PackedScene" uid="uid://bwl2yfcx18l5h" path="res://gameplay/mechtools/stupidlaser.tscn" id="2_ox37j"]
+
+[node name="BasicGun" node_paths=PackedStringArray("gun") instance=ExtResource("1_j3i52")]
+gun = NodePath("laser2")
+tool_name = "LASER"
+
+[node name="laser2" parent="." index="0" node_paths=PackedStringArray("muzzle") instance=ExtResource("2_ox37j")]
+muzzle = NodePath("../muzzle")
+
+[node name="stupidgun" parent="." index="1"]
+cycle_time = 0.1
+
+[connection signal="firing" from="laser2" to="." method="_on_stupidgun_firing"]
+
+[editable path="stupidgun"]

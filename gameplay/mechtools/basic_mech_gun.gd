@@ -11,13 +11,13 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 
 @export var laser : MeshInstance3D
 @export var blinker : Blinker
+@export var muzzle_flash : Node3D
 
 @export var recoil = 20
 @export var mechbody : MechBody
 @export var hand : MechHand
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
-@onready var muzzle_flash = $MuzzleFlash
 
 
 func _ready():
@@ -57,6 +57,10 @@ func _on_stupidgun_firing():
 	
 	audio_stream_player_3d.play(0.8)
 	muzzle_flash.play_fx()
+	
+	#laser.visible = true
+	#await get_tree().create_timer(0.05).timeout
+	#laser.visible = false
 
 
 func activate(hand, controller : MyXRGrabbable = null):
@@ -73,7 +77,6 @@ func activate(hand, controller : MyXRGrabbable = null):
 	print("GUN LAUNCHBODY: ", launching_rigidbody)
 	
 	#laser.visible = true
-	blinker.active = true
 	pass
 
 func deactivate():
@@ -83,7 +86,6 @@ func deactivate():
 	launching_rigidbody = null
 	
 	laser.visible = false
-	blinker.active = false
 	pass
 
 

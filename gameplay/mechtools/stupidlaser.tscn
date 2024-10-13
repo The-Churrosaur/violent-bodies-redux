@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwl2yfcx18l5h"]
+
+[ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/mechtools/stupidgun.tscn" id="1_j5uyb"]
+[ext_resource type="Script" path="res://gameplay/mechtools/stupidlaser.gd" id="2_ym5wi"]
+
+[node name="stupidgun" instance=ExtResource("1_j5uyb")]
+script = ExtResource("2_ym5wi")
+bullet_scene = null
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="1"]
+enabled = false
+target_position = Vector3(0, 0, -1000)
+collision_mask = 2

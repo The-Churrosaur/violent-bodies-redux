@@ -4,5 +4,5 @@
 class_name MyXRController
 extends XRController3D
 
-@export var type : String = "NONE"
+@export var type : XRPlayerGlobals.CONTROLLERS
 @export var hand_grabber : MyXRHandGrabber
