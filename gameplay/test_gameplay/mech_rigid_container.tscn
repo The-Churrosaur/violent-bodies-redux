@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://gameplay/test_gameplay/mech_rigid_container.gd" id="1_wghhh"]
 [ext_resource type="PackedScene" uid="uid://dlsarb7iw7bpi" path="res://test_player.tscn" id="2_hfoqc"]
 [ext_resource type="PackedScene" uid="uid://bysrkagylo8yh" path="res://mechbody/mechbody/limb_physics/hand_bit.tscn" id="4_8vmbs"]
-[ext_resource type="Script" path="res://my_xr_tools/reparenting_joint.gd" id="5_6bdt2"]
+[ext_resource type="Script" path="res://gameplay/test_gameplay/SeatJoint.gd" id="4_w4eir"]
 [ext_resource type="PackedScene" uid="uid://cf7icatnvo8eo" path="res://mechbody_systems/tool_grabbing/two_handed_joint.tscn" id="6_7ki1p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0oolq"]
@@ -20,6 +20,27 @@ left_hand_bit = NodePath("../HandBitLeft")
 right_hand_bit = NodePath("../HandBitRight")
 dominant_hand_bit = NodePath("../HandBitRight")
 
+[node name="HipJoint" type="JoltGeneric6DOFJoint3D" parent="Mechbody"]
+linear_limit_y/lower = -4.0
+linear_limit_spring_x/enabled = true
+linear_limit_spring_x/frequency = 1.0
+linear_limit_spring_x/damping = 0.8
+linear_limit_spring_y/enabled = true
+linear_limit_spring_y/frequency = 2.0
+linear_limit_spring_y/damping = 2.0
+linear_limit_spring_z/enabled = true
+linear_limit_spring_z/frequency = 1.0
+linear_limit_spring_z/damping = 0.8
+linear_spring_x/enabled = true
+linear_spring_y/enabled = true
+linear_spring_z/enabled = true
+angular_spring_x/frequency = 1.0
+angular_spring_y/frequency = 1.0
+angular_spring_z/frequency = 1.0
+node_a = NodePath("..")
+enabled = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74825, 0)
+
 [node name="seatparent" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0313884, 0.175038)
 collision_layer = 0
@@ -33,17 +54,20 @@ shape = SubResource("BoxShape3D_0oolq")
 [node name="XROrigin3D" parent="seatparent/dolly" node_paths=PackedStringArray("dolly") instance=ExtResource("2_hfoqc")]
 dolly = NodePath("..")
 
-[node name="SeatJoint" type="JoltGeneric6DOFJoint3D" parent="."]
-linear_limit_spring_x/frequency = 20.0
-linear_limit_spring_y/frequency = 20.0
-linear_limit_spring_z/frequency = 5.0
-linear_spring_x/enabled = true
+[node name="SeatJoint" type="JoltGeneric6DOFJoint3D" parent="." node_paths=PackedStringArray("body")]
+linear_limit_spring_x/enabled = true
+linear_limit_spring_x/frequency = 40.0
+linear_limit_spring_x/damping = 0.8
+linear_limit_spring_y/enabled = true
+linear_limit_spring_y/frequency = 40.0
+linear_limit_spring_y/damping = 0.5
+linear_limit_spring_z/enabled = true
+linear_limit_spring_z/frequency = 40.0
+linear_limit_spring_z/damping = 0.8
 linear_spring_x/frequency = 7.0
 linear_spring_x/damping = 1.0
-linear_spring_y/enabled = true
-linear_spring_y/frequency = 7.0
-linear_spring_y/damping = 1.0
-linear_spring_z/enabled = true
+linear_spring_y/frequency = 1.0
+linear_spring_y/damping = 0.8
 linear_spring_z/frequency = 7.0
 linear_spring_z/damping = 1.0
 angular_spring_x/enabled = true
@@ -57,7 +81,9 @@ angular_spring_z/damping = 1.0
 node_a = NodePath("../Mechbody")
 node_b = NodePath("../seatparent")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.65933, 0)
-script = ExtResource("5_6bdt2")
+script = ExtResource("4_w4eir")
+body = NodePath("../Mechbody")
+max_speed = 50
 
 [node name="HandBitLeft" parent="." node_paths=PackedStringArray("mechbody", "other_hand") instance=ExtResource("4_8vmbs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.44749)

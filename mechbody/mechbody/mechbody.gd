@@ -68,7 +68,7 @@ var local_velocity : Vector3
 func _physics_process(delta):
 	
 	local_velocity = global_basis.inverse() * linear_velocity
-	print(local_velocity)
+	#print(local_velocity)
 	
 	fore = transform.basis.z
 	right = transform.basis.x 

@@ -37,7 +37,7 @@ import/fbx/enabled=false
 [physics]
 
 3d/physics_engine="JoltPhysics3D"
-3d/default_gravity=2.0
+3d/default_gravity=4.0
 jolt_3d/collisions/areas_detect_static_bodies=true
 jolt_3d/limits/max_linear_velocity=1000.0
 

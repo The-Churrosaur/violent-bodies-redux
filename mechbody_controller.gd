@@ -124,10 +124,14 @@ func _on_right_input_down(action):
 			hand.grab_hovered_grabbable()
 	#
 	if action == "by_button":
-		headlook_controller.lean_boost = true
 		
 		if movement_mode_controller.get_current_state_id() == "skate":
+			movement_mode_controller.enter_state("jumping")
+		elif movement_mode_controller.get_current_state_id() == "jumping":
+			movement_mode_controller.enter_state("hover")
 			body.boost_up(0.01)
+		else:
+			headlook_controller.lean_boost = true
 	
 	if action == "trigger_click":
 		hand_manager_left.current_tool.input("trigger")

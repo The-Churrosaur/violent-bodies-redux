@@ -12,6 +12,7 @@ signal mode_changed(state_id)
 
 var states = {}
 var current_state : MovementModeState = null
+var previous_state : MovementModeState = null
 
 
 
@@ -47,6 +48,7 @@ func enter_state(state_id = "default") -> bool:
 	if current_state != null: current_state.exit_state()
 	state.enter_state()
 	
+	previous_state = current_state
 	current_state = state
 	mode_changed.emit(state.mode_id)
 	

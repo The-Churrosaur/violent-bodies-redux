@@ -24,3 +24,10 @@ func _physics_process(delta):
 	floor_basis.y = normal
 	floor_basis.x = floor_basis.y.cross(floor_basis.z)
 	floor_normal_reference.global_basis = floor_basis.orthonormalized()
+
+
+func get_distance():
+	
+	if !is_colliding(): 0.0
+	
+	return (global_position - get_collision_point()).length()

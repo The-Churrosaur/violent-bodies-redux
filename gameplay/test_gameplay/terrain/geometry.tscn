@@ -21,7 +21,7 @@ size = Vector3(10, 40, 10)
 size = Vector3(2000, 200, 2000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m87jg"]
-size = Vector3(2000, 10, 2000)
+size = Vector3(2000, 200, 2000)
 
 [sub_resource type="MultiMesh" id="MultiMesh_gjw24"]
 transform_format = 1
@@ -582,11 +582,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 mesh = SubResource("BoxMesh_k8jgp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["ground"]]
-collision_layer = 9
-collision_mask = 9
+collision_layer = 24
+collision_mask = 24
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 shape = SubResource("BoxShape3D_m87jg")
 
 [node name="House" type="MeshInstance3D" parent="."]
@@ -604,8 +604,8 @@ body = NodePath("StaticBody3D")
 collider = NodePath("../House/HouseBody/HouseCollider")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MultiMeshInstance3D2" groups=["ground"]]
-collision_layer = 9
-collision_mask = 9
+collision_layer = 24
+collision_mask = 24
 
 [node name="HouseCollider" type="CollisionShape3D" parent="MultiMeshInstance3D2/StaticBody3D"]
 transform = Transform3D(3.99843, 0, -5.74688, 0, 7.001, 0, 5.74688, 0, 3.99843, 573.392, 0, -508.862)
