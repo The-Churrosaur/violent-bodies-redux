@@ -4,6 +4,10 @@ extends MechTool
 
 signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 
+@export var recoil = 20
+@export var play_audio = true
+@export var play_muzzle_flash = true
+
 @export var gun : StupidGun
 @export var trigger_action : String = "trigger_click"
 @export var launching_rigidbody : RigidBody3D
@@ -13,7 +17,6 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 @export var blinker : Blinker
 @export var muzzle_flash : Node3D
 
-@export var recoil = 20
 @export var mechbody : MechBody
 @export var hand : MechHand
 
@@ -33,13 +36,13 @@ func on_controller_input_pressed(action):
 	super(action)
 	if action == trigger_action: 
 		gun.pull_trigger()
-		#audio_stream_player_3d.play()
+		muzzle_flash.play_fx()
 
 func on_controller_input_released(action):
 	super(action)
 	if action == trigger_action: 
 		gun.release_trigger()
-		#audio_stream_player_3d.stop()
+		muzzle_flash.stop_fx()
 
 
 func _on_stupidgun_firing():
@@ -55,8 +58,8 @@ func _on_stupidgun_firing():
 	#spawn.global_position = global_position
 	#spawn.play(0.4)
 	
-	audio_stream_player_3d.play(0.8)
-	muzzle_flash.play_fx()
+	if play_audio: audio_stream_player_3d.play(0.8)
+	#if play_muzzle_flash: muzzle_flash.play_fx()
 	
 	#laser.visible = true
 	#await get_tree().create_timer(0.05).timeout
@@ -91,4 +94,4 @@ func deactivate():
 
 func get_muzzle_velocity():
 	# TODO TODO
-	return 400
+	return 500

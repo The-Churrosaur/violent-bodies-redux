@@ -41,7 +41,8 @@ func _on_area_3d_area_entered(area):
 			grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
 	else:
 		if tool_active: 
-			grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
+			#grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
+			pass
 
 
 

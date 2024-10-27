@@ -9,6 +9,7 @@ script = ExtResource("1_e51oj")
 
 [node name="LeadComputer" parent="." instance=ExtResource("2_c1aev")]
 unique_name_in_owner = true
+collision_error = 4.0
 
 [node name="TargetLeadUI" parent="." instance=ExtResource("3_cxjhh")]
 unique_name_in_owner = true

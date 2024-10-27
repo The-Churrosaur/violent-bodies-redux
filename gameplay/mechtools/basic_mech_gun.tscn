@@ -28,12 +28,14 @@ size = Vector3(0.5, 1, 5)
 
 [node name="BasicGun" node_paths=PackedStringArray("gun", "muzzle", "laser", "muzzle_flash") instance=ExtResource("1_wm0i6")]
 script = ExtResource("2_mbm85")
+recoil = 10
+play_audio = true
+play_muzzle_flash = true
 gun = NodePath("stupidgun")
 trigger_action = "trigger_click"
 muzzle = NodePath("MeshInstance3D")
 laser = NodePath("laser")
 muzzle_flash = NodePath("MuzzleFlash")
-recoil = 10
 tool_name = "GUN"
 
 [node name="stupidgun" parent="." index="0" node_paths=PackedStringArray("muzzle") instance=ExtResource("3_j5572")]
@@ -49,7 +51,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.334919, -5.78177)
 
 [node name="laser" type="MeshInstance3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -500)
-visible = false
 mesh = SubResource("CylinderMesh_o2lxq")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="4"]

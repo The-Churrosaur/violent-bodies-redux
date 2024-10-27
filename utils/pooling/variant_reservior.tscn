@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd1cbw2sxf88w"]
+
+[ext_resource type="Script" path="res://utils/pooling/variant_reservior.gd" id="1_01mij"]
+
+[node name="VariantReservior" type="Node"]
+script = ExtResource("1_01mij")
+spawn_copies = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

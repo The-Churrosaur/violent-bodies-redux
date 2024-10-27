@@ -29,7 +29,7 @@ func _process(delta):
 func draw_path():
 	
 	for i in segments:
-		var point = lead_computer.get_time_lead(i * timestep)
+		var point = lead_computer.get_time_lead(i + 1 * timestep)
 		points_array[i] = point
 		#line_drawer_3d.points.append(point)
 		

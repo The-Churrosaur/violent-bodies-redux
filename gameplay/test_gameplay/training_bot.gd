@@ -59,15 +59,16 @@ func _on_shooter_timer_timeout():
 
 
 func _on_area_3d_area_entered(area):
+	print("trainingbot detected area")
 	$Label3D.text = str(area)
 	if area.is_in_group("laser"): 
 		$Label3D.text = "hit by laser"
-		if area is DamageArea : 
+		if area.get("damage") : 
 			_damage(area.damage)
 		else:
 			_damage()
 		
-func _damage(amount = 1):
+func _damage(amount = 10):
 	health.change_health(-amount)
 	$DamageFx.play()
 

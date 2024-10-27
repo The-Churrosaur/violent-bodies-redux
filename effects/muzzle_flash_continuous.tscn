@@ -1,8 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://u05a6g5fbqgt"]
+[gd_scene load_steps=14 format=3 uid="uid://by5fmiiev5pam"]
 
-[ext_resource type="Script" path="res://effects/muzzle_flash_instance.gd" id="1_15opk"]
-[ext_resource type="Material" uid="uid://d36fshnmb3ppv" path="res://materials/smoke_material.tres" id="2_6kl7a"]
-[ext_resource type="Material" uid="uid://b5rfjr7jtfm0l" path="res://effects/muzzle_shock_material.tres" id="2_ej5jm"]
+[ext_resource type="Script" path="res://effects/muzzle_flash_continuous.gd" id="1_8q636"]
+[ext_resource type="Material" uid="uid://d36fshnmb3ppv" path="res://materials/smoke_material.tres" id="2_hcge0"]
+[ext_resource type="Material" uid="uid://b5rfjr7jtfm0l" path="res://effects/muzzle_shock_material.tres" id="3_pfqlv"]
 
 [sub_resource type="Curve" id="Curve_w5pxi"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.115942, 0.681319), 0.0, 0.0, 0, 0, Vector2(0.246377, 0.120879), 0.0, 0.0, 0, 0, Vector2(0.536232, 0), 0.0, 0.0, 0, 0]
@@ -35,7 +35,7 @@ turbulence_noise_scale = 4.0
 turbulence_influence_over_life = SubResource("CurveTexture_jhj08")
 
 [sub_resource type="SphereMesh" id="SphereMesh_f7qch"]
-material = ExtResource("2_6kl7a")
+material = ExtResource("2_hcge0")
 radial_segments = 8
 rings = 8
 
@@ -55,20 +55,22 @@ scale_max = 11.0
 scale_curve = SubResource("CurveTexture_pmf28")
 
 [sub_resource type="SphereMesh" id="SphereMesh_d5osq"]
-material = ExtResource("2_ej5jm")
+material = ExtResource("3_pfqlv")
 radial_segments = 16
 rings = 8
 
-[node name="MuzzleFlashInstance" type="Node3D"]
-script = ExtResource("1_15opk")
+[node name="MuzzleFlash" type="Node3D"]
+script = ExtResource("1_8q636")
 
 [node name="SmokePuff" type="GPUParticles3D" parent="."]
+emitting = false
 amount = 20
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_vaijr")
 draw_pass_1 = SubResource("SphereMesh_f7qch")
 
 [node name="Shockwave" type="GPUParticles3D" parent="."]
+emitting = false
 amount = 10
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_q7tua")

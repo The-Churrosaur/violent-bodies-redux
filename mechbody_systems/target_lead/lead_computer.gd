@@ -10,17 +10,10 @@ extends Node
 @export var muzzle_reference : Node3D
 @export var projectile_velocity : float
 @export var gravity : Vector3 = Vector3.DOWN
+@export var collision_error = 1.0
 
 @onready var aiming_raycast = %AimingRaycast
 @onready var aim_point_area = %AimPointArea
-
-
-# TODO make these a dict that's returned or something
-## these fields are set when calling predict()
-var collision_time : float
-var collision_point : Vector3
-var aim_point : Vector3
-var aimed = false
 
 
 
@@ -29,30 +22,54 @@ func set_weapon(_projectile_velocity : float, _muzzle_reference : Node3D):
 	projectile_velocity = _projectile_velocity
 
 
+## returns global collision point or null
 func predict(enemy_body : PhysicsBody3D):
 	
 	var e0 = enemy_body.global_position
 	var p0 = muzzle_reference.global_position
-	var delta0 = p0.distance_to(e0)
 	
 	var ev
-	if enemy_body is RigidBody3D : ev = enemy_body.linear_velocity.length()
-	else : ev = 0
+	if enemy_body is RigidBody3D : ev = enemy_body.linear_velocity
+	else : ev = Vector3.ZERO
 	
-	var pv = projectile_velocity
+	# account for launching velocity
+	ev = ev - launching_body.linear_velocity
 	
-	collision_time = delta0 / abs(pv - ev)
-	collision_point = enemy_body.linear_velocity * collision_time + e0
+	var pv = -muzzle_reference.global_basis.z * projectile_velocity
 	
-	# 'aim point' is the collision point minus displacement due to inherited vel
-	# the remaining displacement is how the projetile travels in the reference
-	# frame of the shooter
+	var collision_time = 0.0
+	var last_error = null
+	var collision_point = null
+	var delta = get_physics_process_delta_time()
 	
-	var body_displacement = launching_body.linear_velocity * collision_time / 10
-	#aim_point = p0 + (collision_point - body_displacement) 
-	aim_point = collision_point - body_displacement
+	for i in range(100):
+		var current_time = i * delta
+		var e_current = e0 + ev * current_time
+		var p_dir = e_current - p0
+		var p_current = p0 + (p_dir.normalized() * current_time * projectile_velocity)
+		var e_p = e_current - p_current
+		
+		#$MeshInstance3D.global_position = e_current
+		#$MeshInstance3D2.global_position = p_current
+		# if error increases over time, return no solution
+		var current_error = e_p.length_squared()
+		if last_error != null and last_error < current_error: 
+			print("collision error increasing, no solution")
+			return null
+		last_error = current_error
+		
+		# mark time if error is under threshold
+		if current_error <= collision_error * collision_error:
+			collision_time = current_time
+			#print("solution found: ", collision_time)
+			collision_point = e_current
+			break
 	
-	aimed = _check_aim()
+	if collision_time <= 0: 
+		#print("solution fully iterated...")
+		return null
+	
+	return collision_point
 
 
 ## will get position of projectile in N seconds. 
@@ -70,7 +87,8 @@ func get_time_lead(time : float) -> Vector3:
 	
 	return pos
 
-func _check_aim():
+func check_aim(aim_point):
+	if aim_point == null: return false
 	
 	aiming_raycast.global_transform = muzzle_reference.global_transform
 	aim_point_area.global_position = aim_point

@@ -74,10 +74,8 @@ visible = false
 
 [node name="DamageArea" type="Area3D" parent="." groups=["laser"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.77433, 0)
-monitoring = false
-monitorable = false
 script = ExtResource("4_rf3xd")
-damage = 5
+damage = 100
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
 shape = SubResource("CapsuleShape3D_41j2q")

@@ -147,10 +147,11 @@ rotator = NodePath("../../MechRotator")
 floor_normal_reference_node = NodePath("../../../FloorDetector/FloorNormalReference")
 floor_detector = NodePath("../../../FloorDetector")
 
-[node name="Jumping" parent="MechbodyController/MovementModeController" index="4" node_paths=PackedStringArray("floor_detector", "mechbody", "mech_booster")]
+[node name="Jumping" parent="MechbodyController/MovementModeController" index="4" node_paths=PackedStringArray("floor_detector", "mechbody", "mech_booster", "headlook_controller")]
 floor_detector = NodePath("../../../FloorDetector")
 mechbody = NodePath("../../..")
 mech_booster = NodePath("../../MechBooster")
+headlook_controller = NodePath("../../../HeadlookController")
 
 [node name="Hover" parent="MechbodyController/MovementModeController" index="5" node_paths=PackedStringArray("rotator", "headlook_controller")]
 rotator = NodePath("../../MechRotator")
@@ -389,8 +390,8 @@ transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41
 [node name="BasicGun" parent="LeftHand" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.724767, -1.26876)
 visible = false
-launching_rigidbody = NodePath("../..")
 recoil = 250
+launching_rigidbody = NodePath("../..")
 
 [node name="Shield" parent="LeftHand" instance=ExtResource("19_rcdnm")]
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
@@ -412,8 +413,8 @@ hand = NodePath("..")
 [node name="BasicGun" parent="RightHand" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141178, -1.57548)
 visible = false
-launching_rigidbody = NodePath("../..")
 recoil = 250
+launching_rigidbody = NodePath("../..")
 mechbody = NodePath("../..")
 
 [node name="stupidgun" parent="RightHand/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]

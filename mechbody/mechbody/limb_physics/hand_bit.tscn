@@ -49,8 +49,7 @@ max_translation_k = 20.0
 central_recoil = false
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
-p_tune = 6.0
-i_tune = 0.1
+p_tune = 8.0
 d_tune = 1.0
 max_i = 50.0
 log_size = 5

@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1dyiu4yccxjx"]
+[gd_scene load_steps=6 format=3 uid="uid://d1dyiu4yccxjx"]
 
-[ext_resource type="Script" path="res://gameplay/mechtools/stupidbullet.gd" id="1_enmy5"]
 [ext_resource type="PackedScene" uid="uid://w47g07iayk1o" path="res://gameplay/mechtools/damage_area.tscn" id="2_a8uvd"]
 [ext_resource type="PackedScene" uid="uid://bl5dvsn5pdw0p" path="res://effects/hitFX.tscn" id="3_n83r3"]
 
@@ -18,11 +17,13 @@ height = 6.0
 rings = 8
 
 [node name="StupidBullet" type="RigidBody3D"]
-continuous_cd = true
-max_contacts_reported = 2
+collision_layer = 9
+collision_mask = 9
+freeze = true
+freeze_mode = 1
+max_contacts_reported = 1
 contact_monitor = true
 angular_velocity = Vector3(0, 0.0349066, 0)
-script = ExtResource("1_enmy5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_cmcgd")
@@ -37,7 +38,7 @@ mesh = SubResource("SphereMesh_e3dnt")
 wait_time = 3.0
 autostart = true
 
-[node name="Area3D" parent="." instance=ExtResource("2_a8uvd")]
+[node name="Area3D" parent="Timer" instance=ExtResource("2_a8uvd")]
 damage = 20
 
 [node name="hitFX" parent="." instance=ExtResource("3_n83r3")]

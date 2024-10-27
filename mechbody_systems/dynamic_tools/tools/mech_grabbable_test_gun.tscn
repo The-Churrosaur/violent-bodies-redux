@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c2p1lav7k6rqp" path="res://mechbody_systems/dynamic_tools/mech_grabbable.tscn" id="1_nke3x"]
 [ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="2_2v2ke"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="3_a0k6r"]
-[ext_resource type="PackedScene" uid="uid://detlk287rrq6b" path="res://effects/muzzle_flash.tscn" id="4_ra2mv"]
+[ext_resource type="PackedScene" uid="uid://by5fmiiev5pam" path="res://effects/muzzle_flash_continuous.tscn" id="4_7q46c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8o0xn"]
 size = Vector3(1, 4, 1)
@@ -57,19 +57,28 @@ grabbable = NodePath("..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PrimaryGrabArea" index="0"]
 shape = SubResource("CapsuleShape3D_fejdv")
 
-[node name="BasicGun" parent="." index="6" instance=ExtResource("3_a0k6r")]
+[node name="BasicGun" parent="." index="6" node_paths=PackedStringArray("muzzle_flash") instance=ExtResource("3_a0k6r")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.63578, -0.266535)
-recoil = 50
+muzzle_flash = NodePath("MuzzleFlash3")
 
 [node name="stupidgun" parent="BasicGun" index="0"]
 launch_force = 500.0
-cycle_time = 0.1
+cycle_time = 0.05
+
+[node name="Label3D" parent="BasicGun/stupidgun" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="muzzle" parent="BasicGun" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.334919, -7.27503)
 
-[node name="MuzzleFlash2" parent="BasicGun" index="6" instance=ExtResource("4_ra2mv")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.68221e-07, -6.34114)
+[node name="laser" parent="BasicGun" index="3"]
+visible = false
+
+[node name="AudioStreamPlayer3D" parent="BasicGun" index="5"]
+max_polyphony = 20
+
+[node name="MuzzleFlash3" parent="BasicGun" index="7" instance=ExtResource("4_7q46c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49012e-07, -5)
 
 [editable path="BasicGun"]
 [editable path="BasicGun/stupidgun"]

@@ -12,7 +12,7 @@ signal firing()
 
 enum GUN_STATE {CYCLING, BATTERY, OUT_BATTERY}
 
-@export var bullet_scene : PackedScene
+#@export var bullet_scene : PackedScene
 @export var muzzle : Node3D
 @export var launch_force = 100000.0
 @export var is_automatic = true
@@ -22,15 +22,20 @@ enum GUN_STATE {CYCLING, BATTERY, OUT_BATTERY}
 
 @onready var safety = false
 @onready var cycle_timer = $CycleTimer
+@onready var variant_reservior = $VariantReservior
 
 var current_state : GUN_STATE = GUN_STATE.OUT_BATTERY
 var trigger_down = false
 var is_empty = false ## set me! checked before and after cycling 
-
+var bullet_parent
 
 
 # CALLBACKS  -------------------------------------------------------------------
 
+
+func  _ready():
+	await get_tree().process_frame
+	bullet_parent = LevelGlobals.level
 
 
 func _on_cycle_timer_timeout():
@@ -110,19 +115,22 @@ func _clunk():
 # the actual gun firing - spawns projectile -
 # overridable for lasers or whatever
 func _set_projectile():
-	var bullet : RigidBody3D = bullet_scene.instantiate()
-	get_tree().root.add_child(bullet)
+	var bullet = variant_reservior.pop()
+	bullet.enable()
+	bullet_parent.add_child(bullet)
+	
 	bullet.global_transform = muzzle.global_transform
 	bullet.global_rotation = global_rotation
-	bullet.linear_velocity = launching_rigidbody.linear_velocity
-	
+	bullet.launch_velocity = launching_rigidbody.linear_velocity
+	$Label3D.text = str(variant_reservior.count)
 
-	print("applying bullet impulse: ", launch_force)
-	bullet.apply_central_impulse(-global_transform.basis.z * launch_force)
+	#print("applying bullet impulse: ", launch_force)
+	#bullet.launched_velocity = launching_rigidbody.linear_velocity
+	#bullet.apply_central_impulse(-global_transform.basis.z * launch_force)
 	
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	print(bullet.linear_velocity.length())
+	#await get_tree().physics_frame
+	#await get_tree().physics_frame
+	#print(bullet.linear_velocity.length())
 
 
 

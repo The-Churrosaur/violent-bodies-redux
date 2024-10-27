@@ -1,9 +1,11 @@
 extends Node3D
 
-@export var flash_instance : PackedScene
+## TODO PERFORMANCE
+
+@export var reservoir : VariantReservoir
 
 func play_fx():
-	var flash = flash_instance.instantiate()
+	var flash = reservoir.pop()
 	add_child(flash)
 	flash.position = Vector3.ZERO
 	flash.play_fx()

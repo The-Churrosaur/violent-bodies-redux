@@ -18,13 +18,19 @@ func _ready():
 
 func _physics_process(delta):
 	
-	if current_target == null: return
+	if current_target == null: 
+		target_lead_ui.visible = false
+		return
 	
-	lead_computer.predict(current_target)
-	target_lead_ui.global_position = lead_computer.aim_point
+	var collision_point = lead_computer.predict(current_target)
+	if collision_point == null:
+		target_lead_ui.visible = false
+	else: 
+		target_lead_ui.visible = true
+		target_lead_ui.global_position = collision_point
 	#print(global_position, lead_computer.collision_time)
 	
-	shoot_ui.visible = lead_computer.aimed
+	shoot_ui.visible = lead_computer.check_aim(collision_point)
 	
 
 
@@ -33,7 +39,7 @@ func set_new_target(target):
 	current_target = target
 
 func target_lost():
-	#current_target = null
+	current_target = null
 	pass
 
 func set_new_weapon(weapon : BasicMechGun):

@@ -33,7 +33,7 @@ mode_id = "skate"
 
 [node name="Jumping" parent="." instance=ExtResource("2_svlyu")]
 script = ExtResource("7_lcjyi")
-downforce = 60
+downforce = 40
 mode_id = "jumping"
 
 [node name="Hover" parent="." instance=ExtResource("2_svlyu")]
