@@ -44,7 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://bktunb3uxfbek" path="res://mechbody_systems/floor_detector.tscn" id="36_lq8jm"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pfxel"]
-friction = 0.03
+friction = 0.0
 absorbent = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhtti"]

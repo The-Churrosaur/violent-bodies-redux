@@ -137,7 +137,6 @@ func controller_is_pressed(action : String) -> bool:
 
 
 func _setup_controller_input(controller):
-
 	controller.button_pressed.connect(_on_controller_button_pressed)
 	controller.button_released.connect(_on_controller_button_released)
 	controller.input_float_changed.connect(_on_controller_float_changed)
@@ -155,6 +154,7 @@ func _hover(grabber):
 	if !hoverable: return
 	if get_controller_input_while_hovered:
 		controller = grabber.controller
+		if controller == null: return
 		_setup_controller_input(controller)
 
 

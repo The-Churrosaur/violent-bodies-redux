@@ -33,7 +33,11 @@ extends Node3D
 @export var max_translation_k = 10.0
 ## multiplies velocity delta from recoil body
 @export var relative_damp = 0.5
-@export var constant_damp = 0.1
+@export var constant_damp = 0.01
+
+## 
+@export var rotation_deadzone = 0.1
+@export var translation_deadzone = 0.5
 
 @export var recoil_body : RigidBody3D ## equal and opposite
 @export var central_recoil = true 
@@ -90,17 +94,18 @@ func _rotate_along_axis(delta):
 	var error_angle = error_quat.get_angle()
 	
 	if debug: 
-		print("target rotation: ", target.rotation)
-		print("body rotation: ", body.rotation)
-		print("ERROR AXIS: ", error_axis)
+		#print("target rotation: ", target.rotation)
+		#print("body rotation: ", body.rotation)
+		#print("ERROR AXIS: ", error_axis)
 		pass
 	
 	_apply_rotation_along(error_axis, error_angle, delta)
 
 
 func _apply_rotation_along(axis : Vector3, angle, delta):
+	if angle < rotation_deadzone: return
 	var k = rpid.solve(angle)
-	if debug: print("applying rotation k: ", k)
+	#if debug: print("applying rotation k: ", k)
 	body.apply_torque_impulse(axis * max_torque_impulse * k)
 
 
@@ -108,32 +113,31 @@ func _apply_translation():
 	
 	var towards = target.global_position - body.global_position
 	var length = towards.length()
+	if length < translation_deadzone: return
 	var k = min(ppid.solve(length), max_translation_k)
-	if debug: print("TRANS K: ", k)
+	#if debug: print("TRANS K: ", k)
 	
-	# doing an interesting thing where damping is inverse to length
-	# and also weighted by relative vel
-	var relative_vel = target.linear_velocity - body.linear_velocity
-	var d = relative_damp * relative_vel / length
+	# damping motion relative to parent body
+	var relative_vel = recoil_body.linear_velocity - body.linear_velocity
+	var d = relative_vel * constant_damp
 	
 	#var d = -constant_damp * towards / length
 	
 	var impulse = k * towards.normalized() * max_translation_impulse
 	
-	if debug: print("DISTANCE: ", length)
-	if debug: print("IMPULSE: ", impulse.length())
+	#if impulse.length_squared() <= 25: return
+	
+	#if debug: print("DISTANCE: ", length)
+	#if debug: print("IMPULSE: ", impulse.length())
 	if debug: print("D: ", d.length())
 	
-	body.apply_central_impulse(impulse)
-	body.apply_central_impulse(d)
+	body.apply_central_impulse(impulse + d)
 	
 	# wheee
 	if recoil_body != null:
 		if central_recoil:
-			recoil_body.apply_central_impulse(-impulse)
-			recoil_body.apply_central_impulse(-d)
+			recoil_body.apply_central_impulse(-impulse -d)
 		else:
 			var pos = (body.global_position - recoil_body.global_position) \
 											/ recoil_torque_reduction
-			recoil_body.apply_impulse(-impulse, pos)
-			recoil_body.apply_impulse(-d, pos)
+			recoil_body.apply_impulse(-impulse -d, pos)

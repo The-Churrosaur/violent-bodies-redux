@@ -2,8 +2,7 @@
 class_name MovementModeStateSkate
 extends MovementModeState
 
-@export var downforce = 100
-@export var downforce_delay = 3.0
+@export var downforce = 20
 @export var breakaway_distance = 4.0
 
 @export var headlook_controller : HeadlookController
@@ -23,7 +22,8 @@ func _physics_process(delta):
 		mechbody.apply_central_impulse(normal * -downforce)
 		
 		# skate
-		mechbody.yaw_mult = 1 - abs(mechbody.front_input)
+		#mechbody.yaw_mult = 1 - abs(mechbody.front_input)
+		mechbody.yaw_mult = 2
 		mechbody.yaw_input += mechbody.roll_input * mechbody.front_input * 4
 		
 		# leave

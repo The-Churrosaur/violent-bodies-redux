@@ -26,8 +26,7 @@ mode_id = "orbit"
 
 [node name="Skate" parent="." instance=ExtResource("2_svlyu")]
 script = ExtResource("6_22ybm")
-downforce = 100
-downforce_delay = 3.0
+downforce = 20
 breakaway_distance = 4.0
 mode_id = "skate"
 

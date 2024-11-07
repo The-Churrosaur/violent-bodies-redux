@@ -21,7 +21,7 @@ extends Node3D
 @export var look_rotation = true
 @export var look_pitch = PI/16
 @export var look_yaw = PI/16
-@export var look_mult = 0.8
+@export var look_mult = 1.5
 @export var look_pitch_mult = 3.0
 
 @export var lean_deadzone = 0.05

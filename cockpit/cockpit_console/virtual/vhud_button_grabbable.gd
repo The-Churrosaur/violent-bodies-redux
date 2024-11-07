@@ -24,11 +24,11 @@ func _on_controller_input_released(action):
 
 func _hover(grabbable):
 	super(grabbable)
-	controller.trigger_haptic_pulse("haptic", 5, 0.1, 0.1, 0)
+	if controller != null: controller.trigger_haptic_pulse("haptic", 5, 0.1, 0.1, 0)
 
 
 func _press():
-	controller.trigger_haptic_pulse("haptic", 10, 0.3, 0.1, 0)
+	if controller != null: controller.trigger_haptic_pulse("haptic", 10, 0.3, 0.1, 0)
 	animation_player.play("press")
 	button_clicked.emit()
 

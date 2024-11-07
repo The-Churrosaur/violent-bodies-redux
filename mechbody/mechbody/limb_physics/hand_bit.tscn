@@ -43,14 +43,17 @@ visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [node name="LimbRotator" parent="Hand" node_paths=PackedStringArray("body", "target") instance=ExtResource("2_mnakk")]
+debug = true
 body = NodePath("..")
 target = NodePath("../../Anchor")
 max_translation_k = 20.0
+constant_damp = 0.8
+translation_deadzone = 0.0
 central_recoil = false
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
-p_tune = 8.0
-d_tune = 1.0
+p_tune = 0.1
+i_tune = 1.5
 max_i = 50.0
 log_size = 5
 
