@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dsh7i4eks64gc"]
+[gd_scene load_steps=54 format=3 uid="uid://dsh7i4eks64gc"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/mechbody.gd" id="1_m8lij"]
 [ext_resource type="PackedScene" uid="uid://dvg5e6hisacwi" path="res://mechbody_controller.tscn" id="2_u33eb"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://d22hjj56tl3jg" path="res://cockpit/cockpit_console/virtual/vhud_hover_button.tscn" id="18_0vn8x"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="18_5uqvi"]
 [ext_resource type="PackedScene" uid="uid://cnlpm1f8k8x7h" path="res://gameplay/mechtools/shield.tscn" id="19_rcdnm"]
+[ext_resource type="PackedScene" uid="uid://i585ochs4pe7" path="res://cockpit/cockpit_console/virtual/vhud_button_gross_aim.tscn" id="20_pdgfg"]
 [ext_resource type="PackedScene" uid="uid://ct1mqoq7ffeph" path="res://cockpit/cockpit_console/controls/flight_module_panel.tscn" id="21_1vnex"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="21_wkj61"]
 [ext_resource type="PackedScene" uid="uid://cwn381pjcowiv" path="res://effects/wind_particles.tscn" id="22_lnq4c"]
@@ -299,6 +300,14 @@ body = NodePath("../..")
 [node name="VHUDHoverButton" parent="Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("18_0vn8x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.241116, 1.15768, -0.436344)
 movement_controller = NodePath("../../MechbodyController/MovementModeController")
+
+[node name="VHUDGrossAimButton" parent="Cockpit" node_paths=PackedStringArray("mechbody") instance=ExtResource("20_pdgfg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.236554, 1.01604, -0.436344)
+mechbody = NodePath("../..")
+fine_p = 0.05
+fine_i = 1.5
+gross_p = 4.0
+gross_i = 1.5
 
 [node name="VHUDOrbitButton" parent="Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("16_amfh4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.241116, 1.01604, -0.436344)

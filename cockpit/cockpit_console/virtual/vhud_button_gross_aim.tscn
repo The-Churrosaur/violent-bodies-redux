@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://i585ochs4pe7"]
+
+[ext_resource type="PackedScene" uid="uid://1t2q4b1xyydv" path="res://tutorial/vhud_button_test.tscn" id="1_kpynt"]
+[ext_resource type="Script" path="res://cockpit/cockpit_console/virtual/vhud_button_gross_aim.gd" id="2_7naso"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="3_mq8tr"]
+
+[node name="VHUDGrossAimButton" instance=ExtResource("1_kpynt")]
+script = ExtResource("2_7naso")
+fine_p = 0.1
+fine_i = 1.5
+gross_p = 4.0
+gross_i = 1.5
+get_controller_input = false
+get_controller_input_while_hovered = false
+
+[node name="Status" type="Label3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0294939, 0)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "GROSS"
+font = ExtResource("3_mq8tr")
+font_size = 100
+
+[node name="Label3D" parent="MeshInstance3D" index="0"]
+text = "TOGGLE ACTUATOR MODE"
+
+[node name="WeaponNameLabel" parent="MeshInstance3D" index="1"]
+visible = false
