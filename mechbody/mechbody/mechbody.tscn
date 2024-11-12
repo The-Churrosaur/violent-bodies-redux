@@ -304,10 +304,6 @@ movement_controller = NodePath("../../MechbodyController/MovementModeController"
 [node name="VHUDGrossAimButton" parent="Cockpit" node_paths=PackedStringArray("mechbody") instance=ExtResource("20_pdgfg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.236554, 1.01604, -0.436344)
 mechbody = NodePath("../..")
-fine_p = 0.05
-fine_i = 1.5
-gross_p = 4.0
-gross_i = 1.5
 
 [node name="VHUDOrbitButton" parent="Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("16_amfh4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.241116, 1.01604, -0.436344)
@@ -369,10 +365,10 @@ mech_controller = NodePath("../../MechbodyController")
 headlook_controller = NodePath("../../HeadlookController")
 
 [node name="ArmBaseLeft" parent="." instance=ExtResource("14_x4iok")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, 2.771, 1.893)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4, 2.771, 1.893)
 
 [node name="ArmBaseRight" parent="." instance=ExtResource("14_x4iok")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, 2.771, 1.893)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4, 2.771, 1.893)
 
 [node name="LeftHand" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3, 2.194, -3.587)

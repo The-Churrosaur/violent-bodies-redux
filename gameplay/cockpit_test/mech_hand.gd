@@ -191,7 +191,7 @@ func _grab_hovered_as_secondary():
 	mechbody.enable_current_twohand_joint(self)
 	
 	# tell other hand
-	#other_hand._otherhand_grabbed_secondary()
+	other_hand._otherhand_grabbed_secondary()
 	
 	
 	grabbing_secondary = true
@@ -228,7 +228,7 @@ func _drop_as_secondary():
 	mechbody.disable_current_twohand_joint()
 	
 	# tell other hand
-	#other_hand._otherhand_dropped_secondary()
+	other_hand._otherhand_dropped_secondary()
 	
 	grabbing_secondary = false
 	grabbable.grabbed_secondary = false
@@ -239,13 +239,12 @@ func _drop_as_secondary():
 
 
 # called by other hand on successful grab as secondary
-#func _otherhand_grabbed_secondary():
-	#arm_targeter.alt_lookat_target = other_hand
-	#pass
-#
-#
-#func _otherhand_dropped_secondary():
-	#arm_targeter.alt_lookat_target = null
+func _otherhand_grabbed_secondary():
+	get_hand_bit().stabilized_hand = true
+
+
+func _otherhand_dropped_secondary():
+	get_hand_bit().stabilized_hand = false
 
 
 

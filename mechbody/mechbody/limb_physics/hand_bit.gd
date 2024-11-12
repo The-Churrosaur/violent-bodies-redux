@@ -16,12 +16,15 @@ extends Node3D
 @export var current_joint : MechTwoHandedJoint
 @export var joints : Array[MechTwoHandedJoint]
 
-
+@onready var audio_stream_player_3d : AudioStreamPlayer3D = $Anchor/AudioStreamPlayer3D
 @onready var limb_rotator : LimbRotator = $Hand/LimbRotator
 
 
 var target = null
 var joints_dict = {}
+
+## to make two-handed gunnery easier
+var stabilized_hand = false
 
 
 #TODO clean up these references
@@ -45,6 +48,22 @@ func _physics_process(delta):
 	# equal and opposite
 	if limb_rotator.recoil_body == null:
 		limb_rotator.recoil_body = mechbody
+	
+	var ppid : PidController = limb_rotator.ppid
+	
+	# override PID for gun stabilization
+	if stabilized_hand:
+		limb_rotator.constant_damp = 0.95
+		ppid.override_tuning = true
+		ppid.p_tune = 0.05
+	else:
+		limb_rotator.constant_damp = 0.8
+		ppid.override_tuning = false
+		if ppid.current_tuning: ppid.set_tuning_config(ppid.current_tuning)
+	
+	#audio
+	audio_stream_player_3d.pitch_scale = max(1.0, limb_rotator.current_impulse / 5000)
+
 
 
 func get_joint_by_id(id : String):

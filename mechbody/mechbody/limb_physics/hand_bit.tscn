@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bysrkagylo8yh"]
+[gd_scene load_steps=10 format=3 uid="uid://bysrkagylo8yh"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/limb_physics/hand_bit.gd" id="1_nifvo"]
 [ext_resource type="Texture2D" uid="uid://b6mum5co6l0o8" path="res://icon.svg" id="2_aml5g"]
 [ext_resource type="PackedScene" uid="uid://d0ex8w8t8rocw" path="res://mechbody/mechbody/limb_physics/limb_rotator.tscn" id="2_mnakk"]
+[ext_resource type="AudioStream" uid="uid://i0kc5cytbpol" path="res://assets/audio/42884__digifishmusic__electromechanics-6.wav" id="4_safnp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_663pm"]
 friction = 20.0
@@ -43,13 +44,17 @@ visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [node name="LimbRotator" parent="Hand" node_paths=PackedStringArray("body", "target") instance=ExtResource("2_mnakk")]
-debug = true
 body = NodePath("..")
 target = NodePath("../../Anchor")
 max_translation_k = 20.0
 constant_damp = 0.8
 translation_deadzone = 0.0
 central_recoil = false
+
+[node name="RotationalPidController" parent="Hand/LimbRotator" index="0"]
+p_tune = 2.0
+i_tune = 0.5
+d_tune = 0.5
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
 p_tune = 8.0
@@ -69,5 +74,10 @@ shape = SubResource("SphereShape3D_2k7lh")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Anchor"]
 visible = false
 mesh = SubResource("SphereMesh_wgu1x")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Anchor"]
+stream = ExtResource("4_safnp")
+volume_db = -0.647
+autoplay = true
 
 [editable path="Hand/LimbRotator"]

@@ -4,12 +4,6 @@ extends VHUDButtonTap
 
 @export var mechbody : MechBody
 
-@export var fine_p = 0.05
-@export var fine_i = 1.5
-
-@export var gross_p = 4.0
-@export var gross_i = 1.5
-
 @onready var status = $Status
 
 var state = "gross"
@@ -20,24 +14,15 @@ func _on_button_clicked():
 	
 	# set fine
 	if state == "gross":
-		
-		rpid.p_tune = fine_p
-		rpid.i_tune = fine_i
-		
-		lpid.p_tune = fine_p
-		lpid.i_tune = fine_i
+		rpid.set_tuning_config("trans_fine")
+		lpid.set_tuning_config("trans_fine")
 		
 		state = "fine"
 	
 	# set gross
 	elif state == "fine":
-		
-		rpid.p_tune = gross_p
-		rpid.i_tune = gross_i
-		
-		lpid.p_tune = gross_p
-		lpid.i_tune = gross_i
-		
+		rpid.set_tuning_config("trans_default")
+		lpid.set_tuning_config("trans_default")
 		state = "gross"
 	
 	status.text = state

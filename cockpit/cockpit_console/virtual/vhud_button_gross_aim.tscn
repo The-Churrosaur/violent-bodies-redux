@@ -6,10 +6,6 @@
 
 [node name="VHUDGrossAimButton" instance=ExtResource("1_kpynt")]
 script = ExtResource("2_7naso")
-fine_p = 0.1
-fine_i = 1.5
-gross_p = 4.0
-gross_i = 1.5
 get_controller_input = false
 get_controller_input_while_hovered = false
 

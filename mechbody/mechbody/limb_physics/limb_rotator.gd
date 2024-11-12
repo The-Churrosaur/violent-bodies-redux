@@ -32,7 +32,6 @@ extends Node3D
 @export var max_translation_impulse = 2.0
 @export var max_translation_k = 10.0
 ## multiplies velocity delta from recoil body
-@export var relative_damp = 0.5
 @export var constant_damp = 0.01
 
 ## 
@@ -51,6 +50,10 @@ extends Node3D
 
 @onready var rpid = $RotationalPidController
 @onready var ppid = $PositionalPidController
+
+
+## for audio etc
+var current_impulse = 0
 
 
 
@@ -124,7 +127,7 @@ func _apply_translation():
 	#var d = -constant_damp * towards / length
 	
 	var impulse = k * towards.normalized() * max_translation_impulse
-	
+	current_impulse = impulse.length_squared()
 	#if impulse.length_squared() <= 25: return
 	
 	#if debug: print("DISTANCE: ", length)

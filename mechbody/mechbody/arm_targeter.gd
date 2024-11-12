@@ -8,8 +8,12 @@ class_name ArmTargeter
 extends Node3D
 
 @export var active = true
+@export var hand : XRPlayerGlobals.CONTROLLERS
+
 ## ratio of player arm to mech arm
 @export var scaling = 32
+## ratio of player arm to mech arm from shoulder to centerline
+@export var interior_scaling = 16
 ## will target rotation (disabled for two-handed secondary grip)
 @export var rotate_target = true
 ## if not null, arm target rotation will look at this target (for two-handed)
@@ -37,6 +41,16 @@ func _calculate_target():
 	target_pos = shoulder_pos + player_arm_vec * scaling 
 	
 	arm_target.global_position = target_pos
+	
+	# assume -z alignment with mechbody
+	#if hand == XRPlayerGlobals.CONTROLLERS.LEFT: 
+		#
+		#var x_pos = arm_target.position.x
+		#
+		#
+		#arm_target.position.x = (arm_target.position.x / scaling) * interior_scaling
+	#else:
+		#arm_target.position.x = (arm_target.position.x / scaling) * interior_scaling
 	
 	if rotate_target:
 		if alt_lookat_target == null:

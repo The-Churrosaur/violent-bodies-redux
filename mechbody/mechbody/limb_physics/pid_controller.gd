@@ -14,6 +14,15 @@ extends Node
 ## area and slope calculated over this span
 @export var log_size = 20
 
+## easy-set tuning configurations: string -> vec3(pid)
+@export var tuning_configs = {
+	"trans_default" : Vector3(8, 1.5, 0.2),
+	"trans_fine" : Vector3(0.05, 1.5, 0.2)
+	}
+
+var current_tuning : String
+var override_tuning = false
+
 # logs error over time
 var input_log = []
 
@@ -65,4 +74,13 @@ func _solve_d(error):
 	var avg_slope = sum_slopes/slopes.size()
 	
 	return avg_slope * d_tune
-	
+
+
+func set_tuning_config(id = "trans_default"):
+	print(tuning_configs)
+	print("id: ", id)
+	var vec = tuning_configs[id]
+	current_tuning = id
+	p_tune = vec.x
+	i_tune = vec.y
+	d_tune = vec.z
