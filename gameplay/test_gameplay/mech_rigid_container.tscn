@@ -1,11 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwtsyqg37x6vq"]
+[gd_scene load_steps=13 format=3 uid="uid://bwtsyqg37x6vq"]
 
 [ext_resource type="PackedScene" uid="uid://dsh7i4eks64gc" path="res://mechbody/mechbody/mechbody.tscn" id="1_ji3mg"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/mech_rigid_container.gd" id="1_wghhh"]
 [ext_resource type="PackedScene" uid="uid://dlsarb7iw7bpi" path="res://test_player.tscn" id="2_hfoqc"]
+[ext_resource type="Script" path="res://mechbody_systems/legbody/LegBody.gd" id="3_44eto"]
 [ext_resource type="PackedScene" uid="uid://bysrkagylo8yh" path="res://mechbody/mechbody/limb_physics/hand_bit.tscn" id="4_8vmbs"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/SeatJoint.gd" id="4_w4eir"]
 [ext_resource type="PackedScene" uid="uid://cf7icatnvo8eo" path="res://mechbody_systems/tool_grabbing/two_handed_joint.tscn" id="6_7ki1p"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ldtqx"]
+friction = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_m5m5l"]
+height = 1.327
+radius = 4.804
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vge20"]
+albedo_color = Color(1, 0.403922, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cokhr"]
+material = SubResource("StandardMaterial3D_vge20")
+top_radius = 4.0
+bottom_radius = 4.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0oolq"]
 
@@ -13,33 +29,66 @@
 script = ExtResource("1_wghhh")
 mechbody = NodePath("Mechbody")
 
-[node name="Mechbody" parent="." node_paths=PackedStringArray("seat_parent", "left_hand_bit", "right_hand_bit", "dominant_hand_bit") instance=ExtResource("1_ji3mg")]
-gravity_scale = 1.0
+[node name="Mechbody" parent="." node_paths=PackedStringArray("seat_parent", "legbody", "hip_joint", "legbody_reference", "left_hand_bit", "right_hand_bit", "dominant_hand_bit") instance=ExtResource("1_ji3mg")]
 seat_parent = NodePath("../seatparent/dolly")
+legbody = NodePath("../LegBody")
+hip_joint = NodePath("HipJoint")
+legbody_reference = NodePath("../LegBodyReference")
 left_hand_bit = NodePath("../HandBitLeft")
 right_hand_bit = NodePath("../HandBitRight")
 dominant_hand_bit = NodePath("../HandBitRight")
 
 [node name="HipJoint" type="JoltGeneric6DOFJoint3D" parent="Mechbody"]
-linear_limit_y/lower = -4.0
-linear_limit_spring_x/enabled = true
+linear_limit_y/upper = -1.0
+linear_limit_y/lower = -8.0
 linear_limit_spring_x/frequency = 1.0
 linear_limit_spring_x/damping = 0.8
-linear_limit_spring_y/enabled = true
-linear_limit_spring_y/frequency = 2.0
+linear_limit_spring_y/frequency = 100.0
 linear_limit_spring_y/damping = 2.0
-linear_limit_spring_z/enabled = true
 linear_limit_spring_z/frequency = 1.0
 linear_limit_spring_z/damping = 0.8
+linear_motor_y/target_velocity = -0.1
+linear_motor_y/max_force = 10.0
 linear_spring_x/enabled = true
 linear_spring_y/enabled = true
+linear_spring_y/frequency = 0.1
+linear_spring_y/damping = 10.0
 linear_spring_z/enabled = true
-angular_spring_x/frequency = 1.0
-angular_spring_y/frequency = 1.0
-angular_spring_z/frequency = 1.0
+angular_limit_x/upper = 1.0472
+angular_limit_x/lower = -1.0472
+angular_limit_z/upper = 0.785398
+angular_limit_z/lower = -0.785398
+angular_spring_x/enabled = true
+angular_spring_x/frequency = 5.0
+angular_spring_x/damping = 5.0
+angular_spring_y/enabled = true
+angular_spring_y/frequency = 5.0
+angular_spring_y/damping = 5.0
+angular_spring_z/enabled = true
+angular_spring_z/frequency = 5.0
+angular_spring_z/damping = 5.0
 node_a = NodePath("..")
-enabled = false
+node_b = NodePath("../../LegBody")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74825, 0)
+
+[node name="LegBodyReference" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7501, 0)
+
+[node name="LegBody" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7501, 0)
+collision_layer = 16
+collision_mask = 16
+mass = 50.0
+physics_material_override = SubResource("PhysicsMaterial_ldtqx")
+gravity_scale = 0.0
+script = ExtResource("3_44eto")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="LegBody"]
+shape = SubResource("CylinderShape3D_m5m5l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LegBody/CollisionShape3D2"]
+visible = false
+mesh = SubResource("CylinderMesh_cokhr")
 
 [node name="seatparent" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0313884, 0.175038)

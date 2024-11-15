@@ -25,7 +25,7 @@ extends Node3D
 @export var look_pitch_mult = 1.5
 
 @export var lean_deadzone = 0.07
-@export var lean_roll_mult = 6.0
+@export var lean_roll_mult = 3.0
 @export var lean_input_mult = 1
 @export var lean_pitch_mult = 3.0
 @export var lean_boost_threshold = 0.1
@@ -68,7 +68,7 @@ func _physics_process(delta):
 	
 	
 	# pitch by angle
-	if abs(x) > look_pitch:
+	if x > look_pitch:
 		body.pitch_input -= x * look_pitch_mult
 	
 	# LEAN ROLL / pitch / boost
@@ -85,7 +85,7 @@ func _physics_process(delta):
 		# dont pitch with forward lean
 		# nvm
 		#h_y= clamp(h_y, -1, 0)
-		body.pitch_input += h_y * lean_pitch_mult
+		body.pitch_input += max(h_y, 0) * lean_pitch_mult
 		
 		# double pitch input for pulling up
 		if h_y < 0: body.pitch_input += h_y * lean_pitch_mult

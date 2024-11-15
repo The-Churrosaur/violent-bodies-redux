@@ -20,8 +20,10 @@ func enter_state():
 	mech_booster.boost_fore(0.4 * mechbody.front_input)
 	mech_booster.boost_strafe(0.4 * mechbody.strafe_input)
 	
-	headlook_controller.pitch_disabled = true
-	headlook_controller.roll_disabled = true
+	#headlook_controller.pitch_disabled = true
+	#headlook_controller.roll_disabled = true
+	
+	mechbody.disable_legs()
 
 
 func exit_state():

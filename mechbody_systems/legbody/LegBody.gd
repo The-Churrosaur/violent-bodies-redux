@@ -1,0 +1,3 @@
+class_name LegBody
+extends RigidBody3D
+

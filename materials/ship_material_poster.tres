@@ -1,7 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b03uvi7hv1igi"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b03uvi7hv1igi"]
 
 [ext_resource type="Shader" uid="uid://il23fnrm68va" path="res://shaders/poster_lines.tres" id="1_bt8si"]
-[ext_resource type="Material" uid="uid://dmrgpj2mpj5jt" path="res://materials/test_outline_shader.tres" id="1_wiunx"]
 [ext_resource type="Texture2D" uid="uid://bx1tehvibdjr0" path="res://assets/fishtex2.png" id="2_nndg5"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cnhk3"]
@@ -14,7 +13,6 @@ noise = SubResource("FastNoiseLite_cnhk3")
 
 [resource]
 render_priority = 0
-next_pass = ExtResource("1_wiunx")
 shader = ExtResource("1_bt8si")
 shader_parameter/ColorParameter = Color(0.713726, 0.713726, 0.713726, 1)
 shader_parameter/pit_brightness = 0.044

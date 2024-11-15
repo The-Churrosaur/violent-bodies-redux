@@ -35,6 +35,11 @@ script = ExtResource("1_n5fsb")
 [node name="MechRigidContainer" parent="." instance=ExtResource("2_c218m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 
+[node name="Skate" parent="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController" index="3"]
+downforce = 200
+breakaway_distance = 10.0
+lean_skate_mult = 12
+
 [node name="Base" type="Node3D" parent="."]
 
 [node name="GrabbableGun2" parent="Base" instance=ExtResource("3_jru3v")]
@@ -42,12 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -385.115, -12.7265)
 
 [node name="GrabbableGun" parent="Base" instance=ExtResource("3_gyprs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.83, -385.115, -12.7265)
-
-[node name="MuzzleFlash2" parent="Base/GrabbableGun/BasicGun" index="6"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.68221e-07, -6.34114)
-
-[node name="MuzzleFlash" parent="Base/GrabbableGun/BasicGun" index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
 
@@ -138,35 +137,32 @@ transform = Transform3D(0.341667, 0.271093, -0.244484, 0, 0.334861, 0.371306, 0.
 player_target = NodePath("../MechRigidContainer/Mechbody")
 
 [node name="PlayspaceRecenterer" parent="." node_paths=PackedStringArray("default_head_reference") instance=ExtResource("11_agqa7")]
-default_head_reference = NodePath("../MechRigidContainer/Mechbody/Cockpit/PlayerBodyReferences/HeadsetReference")
+default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Cockpit/PlayerBodyReferences/HeadsetReference")
 
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
-[connection signal="dropped" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
-[connection signal="grabbed" from="MechRigidContainer/Mechbody/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
-
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]
-[editable path="MechRigidContainer/Mechbody/MechbodyController/MovementModeController"]
-[editable path="MechRigidContainer/Mechbody/MechbodyController/MechRotator"]
-[editable path="MechRigidContainer/Mechbody/MechbodyController/MechRotator/LimbRotator"]
-[editable path="MechRigidContainer/Mechbody/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
-[editable path="MechRigidContainer/Mechbody/Cockpit"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen1"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen2"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen3"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen4"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen5"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen6"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/BACKBUTTON"]
-[editable path="MechRigidContainer/Mechbody/Cockpit/TutorialScreenManager/FORBUTTON"]
-[editable path="MechRigidContainer/Mechbody/RightHand/BasicGun"]
-[editable path="MechRigidContainer/Mechbody/RightHand/BasicGun/stupidgun"]
-[editable path="MechRigidContainer/Mechbody/HeadTurret"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MechRotator"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MechRotator/LimbRotator"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen1"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen2"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen3"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen4"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen5"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen6"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/BACKBUTTON"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/FORBUTTON"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/RightHand/BasicGun"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/RightHand/BasicGun/stupidgun"]
+[editable path="MechRigidContainer/Mechbody/TorsoDolly/HeadTurret"]
 [editable path="MechRigidContainer/seatparent/dolly/XROrigin3D"]
 [editable path="MechRigidContainer/HandBitLeft"]
 [editable path="MechRigidContainer/HandBitLeft/Hand/LimbRotator"]

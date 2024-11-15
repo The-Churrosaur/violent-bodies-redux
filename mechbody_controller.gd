@@ -14,6 +14,7 @@ extends XRInputProcessor
 @export var pull_thruster : PullThruster
 @export var arm_aimer_hand_remote : Node3D
 @export var mech_booster : MechBooster
+@export var torso_dolly : Node3D
 
 @export var hand_manager_left : MechHandToolManager
 @export var hand_manager_right : MechHandToolManager
@@ -30,6 +31,7 @@ extends XRInputProcessor
 @onready var arm_center_reference = $ArmCenterReference
 @onready var arm_aimer = $ArmAimer
 @onready var headset_local = $HeadsetLocal
+
 
 var alt_look = true
 var headlook_hold = false
@@ -65,14 +67,37 @@ func _physics_process(delta):
 	if movement_mode_controller.get_current_state_id() == "flight":
 		body.front_input += secondary.y * flight_thrust_mult
 	
-	body.climb_input += primary.y * tranlation_mult
+	#if movement_mode_controller.get_current_state_id() != "skate":
+		#body.climb_input += primary.y * tranlation_mult
+		#body.yaw_input += primary.x * rotation_mult
+	
 	body.yaw_input += primary.x * rotation_mult
+	body.pitch_input += primary.y * rotation_mult
 	
-	#body.roll_input += primary.x * rotation_mult
-	#body.pitch_input += primary.y * rotation_mult
+	if movement_mode_controller.get_current_state_id() != "skate":
+		if ry: body.climb_input += tranlation_mult
+		if rx: body.climb_input -= tranlation_mult
 	
-	#if ry: body.climb_input += tranlation_mult
-	#if rx: body.climb_input -= tranlation_mult
+	if movement_mode_controller.get_current_state_id() == "skate":
+		#if primary.y > 0.1:
+			##torso_dolly.position.y += 1 * delta
+			#var joint : JoltGeneric6DOFJoint3D = body.hip_joint
+			#joint.set_param_y(JoltGeneric6DOFJoint3D.PARAM_LINEAR_SPRING_FREQUENCY, 5)
+			#pass
+		#if primary.y < -0.1:
+			##torso_dolly.position.y -= 1 * delta
+			#var joint : JoltGeneric6DOFJoint3D = body.hip_joint
+			#joint.set_param_y(JoltGeneric6DOFJoint3D.PARAM_LINEAR_SPRING_FREQUENCY, 0.1)
+			#pass
+		
+		var joint : JoltGeneric6DOFJoint3D = body.hip_joint
+		joint.set_param_y(JoltGeneric6DOFJoint3D.PARAM_LINEAR_SPRING_FREQUENCY, 5 + 10 * primary.y)
+		
+		#body.legbody.physics_material_override.friction = 1.1 - max(abs(secondary.y), abs(secondary.x))
+		
+		var fric = 0.2
+		if max(abs(secondary.y), abs(secondary.x)) > 0.1: fric = 0
+		body.legbody.physics_material_override.friction = fric
 
 
 func _on_input_down(action, controller):
@@ -131,7 +156,7 @@ func _on_right_input_down(action):
 		if movement_mode_controller.get_current_state_id() == "skate":
 			movement_mode_controller.enter_state("jumping")
 		elif movement_mode_controller.get_current_state_id() == "jumping":
-			movement_mode_controller.enter_state("hover")
+			movement_mode_controller.enter_state()
 			body.boost_up(0.01)
 		else:
 			headlook_controller.lean_boost = true

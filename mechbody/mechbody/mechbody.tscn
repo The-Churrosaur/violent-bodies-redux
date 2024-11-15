@@ -76,9 +76,9 @@ height = 1.0
 size = Vector3(5, 5, 5)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ei5hg"]
-radius = 3.0
+radius = 2.0
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_1i21g"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8onw4"]
 height = 1.327
 radius = 4.804
 
@@ -88,206 +88,221 @@ collision_mask = 16
 mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_pfxel")
 gravity_scale = 0.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.5, 0)
 max_contacts_reported = 2
 contact_monitor = true
 linear_damp = 0.1
-angular_damp = 2.0
+angular_damp = 10.0
 script = ExtResource("1_m8lij")
-cockpit = NodePath("Cockpit")
-left_arm_targeter = NodePath("ArmTargeterLeft")
-right_arm_targeter = NodePath("ArmTargeterRight")
-left_player_shoulder = NodePath("Cockpit/PlayerBodyReferences/PlayerShoulderLeft")
-right_player_shoulder = NodePath("Cockpit/PlayerBodyReferences/PlayerShoulderRight")
-left_hand_remote = NodePath("LeftHand")
-right_hand_remote = NodePath("RightHand")
-step_push_timer = NodePath("Step/StepPushTimer")
-step_fall_timer = NodePath("Step/StepFallTimer")
-movement_mode_controller = NodePath("MechbodyController/MovementModeController")
+thrust_power = 1e+06
+torque_power = 70000.0
+cockpit = NodePath("TorsoDolly/Cockpit")
+left_arm_targeter = NodePath("TorsoDolly/ArmTargeterLeft")
+right_arm_targeter = NodePath("TorsoDolly/ArmTargeterRight")
+left_player_shoulder = NodePath("TorsoDolly/Cockpit/PlayerBodyReferences/PlayerShoulderLeft")
+right_player_shoulder = NodePath("TorsoDolly/Cockpit/PlayerBodyReferences/PlayerShoulderRight")
+left_hand_remote = NodePath("TorsoDolly/LeftHand")
+right_hand_remote = NodePath("TorsoDolly/RightHand")
+step_push_timer = NodePath("TorsoDolly/Step/StepPushTimer")
+step_fall_timer = NodePath("TorsoDolly/Step/StepFallTimer")
+movement_mode_controller = NodePath("TorsoDolly/MechbodyController/MovementModeController")
 
-[node name="MechbodyController" parent="." node_paths=PackedStringArray("body", "pull_thruster", "arm_aimer_hand_remote", "mech_booster", "hand_manager_left", "hand_manager_right", "headlook_controller", "movement_mode_controller") instance=ExtResource("2_u33eb")]
-body = NodePath("..")
+[node name="TorsoDolly" type="Node3D" parent="."]
+
+[node name="MechbodyController" parent="TorsoDolly" node_paths=PackedStringArray("body", "pull_thruster", "arm_aimer_hand_remote", "mech_booster", "torso_dolly", "hand_manager_left", "hand_manager_right", "headlook_controller", "movement_mode_controller") instance=ExtResource("2_u33eb")]
+body = NodePath("../..")
 pull_thruster = NodePath("../LeftHand/PullThruster")
 arm_aimer_hand_remote = NodePath("../LeftHand")
 mech_booster = NodePath("MechBooster")
+torso_dolly = NodePath("..")
 hand_manager_left = NodePath("../LeftHand/MechHandToolManager")
 hand_manager_right = NodePath("../RightHand/MechHandToolManager")
 headlook_controller = NodePath("../HeadlookController")
 movement_mode_controller = NodePath("MovementModeController")
 
-[node name="SensorLabel" type="Label3D" parent="MechbodyController"]
+[node name="SensorLabel" type="Label3D" parent="TorsoDolly/MechbodyController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16413, -1.36684)
 visible = false
 text = "asdfasd"
 font_size = 12
 outline_size = 4
 
-[node name="SensorLabel2" type="Label3D" parent="MechbodyController"]
+[node name="SensorLabel2" type="Label3D" parent="TorsoDolly/MechbodyController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04356, -1.36684)
 visible = false
 text = "asdfasd"
 font_size = 12
 outline_size = 4
 
-[node name="MovementModeController" parent="MechbodyController" instance=ExtResource("3_hvm2a")]
+[node name="MovementModeController" parent="TorsoDolly/MechbodyController" instance=ExtResource("3_hvm2a")]
 
-[node name="Flight" parent="MechbodyController/MovementModeController" index="0" node_paths=PackedStringArray("flight_module_pitch", "flight_module_yaw", "body", "headlook_controller")]
+[node name="Flight" parent="TorsoDolly/MechbodyController/MovementModeController" index="0" node_paths=PackedStringArray("flight_module_pitch", "flight_module_yaw", "body", "headlook_controller")]
 flight_module_pitch = NodePath("../../../FlightModule")
 flight_module_yaw = NodePath("../../../FlightModuleTail")
-body = NodePath("../../..")
+body = NodePath("../../../..")
 headlook_controller = NodePath("../../../HeadlookController")
 
-[node name="Orbit" parent="MechbodyController/MovementModeController" index="2" node_paths=PackedStringArray("sensor_manager", "rotator")]
+[node name="6dof" parent="TorsoDolly/MechbodyController/MovementModeController" index="1" node_paths=PackedStringArray("mechbody")]
+mechbody = NodePath("../../../..")
+
+[node name="Orbit" parent="TorsoDolly/MechbodyController/MovementModeController" index="2" node_paths=PackedStringArray("sensor_manager", "rotator")]
 sensor_manager = NodePath("../../../HeadlookController/HeadsetLocal/HeadSensorManager")
 rotator = NodePath("../../MechRotator")
 
-[node name="Skate" parent="MechbodyController/MovementModeController" index="3" node_paths=PackedStringArray("headlook_controller", "flight_module_yaw", "mechbody", "rotator", "floor_normal_reference_node", "floor_detector")]
+[node name="Skate" parent="TorsoDolly/MechbodyController/MovementModeController" index="3" node_paths=PackedStringArray("headlook_controller", "flight_module_yaw", "mechbody", "rotator", "floor_normal_reference_node", "floor_detector")]
+downforce = 400
+breakaway_distance = 10.0
+lean_skate_mult = 0.1
 headlook_controller = NodePath("../../../HeadlookController")
 flight_module_yaw = NodePath("../../../FlightModuleTail")
-mechbody = NodePath("../../..")
+mechbody = NodePath("../../../..")
 rotator = NodePath("../../MechRotator")
 floor_normal_reference_node = NodePath("../../../FloorDetector/FloorNormalReference")
 floor_detector = NodePath("../../../FloorDetector")
 
-[node name="Jumping" parent="MechbodyController/MovementModeController" index="4" node_paths=PackedStringArray("floor_detector", "mechbody", "mech_booster", "headlook_controller")]
+[node name="Jumping" parent="TorsoDolly/MechbodyController/MovementModeController" index="4" node_paths=PackedStringArray("floor_detector", "mechbody", "mech_booster", "headlook_controller")]
 floor_detector = NodePath("../../../FloorDetector")
-mechbody = NodePath("../../..")
+mechbody = NodePath("../../../..")
 mech_booster = NodePath("../../MechBooster")
 headlook_controller = NodePath("../../../HeadlookController")
 
-[node name="Hover" parent="MechbodyController/MovementModeController" index="5" node_paths=PackedStringArray("rotator", "headlook_controller")]
+[node name="Hover" parent="TorsoDolly/MechbodyController/MovementModeController" index="5" node_paths=PackedStringArray("rotator", "mechbody", "headlook_controller")]
 rotator = NodePath("../../MechRotator")
+mechbody = NodePath("../../../..")
 headlook_controller = NodePath("../../../HeadlookController")
 
-[node name="MechRotator" parent="MechbodyController" instance=ExtResource("4_sgfu2")]
+[node name="MechRotator" parent="TorsoDolly/MechbodyController" instance=ExtResource("4_sgfu2")]
 
-[node name="LimbRotator" parent="MechbodyController/MechRotator" index="0" node_paths=PackedStringArray("body")]
-body = NodePath("../../..")
+[node name="LimbRotator" parent="TorsoDolly/MechbodyController/MechRotator" index="0" node_paths=PackedStringArray("body")]
+body = NodePath("../../../..")
 max_torque_impulse = 20.0
 rotation_deadzone = 0.0
 match_z = false
 
-[node name="RotationalPidController" parent="MechbodyController/MechRotator/LimbRotator" index="0"]
+[node name="RotationalPidController" parent="TorsoDolly/MechbodyController/MechRotator/LimbRotator" index="0"]
 p_tune = 4.0
 i_tune = 0.5
 d_tune = 0.2
 
-[node name="MechBooster" parent="MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
-mechbody = NodePath("../..")
+[node name="MechBooster" parent="TorsoDolly/MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
+mechbody = NodePath("../../..")
 
-[node name="HeadlookController" parent="." node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
+[node name="HeadlookController" parent="TorsoDolly" node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
-body = NodePath("..")
+body = NodePath("../..")
 headset_local = NodePath("HeadsetLocal")
 cockpit_headset_reference = NodePath("../Cockpit/PlayerBodyReferences/HeadsetReference")
 cockpit_inputs = NodePath("../Cockpit/GlobalCockpitInputProcessor")
 mech_booster = NodePath("../MechbodyController/MechBooster")
 
-[node name="HeadsetLocal" parent="HeadlookController" instance=ExtResource("4_08ba4")]
+[node name="HeadsetLocal" parent="TorsoDolly/HeadlookController" instance=ExtResource("4_08ba4")]
 
-[node name="HeadSensorManager" parent="HeadlookController/HeadsetLocal" node_paths=PackedStringArray("sensor", "helmet", "lead_manager") instance=ExtResource("6_yw0ob")]
+[node name="HeadSensorManager" parent="TorsoDolly/HeadlookController/HeadsetLocal" node_paths=PackedStringArray("sensor", "helmet", "lead_manager") instance=ExtResource("6_yw0ob")]
 sensor = NodePath("../../../HeadTurret/TurretBase/ShipSensor")
 helmet = NodePath("../HeadPointer")
 lead_manager = NodePath("TargetLeadManager")
 
-[node name="TargetLeadManager" parent="HeadlookController/HeadsetLocal/HeadSensorManager" node_paths=PackedStringArray("current_weapon", "shoot_ui") instance=ExtResource("8_n8k65")]
+[node name="TargetLeadManager" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager" node_paths=PackedStringArray("current_weapon", "shoot_ui") instance=ExtResource("8_n8k65")]
 current_weapon = NodePath("../../../../RightHand/BasicGun")
 shoot_ui = NodePath("ShootText")
 
-[node name="LeadComputer" parent="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" index="0" node_paths=PackedStringArray("launching_body", "muzzle_reference")]
-launching_body = NodePath("../../../../..")
+[node name="LeadComputer" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" index="0" node_paths=PackedStringArray("launching_body", "muzzle_reference")]
+launching_body = NodePath("../../../../../..")
 muzzle_reference = NodePath("../../../../../RightHand/BasicGun/muzzle")
 projectile_velocity = 500.0
 
-[node name="ShootText" parent="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" instance=ExtResource("9_57rmj")]
+[node name="ShootText" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" instance=ExtResource("9_57rmj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.573468)
 visible = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager/ShootText"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager/ShootText"]
 visible = false
 mesh = SubResource("SphereMesh_irsvg")
 
-[node name="HeadPointer" parent="HeadlookController/HeadsetLocal" instance=ExtResource("5_axe8k")]
+[node name="HeadPointer" parent="TorsoDolly/HeadlookController/HeadsetLocal" instance=ExtResource("5_axe8k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.501728)
 
-[node name="HeadlookMask" parent="." node_paths=PackedStringArray("headlook_controller", "mask_areas") instance=ExtResource("4_usege")]
+[node name="HeadlookMask" parent="TorsoDolly" node_paths=PackedStringArray("headlook_controller", "mask_areas") instance=ExtResource("4_usege")]
 headlook_controller = NodePath("../HeadlookController")
 mask_areas = [NodePath("Area3D"), NodePath("Area3D2"), NodePath("Area3D3")]
 
-[node name="Area3D" type="Area3D" parent="HeadlookMask"]
+[node name="Area3D" type="Area3D" parent="TorsoDolly/HeadlookMask"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.10766, 0.0529015)
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HeadlookMask/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TorsoDolly/HeadlookMask/Area3D"]
 shape = SubResource("CapsuleShape3D_h8xov")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HeadlookMask/Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TorsoDolly/HeadlookMask/Area3D"]
 mesh = SubResource("BoxMesh_72nma")
 skeleton = NodePath("../../Area3D3")
 surface_material_override/0 = ExtResource("7_nvspr")
 
-[node name="Area3D2" type="Area3D" parent="HeadlookMask"]
+[node name="Area3D2" type="Area3D" parent="TorsoDolly/HeadlookMask"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.108, 0.0529015)
 monitoring = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HeadlookMask/Area3D2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TorsoDolly/HeadlookMask/Area3D2"]
 mesh = SubResource("BoxMesh_72nma")
 skeleton = NodePath("../../Area3D3")
 surface_material_override/0 = ExtResource("7_nvspr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HeadlookMask/Area3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TorsoDolly/HeadlookMask/Area3D2"]
 shape = SubResource("CapsuleShape3D_h8xov")
 
-[node name="Area3D3" type="Area3D" parent="HeadlookMask"]
+[node name="Area3D3" type="Area3D" parent="TorsoDolly/HeadlookMask"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.721541, -0.634205)
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HeadlookMask/Area3D3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TorsoDolly/HeadlookMask/Area3D3"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -4.19547e-09, 0.0959811, 0.184541)
 shape = SubResource("CapsuleShape3D_am2w0")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TorsoDolly"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.832651, 0)
 visible = false
 mesh = SubResource("CylinderMesh_4co0s")
+skeleton = NodePath("../..")
 
-[node name="ArmTargeterLeft" parent="." node_paths=PackedStringArray("player_shoulder", "player_yoke", "arm") instance=ExtResource("4_dacqt")]
-scaling = 24
+[node name="ArmTargeterLeft" parent="TorsoDolly" node_paths=PackedStringArray("player_shoulder", "player_yoke", "arm") instance=ExtResource("4_dacqt")]
+scaling = 20
 player_shoulder = NodePath("../Cockpit/PlayerBodyReferences/PlayerShoulderLeft")
 player_yoke = NodePath("../Cockpit/Handles/YokeGrabbableLeft")
 arm = NodePath("../ArmBaseLeft")
 
-[node name="ArmTargeterRight" parent="." node_paths=PackedStringArray("player_shoulder", "player_yoke", "arm") instance=ExtResource("4_dacqt")]
-scaling = 24
+[node name="ArmTargeterRight" parent="TorsoDolly" node_paths=PackedStringArray("player_shoulder", "player_yoke", "arm") instance=ExtResource("4_dacqt")]
+scaling = 20
 player_shoulder = NodePath("../Cockpit/PlayerBodyReferences/PlayerShoulderRight")
 player_yoke = NodePath("../Cockpit/Handles/YokeGrabbableRight")
 arm = NodePath("../ArmBaseRight")
 
-[node name="Cockpit" parent="." instance=ExtResource("6_te8af")]
+[node name="Cockpit" parent="TorsoDolly" instance=ExtResource("6_te8af")]
 
-[node name="handles_new" parent="Cockpit/Handles/YokeGrabbableLeft" index="3"]
+[node name="handles_new" parent="TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="YokeGrabbableRight" parent="Cockpit/Handles" index="5"]
+[node name="YokeGrabbableRight" parent="TorsoDolly/Cockpit/Handles" index="5"]
 collision_layer = 3
 collision_mask = 1
 
-[node name="handles_new2" parent="Cockpit/Handles/YokeGrabbableRight" index="3"]
+[node name="handles_new2" parent="TorsoDolly/Cockpit/Handles/YokeGrabbableRight" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="CockpitAmbience" parent="Cockpit" index="3" node_paths=PackedStringArray("velocity_body")]
-velocity_body = NodePath("../..")
+[node name="CockpitAmbience" parent="TorsoDolly/Cockpit" index="3" node_paths=PackedStringArray("velocity_body")]
+velocity_body = NodePath("../../..")
 
-[node name="VHUDButtonGrabbable2" parent="Cockpit" node_paths=PackedStringArray("tool_manager") instance=ExtResource("6_rm64o")]
+[node name="VHUDButtonGrabbable2" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("tool_manager") instance=ExtResource("6_rm64o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.848, -0.417)
 tool_manager = NodePath("../../RightHand/MechHandToolManager")
 get_controller_input = false
 
-[node name="VHUDButtonGrabbable3" parent="Cockpit" node_paths=PackedStringArray("tool_manager") instance=ExtResource("6_rm64o")]
+[node name="VHUDButtonGrabbable3" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("tool_manager") instance=ExtResource("6_rm64o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.848, -0.417)
 tool_manager = NodePath("../../LeftHand/MechHandToolManager")
 get_controller_input = false
 
-[node name="VelocityLabel3" type="Label3D" parent="Cockpit/VHUDButtonGrabbable3"]
+[node name="VelocityLabel3" type="Label3D" parent="TorsoDolly/Cockpit/VHUDButtonGrabbable3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00323074, 0.0235335, 0.00287922)
 pixel_size = 0.0002
 modulate = Color(0, 1, 0, 1)
@@ -296,45 +311,45 @@ text = "(CLICK ME)"
 font = ExtResource("7_on0n2")
 font_size = 25
 
-[node name="VhudNavball" parent="Cockpit" node_paths=PackedStringArray("body") instance=ExtResource("8_0paey")]
+[node name="VhudNavball" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("body") instance=ExtResource("8_0paey")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09447, -0.472227)
-body = NodePath("../..")
+body = NodePath("../../..")
 
-[node name="VHUDHoverButton" parent="Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("18_0vn8x")]
+[node name="VHUDHoverButton" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("18_0vn8x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.241116, 1.15768, -0.436344)
 movement_controller = NodePath("../../MechbodyController/MovementModeController")
 
-[node name="VHUDGrossAimButton" parent="Cockpit" node_paths=PackedStringArray("mechbody") instance=ExtResource("20_pdgfg")]
+[node name="VHUDGrossAimButton" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("mechbody") instance=ExtResource("20_pdgfg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.236554, 1.01604, -0.436344)
-mechbody = NodePath("../..")
+mechbody = NodePath("../../..")
 
-[node name="VHUDOrbitButton" parent="Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("16_amfh4")]
+[node name="VHUDOrbitButton" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("movement_controller") instance=ExtResource("16_amfh4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.241116, 1.01604, -0.436344)
 movement_controller = NodePath("../../MechbodyController/MovementModeController")
 
-[node name="VHUDButtonGrabbable4" parent="Cockpit" node_paths=PackedStringArray("mechbody_controller", "mechbody") instance=ExtResource("9_2oyiw")]
+[node name="VHUDButtonGrabbable4" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("mechbody_controller", "mechbody") instance=ExtResource("9_2oyiw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.862375, -0.436344)
 mechbody_controller = NodePath("../../MechbodyController")
-mechbody = NodePath("../..")
+mechbody = NodePath("../../..")
 get_controller_input = false
 
-[node name="TutorialScreenManager" parent="Cockpit" instance=ExtResource("10_vfi34")]
+[node name="TutorialScreenManager" parent="TorsoDolly/Cockpit" instance=ExtResource("10_vfi34")]
 transform = Transform3D(0.5, 0, 0, 0, 0.492818, 0.0844424, 0, -0.0844424, 0.492818, 0, 1.03795, -0.388215)
 visible = false
 
-[node name="TutorialScreen1" parent="Cockpit/TutorialScreenManager/screens" index="1" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen1" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="1" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../../../Handles/YokeGrabbableLeft/ControllerMockup")
 
-[node name="TutorialScreen2" parent="Cockpit/TutorialScreenManager/screens" index="2" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen2" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="2" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../..")
 
-[node name="TutorialScreen3" parent="Cockpit/TutorialScreenManager/screens" index="3" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen3" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="3" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../../../Handles/YokeGrabbableLeft")
 
-[node name="TutorialScreen4" parent="Cockpit/TutorialScreenManager/screens" index="4" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen4" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="4" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../../../Handles/YokeGrabbableRight/ControllerMockup/Node3D/headrot")
 
-[node name="Label" parent="Cockpit/TutorialScreenManager/screens/TutorialScreen4" index="0"]
+[node name="Label" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen4" index="0"]
 text = "WHILE GRABBING THE CONTROL STICKS
 HOLD 'b' 
 
@@ -349,33 +364,33 @@ WILL TRACK TO YOUR GAZE
 LEAN TO ROLL
 "
 
-[node name="TutorialScreen5" parent="Cockpit/TutorialScreenManager/screens" index="5" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen5" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="5" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../../../VHUDButtonGrabbable4")
 
-[node name="TutorialScreen6" parent="Cockpit/TutorialScreenManager/screens" index="6" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen6" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="6" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../../../VHUDButtonGrabbable2")
 
-[node name="TutorialScreen7" parent="Cockpit/TutorialScreenManager/screens" index="7" node_paths=PackedStringArray("pointer_target")]
+[node name="TutorialScreen7" parent="TorsoDolly/Cockpit/TutorialScreenManager/screens" index="7" node_paths=PackedStringArray("pointer_target")]
 pointer_target = NodePath("../..")
 
-[node name="GlobalCockpitInputProcessor" parent="Cockpit" node_paths=PackedStringArray("left_stick", "right_stick") instance=ExtResource("11_fkl0l")]
+[node name="GlobalCockpitInputProcessor" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("left_stick", "right_stick") instance=ExtResource("11_fkl0l")]
 left_stick = NodePath("../Handles/YokeGrabbableLeft")
 right_stick = NodePath("../Handles/YokeGrabbableRight")
 
-[node name="Headbutton" parent="Cockpit" node_paths=PackedStringArray("mech_controller", "headlook_controller") instance=ExtResource("12_7po0h")]
+[node name="Headbutton" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("mech_controller", "headlook_controller") instance=ExtResource("12_7po0h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28615, -0.367953)
 mech_controller = NodePath("../../MechbodyController")
 headlook_controller = NodePath("../../HeadlookController")
 
-[node name="ArmBaseLeft" parent="." instance=ExtResource("14_x4iok")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4, 2.771, 1.893)
+[node name="ArmBaseLeft" parent="TorsoDolly" instance=ExtResource("14_x4iok")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4, 2.423, 1.47666)
 
-[node name="ArmBaseRight" parent="." instance=ExtResource("14_x4iok")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4, 2.771, 1.893)
+[node name="ArmBaseRight" parent="TorsoDolly" instance=ExtResource("14_x4iok")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4, 2.423, 1.47666)
 
-[node name="LeftHand" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
+[node name="LeftHand" parent="TorsoDolly" node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3, 2.194, -3.587)
-mechbody = NodePath("..")
+mechbody = NodePath("../..")
 tool_manager = NodePath("MechHandToolManager")
 current_tool = NodePath("beamfx2")
 arm = NodePath("../ArmBaseLeft")
@@ -383,71 +398,78 @@ arm_targeter = NodePath("../ArmTargeterLeft")
 other_hand = NodePath("../RightHand")
 hands = 0
 
-[node name="MechHandToolManager" parent="LeftHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
+[node name="MechHandToolManager" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
 tools = [NodePath("../beamfx2"), NodePath("../BasicGun"), NodePath("../Shield")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableLeft")
 hand = NodePath("..")
 
-[node name="PullThruster" parent="LeftHand" instance=ExtResource("17_qxjyk")]
+[node name="PullThruster" parent="TorsoDolly/LeftHand" instance=ExtResource("17_qxjyk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 thrust = 400
 
-[node name="beamfx2" parent="LeftHand" instance=ExtResource("17_jdv0r")]
+[node name="beamfx2" parent="TorsoDolly/LeftHand" instance=ExtResource("17_jdv0r")]
 transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41998, 3.439e-14, -2.41998, 1.77304, 9.53674e-07, -1.05558, -0.471303)
 
-[node name="BasicGun" parent="LeftHand" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
+[node name="BasicGun" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.724767, -1.26876)
 visible = false
 recoil = 250
-launching_rigidbody = NodePath("../..")
+launching_rigidbody = NodePath("../../..")
 
-[node name="Shield" parent="LeftHand" instance=ExtResource("19_rcdnm")]
+[node name="Shield" parent="TorsoDolly/LeftHand" instance=ExtResource("19_rcdnm")]
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
 tool_name = "SHIELD"
 
-[node name="RightHand" parent="." node_paths=PackedStringArray("mechbody", "tool_manager", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
+[node name="RightHand" parent="TorsoDolly" node_paths=PackedStringArray("mechbody", "tool_manager", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, 1.527, -3.587)
-mechbody = NodePath("..")
+mechbody = NodePath("../..")
 tool_manager = NodePath("MechHandToolManager")
 arm = NodePath("../ArmBaseRight")
 arm_targeter = NodePath("../ArmTargeterRight")
 other_hand = NodePath("../LeftHand")
 
-[node name="MechHandToolManager" parent="RightHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
+[node name="MechHandToolManager" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
 tools = [NodePath("../beamfx"), NodePath("../GrabberTool"), NodePath("../BasicGun")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 hand = NodePath("..")
 
-[node name="BasicGun" parent="RightHand" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
+[node name="BasicGun" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141178, -1.57548)
 visible = false
 recoil = 250
-launching_rigidbody = NodePath("../..")
-mechbody = NodePath("../..")
-
-[node name="stupidgun" parent="RightHand/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
 launching_rigidbody = NodePath("../../..")
+mechbody = NodePath("../../..")
 
-[node name="beamfx" parent="RightHand" instance=ExtResource("17_jdv0r")]
+[node name="stupidgun" parent="TorsoDolly/RightHand/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
+launching_rigidbody = NodePath("../../../..")
+
+[node name="beamfx" parent="TorsoDolly/RightHand" instance=ExtResource("17_jdv0r")]
 transform = Transform3D(3, 0, 0, 0, 1.73272, 2.44902, 0, -2.44902, 1.73272, 0, 0.366668, -2.3511)
 
-[node name="GrabberTool" parent="RightHand" instance=ExtResource("24_ia80r")]
+[node name="GrabberTool" parent="TorsoDolly/RightHand" instance=ExtResource("24_ia80r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
 
-[node name="ProjectilePathUI" parent="RightHand" node_paths=PackedStringArray("lead_computer") instance=ExtResource("9_y8a4w")]
+[node name="ProjectilePathUI" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("lead_computer") instance=ExtResource("9_y8a4w")]
 lead_computer = NodePath("../../HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager/LeadComputer")
 
-[node name="FlightModule" parent="." node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
+[node name="FlightModule" parent="TorsoDolly" node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0422812, 0.942789, -1.45214)
-mechbody = NodePath("..")
+mechbody = NodePath("../..")
 coefficient = 4.0
 
-[node name="FlightModuleTail" parent="." node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
+[node name="FlightModule2" parent="TorsoDolly" node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0422812, 0.942789, -1.45214)
+mechbody = NodePath("../..")
+coefficient = 10.0
+max_aoa = 3.142
+max_force = 100000
+
+[node name="FlightModuleTail" parent="TorsoDolly" node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0422812, 0.0477576, 0.0106616)
-mechbody = NodePath("..")
+mechbody = NodePath("../..")
 coefficient = 4.0
 
-[node name="MovementModePanel" type="Label3D" parent="." node_paths=PackedStringArray("movement_mode_controller")]
+[node name="MovementModePanel" type="Label3D" parent="TorsoDolly" node_paths=PackedStringArray("movement_mode_controller")]
 transform = Transform3D(1, 0, 0, 0, 0.998198, -0.0600033, 0, 0.0600033, 0.998198, 0, 1.1888, -0.498818)
 pixel_size = 0.0002
 modulate = Color(0, 1, 0, 1)
@@ -459,82 +481,84 @@ font_size = 100
 script = ExtResource("34_ei38e")
 movement_mode_controller = NodePath("../MechbodyController/MovementModeController")
 
-[node name="FlightPanel" parent="." node_paths=PackedStringArray("flight_module") instance=ExtResource("21_1vnex")]
+[node name="FlightPanel" parent="TorsoDolly" node_paths=PackedStringArray("flight_module") instance=ExtResource("21_1vnex")]
 transform = Transform3D(1, 0, 0, 0, 0.998198, -0.0600033, 0, 0.0600033, 0.998198, 0, 0.938048, -0.497231)
 flight_module = NodePath("../FlightModule")
 
-[node name="WindParticles" parent="." node_paths=PackedStringArray("body") instance=ExtResource("22_lnq4c")]
-body = NodePath("..")
+[node name="WindParticles" parent="TorsoDolly" node_paths=PackedStringArray("body") instance=ExtResource("22_lnq4c")]
+body = NodePath("../..")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="TorsoDolly"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.563671, 1.02496)
 visible = false
 mesh = SubResource("BoxMesh_nxfr1")
 skeleton = NodePath("../MeshInstance3D2")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TorsoDolly"]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, -0.814902, 4.54445)
 mesh = ExtResource("23_4d7fq")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("24_4gwjq")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25765, 0.996926)
-shape = SubResource("SphereShape3D_ei5hg")
+[node name="Step" type="Node3D" parent="TorsoDolly"]
 
-[node name="Step" type="Node3D" parent="."]
-
-[node name="StepPushTimer" type="Timer" parent="Step"]
+[node name="StepPushTimer" type="Timer" parent="TorsoDolly/Step"]
 one_shot = true
 
-[node name="StepFallTimer" type="Timer" parent="Step"]
+[node name="StepFallTimer" type="Timer" parent="TorsoDolly/Step"]
 
-[node name="HeadTurret" parent="." node_paths=PackedStringArray("tracking_base") instance=ExtResource("27_jujma")]
+[node name="HeadTurret" parent="TorsoDolly" node_paths=PackedStringArray("tracking_base") instance=ExtResource("27_jujma")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.3727, 0)
 tracking_base = NodePath("../HeadlookController/HeadsetLocal")
 
-[node name="ShipSensor" parent="HeadTurret/TurretBase" index="0" node_paths=PackedStringArray("sensor_display", "tuning_display") instance=ExtResource("32_21wed")]
+[node name="ShipSensor" parent="TorsoDolly/HeadTurret/TurretBase" index="0" node_paths=PackedStringArray("sensor_display", "tuning_display") instance=ExtResource("32_21wed")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 8)
 sensor_display = NodePath("../../../MechbodyController/SensorLabel")
 tuning_display = NodePath("../../../MechbodyController/SensorLabel2")
 sensor_strength = 1e+06
 
-[node name="FloorDetector" parent="." node_paths=PackedStringArray("floor_normal_reference") instance=ExtResource("36_lq8jm")]
+[node name="FloorDetector" parent="TorsoDolly" node_paths=PackedStringArray("floor_normal_reference") instance=ExtResource("36_lq8jm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.16839, 0)
 collision_mask = 8
 hit_from_inside = true
 floor_normal_reference = NodePath("FloorNormalReference")
 
-[node name="FloorNormalReference" type="Node3D" parent="FloorDetector"]
+[node name="FloorNormalReference" type="Node3D" parent="TorsoDolly/FloorDetector"]
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25765, 0.996926)
+shape = SubResource("SphereShape3D_ei5hg")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.13702, 0)
-shape = SubResource("CylinderShape3D_1i21g")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.647565, 0)
+shape = SubResource("CylinderShape3D_8onw4")
+disabled = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
-[connection signal="dropped" from="Cockpit/Handles/YokeGrabbableLeft" to="MechbodyController" method="_on_yoke_grabbable_left_dropped"]
-[connection signal="grabbed" from="Cockpit/Handles/YokeGrabbableLeft" to="MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
-[connection signal="dropped" from="Cockpit/Handles/YokeGrabbableRight" to="MechbodyController" method="_on_yoke_grabbable_right_dropped"]
-[connection signal="grabbed" from="Cockpit/Handles/YokeGrabbableRight" to="MechbodyController" method="_on_yoke_grabbable_right_grabbed"]
-[connection signal="timeout" from="Step/StepPushTimer" to="." method="_on_step_push_timer_timeout"]
-[connection signal="timeout" from="Step/StepFallTimer" to="." method="_on_step_fall_timer_timeout"]
+[connection signal="dropped" from="TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
+[connection signal="grabbed" from="TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
+[connection signal="dropped" from="TorsoDolly/Cockpit/Handles/YokeGrabbableRight" to="TorsoDolly/MechbodyController" method="_on_yoke_grabbable_right_dropped"]
+[connection signal="grabbed" from="TorsoDolly/Cockpit/Handles/YokeGrabbableRight" to="TorsoDolly/MechbodyController" method="_on_yoke_grabbable_right_grabbed"]
+[connection signal="timeout" from="TorsoDolly/Step/StepPushTimer" to="." method="_on_step_push_timer_timeout"]
+[connection signal="timeout" from="TorsoDolly/Step/StepFallTimer" to="." method="_on_step_fall_timer_timeout"]
 
-[editable path="MechbodyController/MovementModeController"]
-[editable path="MechbodyController/MechRotator"]
-[editable path="MechbodyController/MechRotator/LimbRotator"]
-[editable path="HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
-[editable path="Cockpit"]
-[editable path="Cockpit/TutorialScreenManager"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen1"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen2"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen3"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen4"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen5"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen6"]
-[editable path="Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
-[editable path="Cockpit/TutorialScreenManager/BACKBUTTON"]
-[editable path="Cockpit/TutorialScreenManager/FORBUTTON"]
-[editable path="RightHand/BasicGun"]
-[editable path="RightHand/BasicGun/stupidgun"]
-[editable path="HeadTurret"]
+[editable path="TorsoDolly/MechbodyController/MovementModeController"]
+[editable path="TorsoDolly/MechbodyController/MechRotator"]
+[editable path="TorsoDolly/MechbodyController/MechRotator/LimbRotator"]
+[editable path="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
+[editable path="TorsoDolly/Cockpit"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen1"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen2"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen3"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen4"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen5"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen6"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/BACKBUTTON"]
+[editable path="TorsoDolly/Cockpit/TutorialScreenManager/FORBUTTON"]
+[editable path="TorsoDolly/RightHand/BasicGun"]
+[editable path="TorsoDolly/RightHand/BasicGun/stupidgun"]
+[editable path="TorsoDolly/HeadTurret"]

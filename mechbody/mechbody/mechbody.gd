@@ -15,9 +15,17 @@ signal takeoff()
 @export var min_step_fall_time = 0.2
 @export var angular_shake_velocity = PI / 2
 
+@export var legbody_mass = 100
+@export var legbody_mass_disabled = 0.1
+
 @export_group("references")
 @export var seat_parent : Node3D
 @export var cockpit : Cockpit
+
+@export var legbody : RigidBody3D
+@export var hip_joint : JoltJoint3D
+@export var legbody_reference : Node3D
+
 @export var left_arm_targeter : ArmTargeter
 @export var right_arm_targeter : ArmTargeter
 @export var left_player_shoulder : Node3D
@@ -42,11 +50,16 @@ var front_input = 0
 var strafe_input = 0
 var climb_input = 0
 
+# saves last frame's inputs
+var last_trans = Vector3.ZERO
+var last_rotat = Vector3.ZERO
+
 var pitch_mult = 1.0
 var roll_mult = 1.0
 var yaw_mult = 1.0
 
 var walk = true
+var legs_enabled = false
 
 # utility vars
 var fore
@@ -76,13 +89,23 @@ func _physics_process(delta):
 	fore = transform.basis.z
 	right = transform.basis.x 
 	up = transform.basis.y
-	
+
 	# strafe
 	apply_central_force(right * thrust_power * delta * strafe_input)
 	# fore/reverse
 	apply_central_force(fore * -thrust_power * delta * front_input)
 	# climb
 	apply_central_force(up * thrust_power * delta * climb_input)
+	
+	#if legs_enabled:
+		#
+		## strafe
+		#legbody.apply_central_force(right * thrust_power * delta * strafe_input)
+		## fore/reverse
+		#legbody.apply_central_force(fore * -thrust_power * delta * front_input)
+		## climb
+		#legbody.apply_central_force(up * thrust_power * delta * climb_input)
+	
 	
 	# pitch
 	apply_torque(right * -torque_power * delta * pitch_input * pitch_mult)
@@ -128,6 +151,14 @@ func boost_strafe(mult = 1.0):
 
 
 func clear_inputs():
+	
+	last_trans.x = strafe_input
+	last_trans.z = front_input
+	last_trans.y = climb_input
+	
+	last_rotat.x = pitch_input
+	last_rotat.z = roll_input
+	last_rotat.y = yaw_input
 	
 	pitch_input = 0
 	roll_input = 0
@@ -211,3 +242,20 @@ func enable_current_twohand_joint(hand):
 func disable_current_twohand_joint():
 	current_two_hand_joint.enabled = false
 	is_two_hand_grabbing = false
+
+
+func enable_legs():
+	#get_parent().add_child(legbody)
+	#legbody.global_transform = legbody_reference.global_transform
+	#legbody.freeze = false
+	#hip_joint.enabled = true
+	legbody.mass = legbody_mass
+	legs_enabled = true
+
+
+func disable_legs():
+	#legbody.freeze = true
+	#hip_joint.enabled = false
+	#add_child(legbody)
+	legbody.mass = legbody_mass_disabled
+	legs_enabled = false
