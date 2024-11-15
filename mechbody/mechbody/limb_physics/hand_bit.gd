@@ -62,7 +62,9 @@ func _physics_process(delta):
 		if ppid.current_tuning: ppid.set_tuning_config(ppid.current_tuning)
 	
 	#audio
-	audio_stream_player_3d.pitch_scale = max(1.0, limb_rotator.current_impulse / 5000)
+	var pitch_target = min(1.0, limb_rotator.current_impulse / 5000)
+	var dif = pitch_target - audio_stream_player_3d.pitch_scale
+	audio_stream_player_3d.pitch_scale += dif / 10
 
 
 

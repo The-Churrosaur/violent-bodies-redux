@@ -96,13 +96,13 @@ other_hand = NodePath("../HandBitLeft")
 hands = 1
 joints = [NodePath("Hand/JoltGeneric6DOFJoint3D")]
 
-[node name="PositionalPidController" parent="HandBitRight/Hand/LimbRotator" index="1"]
-p_tune = 1.0
-
 [node name="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="3" instance=ExtResource("6_7ki1p")]
 node_a = NodePath("..")
 node_b = NodePath("../../../HandBitLeft/Hand")
 visible = false
+
+[node name="PositionalPidController" parent="HandBitRight/Hand/LimbRotator" index="1"]
+p_tune = 1.0
 
 [editable path="HandBitLeft"]
 [editable path="HandBitLeft/Hand/LimbRotator"]

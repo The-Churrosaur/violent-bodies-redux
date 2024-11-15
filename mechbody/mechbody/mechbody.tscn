@@ -163,10 +163,13 @@ headlook_controller = NodePath("../../../HeadlookController")
 [node name="LimbRotator" parent="MechbodyController/MechRotator" index="0" node_paths=PackedStringArray("body")]
 body = NodePath("../../..")
 max_torque_impulse = 20.0
+rotation_deadzone = 0.0
+match_z = false
 
 [node name="RotationalPidController" parent="MechbodyController/MechRotator/LimbRotator" index="0"]
-p_tune = 0.8
-i_tune = 0.4
+p_tune = 4.0
+i_tune = 0.5
+d_tune = 0.2
 
 [node name="MechBooster" parent="MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
 mechbody = NodePath("../..")
@@ -475,7 +478,7 @@ mesh = ExtResource("23_4d7fq")
 surface_material_override/0 = ExtResource("24_4gwjq")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.04997, 0.996926)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25765, 0.996926)
 shape = SubResource("SphereShape3D_ei5hg")
 
 [node name="Step" type="Node3D" parent="."]
@@ -504,7 +507,7 @@ floor_normal_reference = NodePath("FloorNormalReference")
 [node name="FloorNormalReference" type="Node3D" parent="FloorDetector"]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.058, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.13702, 0)
 shape = SubResource("CylinderShape3D_1i21g")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

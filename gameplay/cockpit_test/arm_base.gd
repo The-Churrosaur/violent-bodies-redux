@@ -8,7 +8,7 @@ class_name ArmBase
 extends Node3D
 
 @export var calibrate = false
-@export var lerp_target = true
+@export var lerp_target = false
 @export var lerp_shoulder = true
 @export var target_lerp = 5
 @export var shoulder_lerp = 5

@@ -13,9 +13,12 @@ extends RigidBody3D
 @onready var shoot_timer = $Timer2
 @onready var health = $HealthModule
 @onready var mechmesh = $mechmesh
+@onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
 
 var r = RandomNumberGenerator.new()
+
+var destroyed = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -73,11 +76,20 @@ func _damage(amount = 10):
 	$DamageFx.play()
 
 func explode():
+	if destroyed: return
+	destroyed = true
+	
 	freeze = true
 	mechmesh.visible = false
 	gun.safety = true
+	audio_stream_player_3d.stop()
 	$explosionFX.start_explosion_sequence()
 	player.destroyed_enemy(self)
+	
+	if (player.global_position - global_position).length_squared() < 400:
+		Engine.time_scale = 0.2
+		await get_tree().create_timer(0.1).timeout
+		Engine.time_scale = 1.0
 
 
 func _on_explosion_fx_explosion_ended():

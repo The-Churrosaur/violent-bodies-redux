@@ -11,3 +11,5 @@ script = ExtResource("1_rlsmf")
 [node name="PositionalPidController" parent="." instance=ExtResource("2_gdfu0")]
 i_tune = 0.2
 d_tune = 0.2
+
+[node name="LocalTargetReference" type="Node3D" parent="."]

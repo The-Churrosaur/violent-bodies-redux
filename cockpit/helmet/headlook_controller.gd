@@ -19,10 +19,10 @@ extends Node3D
 
 @export_group("headset tracking movement parameters")
 @export var look_rotation = true
-@export var look_pitch = PI/16
-@export var look_yaw = PI/16
+@export var look_pitch = PI/32
+@export var look_yaw = PI/32
 @export var look_mult = 1.0
-@export var look_pitch_mult = 3.0
+@export var look_pitch_mult = 1.5
 
 @export var lean_deadzone = 0.07
 @export var lean_roll_mult = 6.0

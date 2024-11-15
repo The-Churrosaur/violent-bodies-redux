@@ -41,6 +41,7 @@ extends Node3D
 @export var recoil_body : RigidBody3D ## equal and opposite
 @export var central_recoil = true 
 @export var recoil_torque_reduction = 5
+@export var recoil_force_multiplier = 0.8
 
 @export var rotate_by_axis = false
 @export var match_x = true
@@ -50,6 +51,8 @@ extends Node3D
 
 @onready var rpid = $RotationalPidController
 @onready var ppid = $PositionalPidController
+# for axis rotation
+@onready var local_target_reference = $LocalTargetReference
 
 
 ## for audio etc
@@ -63,6 +66,9 @@ func _physics_process(delta):
 	
 	if rotate:
 		if rotate_by_axis:
+			print("rotating by axis...")
+			print("body rotation...            ", body.global_rotation)
+			local_target_reference.global_rotation = target.global_rotation
 			if match_x: _rotate_local_x(delta)
 			if match_y: _rotate_local_y(delta)
 			if match_z: _rotate_local_z(delta)
@@ -73,16 +79,19 @@ func _physics_process(delta):
 
 
 func _rotate_local_x(delta):
-	var error = target.rotation.x - rotation.x
-	_apply_rotation_along(basis.x, error, delta)
+	var error = local_target_reference.rotation.x - rotation.x
+	print("x error... ", error)
+	print("x basis... ", global_basis.x)
+	_apply_rotation_along(local_target_reference.global_basis.x, error, delta)
 
 func _rotate_local_y(delta):
-	var error = target.rotation.y - rotation.y
-	_apply_rotation_along(basis.y, -error, delta)
+	var error = local_target_reference.rotation.y - rotation.y
+	_apply_rotation_along(global_basis.y, -error, delta)
 
 func _rotate_local_z(delta):
-	var error = target.rotation.z - rotation.z
-	_apply_rotation_along(basis.z, error, delta)
+	var error = local_target_reference.rotation.z - rotation.z
+	print("z error... ", error)
+	_apply_rotation_along(global_basis.z, error, delta)
 
 
 func _rotate_along_axis(delta):
@@ -139,8 +148,8 @@ func _apply_translation():
 	# wheee
 	if recoil_body != null:
 		if central_recoil:
-			recoil_body.apply_central_impulse(-impulse -d)
+			recoil_body.apply_central_impulse((-impulse -d) * recoil_force_multiplier)
 		else:
 			var pos = (body.global_position - recoil_body.global_position) \
 											/ recoil_torque_reduction
-			recoil_body.apply_impulse(-impulse -d, pos)
+			recoil_body.apply_impulse((-impulse -d) * recoil_force_multiplier, pos)

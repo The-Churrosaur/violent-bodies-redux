@@ -26,6 +26,7 @@ func _physics_process(delta):
 	
 	if use_match_target:
 		if match_target == null: return
+		#print("mechrotator setting target: ", match_target.global_rotation)
 		rotation_target.global_rotation = match_target.global_rotation
 	
 	else:

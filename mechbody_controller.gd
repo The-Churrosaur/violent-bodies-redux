@@ -77,6 +77,7 @@ func _physics_process(delta):
 
 func _on_input_down(action, controller):
 	super(action, controller)
+	#print("input down: ", action, controller)
 	
 	if controller.type == left: _on_left_input_down(action)
 	if controller.type == right: _on_right_input_down(action)
@@ -93,7 +94,7 @@ func _on_left_input_down(action):
 	
 	if action == "ax_button":
 		var hand = body.left_hand_remote
-		if hand.grabbable is  MechGrabbable:
+		if hand.grabbing_primary or hand.grabbing_secondary :
 			hand.drop_grabbable()
 		else:
 			hand.grab_hovered_grabbable()
@@ -113,14 +114,16 @@ func _on_left_input_up(action):
 
 
 func _on_right_input_down(action):
+	#print("right input down")
 	
 	if action == "ax_button":
+		print("ax press")
 		var hand = body.right_hand_remote
-		if hand.grabbable is MechGrabbable:
-			print("controller grabbing")
+		if hand.grabbing_primary or hand.grabbing_secondary:
+			print("controller dropping")
 			hand.drop_grabbable()
 		else:
-			print("controller dropping")
+			print("controller grabbing")
 			hand.grab_hovered_grabbable()
 	#
 	if action == "by_button":

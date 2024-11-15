@@ -87,6 +87,7 @@ func _on_grab_detection_area_area_entered(area):
 		if new_grabbable == grabbable: return
 		
 		print("grab area entered: ", area)
+		print("hovering grabbable set: ", new_grabbable)
 		hovering_grabbable = new_grabbable
 		hovering_area = area
 
@@ -95,6 +96,8 @@ func _on_grab_detection_area_area_exited(area):
 	
 	if area is MechGrabPoint:
 		if area.grabbable == hovering_grabbable: 
+			print("Grab area left: ", area)
+			print("resetting hovering_grabbable to null")
 			hovering_grabbable = null
 
 
@@ -125,7 +128,10 @@ func get_hand_bit():
 
 
 func grab_hovered_grabbable():
-	if !hovering_grabbable is MechGrabbable: return
+	print("hand attempting to grab... ", hovering_grabbable)
+	if !hovering_grabbable is MechGrabbable: 
+		print("hovering grabbable is not mechgrabbable: ", hovering_grabbable)
+		return
 	
 	# if area is primary
 	if !hovering_area.secondary:
@@ -136,6 +142,7 @@ func grab_hovered_grabbable():
 			_grab_hovered_as_primary()
 		# if primary and grabbed
 		else:
+			print("Attempting to grab claimed primary")
 			pass
 	
 	# if area is secondary
@@ -156,7 +163,6 @@ func drop_grabbable():
 	if grabbing_primary: _drop_as_primary()
 	if grabbing_secondary: _drop_as_secondary()
 	
-	hovering_grabbable = grabbable
 	grabbable_state = STATE.NONE
 
 
@@ -217,12 +223,15 @@ func _drop_as_primary():
 	grabbable.grabbed = false
 	grabbable.primary_grabber = null
 	grabbable.freeze = false
+	
+	hovering_grabbable = grabbable
 	grabbable = null
 
 
 func _drop_as_secondary():
 	
 	print("DROPPING AS SECONDARY")
+	print(hovering_area, hovering_grabbable)
 	
 	# tell body
 	mechbody.disable_current_twohand_joint()
@@ -233,6 +242,8 @@ func _drop_as_secondary():
 	grabbing_secondary = false
 	grabbable.grabbed_secondary = false
 	grabbable.secondary_grabber = null
+	
+	hovering_grabbable = grabbable
 	grabbable = null
 	
 	#get_hand_bit().limb_rotator.rotate = true

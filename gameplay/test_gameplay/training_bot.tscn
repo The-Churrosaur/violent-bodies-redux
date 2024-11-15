@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/test_gameplay/health_module.tscn" id="8_27lgs"]
 [ext_resource type="PackedScene" uid="uid://bisjoacj4bgel" path="res://gameplay/mechtools/enemystupidgun.tscn" id="8_62xk6"]
 [ext_resource type="PackedScene" uid="uid://c8k6oppug00w8" path="res://gameplay/test_gameplay/damage_fx.tscn" id="9_s1n2a"]
-[ext_resource type="AudioStream" uid="uid://2g6jc81k77x6" path="res://assets/audio/cockpit_ambiance.wav" id="11_1r1kv"]
+[ext_resource type="AudioStream" uid="uid://b0hek6a22ax66" path="res://assets/audio/269064__mickboere__jet-loop-01.wav" id="10_0joy1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
 radius = 3.0
@@ -97,9 +97,9 @@ health = 100
 transform = Transform3D(0.000283132, 0.00794356, 0.999968, -0.00163949, 0.999967, -0.00794309, -0.999999, -0.00163718, 0.000296158, 0, 0, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("11_1r1kv")
-unit_size = 24.43
-pitch_scale = 1.47
+stream = ExtResource("10_0joy1")
+unit_size = 47.74
+max_db = 6.0
 autoplay = true
 doppler_tracking = 2
 

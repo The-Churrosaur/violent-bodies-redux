@@ -77,8 +77,8 @@ func _solve_d(error):
 
 
 func set_tuning_config(id = "trans_default"):
-	print(tuning_configs)
-	print("id: ", id)
+	#print(tuning_configs)
+	#print("id: ", id)
 	var vec = tuning_configs[id]
 	current_tuning = id
 	p_tune = vec.x
