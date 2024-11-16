@@ -591,8 +591,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)
 mesh = SubResource("BoxMesh_k8jgp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["ground"]]
-collision_layer = 24
-collision_mask = 24
+collision_layer = 56
+collision_mask = 56
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0)

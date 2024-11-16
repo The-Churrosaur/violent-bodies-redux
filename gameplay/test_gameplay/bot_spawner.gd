@@ -15,3 +15,4 @@ func _on_timer_timeout():
 	var bot = bot_template.instantiate()
 	bot.player = bot_target
 	add_child(bot)
+	print("spawning... ", bot)

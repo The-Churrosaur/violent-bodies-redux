@@ -13,9 +13,9 @@ func _physics_process(delta):
 
 func enter_state():
 	super()
-	rotator.track_match_target(gravity_looker, false) # true
-	#headlook_controller.pitch_disabled = true
-	#headlook_controller.roll_disabled = true
+	rotator.track_match_target(gravity_looker, true) # true
+	headlook_controller.pitch_disabled = true
+	headlook_controller.roll_disabled = true
 	mechbody.disable_legs()
 	
 

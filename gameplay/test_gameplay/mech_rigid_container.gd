@@ -4,6 +4,7 @@
 
 ## reeeeeeeeeeeee
 ## all rigidbodies need to be top level
+## node3d.top level asdfiasdfhieajeaoi
 
 extends Node3D
 

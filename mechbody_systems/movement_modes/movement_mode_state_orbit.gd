@@ -2,6 +2,7 @@ extends MovementModeState
 
 @export var sensor_manager : HeadSensorManager
 @export var rotator : MechRotator
+@export var headlook_controller : HeadlookController
 
 
 func _ready():
@@ -10,13 +11,17 @@ func _ready():
 
 func enter_state():
 	super()
+	
 	rotator.track_target(sensor_manager.current_target)
 	
+	headlook_controller.pitch_disabled = true
+	headlook_controller.yaw_disabled = true
+	headlook_controller.roll_disabled = false
 
 func exit_state():
 	super()
 	rotator.stop_tracking()
-	
+
 
 # can enter orbit if sensor manager has a valid target
 func can_enter() -> bool :

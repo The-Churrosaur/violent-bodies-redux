@@ -22,13 +22,15 @@ extends Node3D
 @export var look_pitch = PI/32
 @export var look_yaw = PI/32
 @export var look_mult = 1.0
-@export var look_pitch_mult = 1.5
+@export var look_pitch_mult = 3.0
 
-@export var lean_deadzone = 0.07
-@export var lean_roll_mult = 3.0
+@export var lean_deadzone = 0.1
+@export var lean_roll_mult = 2.0
 @export var lean_input_mult = 1
-@export var lean_pitch_mult = 3.0
+@export var lean_pitch_mult = 1.5
 @export var lean_boost_threshold = 0.1
+
+@export var crouch_climb_mult = 1.5
 
 
 # toggled by sticks and deadzones - disables headlook regardless of enabled
@@ -85,7 +87,7 @@ func _physics_process(delta):
 		# dont pitch with forward lean
 		# nvm
 		#h_y= clamp(h_y, -1, 0)
-		body.pitch_input += max(h_y, 0) * lean_pitch_mult
+		body.pitch_input += h_y * lean_pitch_mult
 		
 		# double pitch input for pulling up
 		if h_y < 0: body.pitch_input += h_y * lean_pitch_mult
@@ -97,6 +99,13 @@ func _physics_process(delta):
 			elif abs(h_x) > lean_boost_threshold:
 				mech_booster.boost_strafe(sign(h_x))
 	
+	# experimental crouch
+	#body.climb_input += get_headset_pos().y * crouch_climb_mult
+	#
+	#if body.movement_mode_controller.get_current_state_id() == "skate":
+		#var joint : JoltGeneric6DOFJoint3D = body.hip_joint
+		#joint.set_param_y(JoltGeneric6DOFJoint3D.PARAM_LINEAR_SPRING_FREQUENCY, 5 + 10 * get_headset_pos().y * crouch_climb_mult)
+	
 	# overrides
 	if pitch_disabled: body.pitch_input = 0
 	if yaw_disabled: body.yaw_input = 0
@@ -106,6 +115,9 @@ func _physics_process(delta):
 func get_headset_xz():
 	var headset_pos = cockpit_headset_reference.to_local(headset_local.global_position)
 	return Vector2(headset_pos.x, -headset_pos.z)
+
+func get_headset_pos():
+	return cockpit_headset_reference.to_local(headset_local.global_position)
 
 
 func _on_cockpit_stick_grabbed(controller):

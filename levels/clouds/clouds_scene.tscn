@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=22 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_n5fsb"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://7ws1vu7utnp6" path="res://my_xr_tools/playspace_recenterer.tscn" id="11_agqa7"]
 [ext_resource type="PackedScene" uid="uid://bwg23bgh03qe6" path="res://levels/clouds/cloudsmesh.tscn" id="11_yyhlv"]
 [ext_resource type="PackedScene" uid="uid://cchgruq25tsm" path="res://levels/clouds/sky_dome.tscn" id="12_d33gl"]
+[ext_resource type="PackedScene" uid="uid://cdgfmtvu50t1c" path="res://gameplay/test_gameplay/training_bot_ground.tscn" id="14_ddrce"]
 [ext_resource type="PackedScene" uid="uid://dapy8e8aqf5pt" path="res://gameplay/test_gameplay/terrain/geometry.tscn" id="14_q6aba"]
 
 [sub_resource type="Sky" id="Sky_74yib"]
@@ -37,7 +38,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 
 [node name="Skate" parent="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController" index="3"]
 downforce = 200
-breakaway_distance = 10.0
 lean_skate_mult = 12
 
 [node name="Base" type="Node3D" parent="."]
@@ -125,6 +125,12 @@ shape = SubResource("CapsuleShape3D_nfpfe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7019, -25.8647, -403.568)
 bot_target = NodePath("../../MechRigidContainer/Mechbody")
 
+[node name="BotSpawner2" parent="Base" node_paths=PackedStringArray("bot_target") instance=ExtResource("9_voekk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7019, -362.837, -403.568)
+bot_template = ExtResource("14_ddrce")
+bot_target = NodePath("../../MechRigidContainer/Mechbody")
+enabled = true
+
 [node name="Cloudsmesh" parent="." instance=ExtResource("11_yyhlv")]
 
 [node name="Currents" parent="Cloudsmesh" index="0"]
@@ -141,6 +147,9 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Coc
 
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
+
+[connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
+[connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
 
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]

@@ -43,6 +43,8 @@ extends Node3D
 @export var recoil_torque_reduction = 5
 @export var recoil_force_multiplier = 0.8
 
+@export var rotate_by_cross = false
+
 @export var rotate_by_axis = false
 @export var match_x = true
 @export var match_y = false
@@ -72,6 +74,8 @@ func _physics_process(delta):
 			if match_x: _rotate_local_x(delta)
 			if match_y: _rotate_local_y(delta)
 			if match_z: _rotate_local_z(delta)
+		elif rotate_by_cross:
+			_rotate_along_cross(delta)
 		else:
 			_rotate_along_axis(delta)
 	
@@ -94,7 +98,19 @@ func _rotate_local_z(delta):
 	_apply_rotation_along(global_basis.z, error, delta)
 
 
+func _rotate_along_cross(delta):
+	
+	var b_y = body.global_basis.y
+	var t_y = target.global_basis.y
+	
+	var error_axis = b_y.cross(t_y)
+	var error_angle = b_y.angle_to(t_y)
+	
+	_apply_rotation_along(error_axis, error_angle, delta)
+
+
 func _rotate_along_axis(delta):
+	#print("rotating along axis... ", target)
 	
 	var b_basis = body.global_basis
 	var t_basis = target.global_basis

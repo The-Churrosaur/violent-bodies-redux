@@ -87,7 +87,6 @@ collision_layer = 16
 collision_mask = 16
 mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_pfxel")
-gravity_scale = 0.0
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.5, 0)
 max_contacts_reported = 2
@@ -146,9 +145,10 @@ headlook_controller = NodePath("../../../HeadlookController")
 [node name="6dof" parent="TorsoDolly/MechbodyController/MovementModeController" index="1" node_paths=PackedStringArray("mechbody")]
 mechbody = NodePath("../../../..")
 
-[node name="Orbit" parent="TorsoDolly/MechbodyController/MovementModeController" index="2" node_paths=PackedStringArray("sensor_manager", "rotator")]
+[node name="Orbit" parent="TorsoDolly/MechbodyController/MovementModeController" index="2" node_paths=PackedStringArray("sensor_manager", "rotator", "headlook_controller")]
 sensor_manager = NodePath("../../../HeadlookController/HeadsetLocal/HeadSensorManager")
 rotator = NodePath("../../MechRotator")
+headlook_controller = NodePath("../../../HeadlookController")
 
 [node name="Skate" parent="TorsoDolly/MechbodyController/MovementModeController" index="3" node_paths=PackedStringArray("headlook_controller", "flight_module_yaw", "mechbody", "rotator", "floor_normal_reference_node", "floor_detector")]
 downforce = 400
@@ -181,9 +181,9 @@ rotation_deadzone = 0.0
 match_z = false
 
 [node name="RotationalPidController" parent="TorsoDolly/MechbodyController/MechRotator/LimbRotator" index="0"]
-p_tune = 4.0
-i_tune = 0.5
-d_tune = 0.2
+p_tune = 2.0
+i_tune = 0.25
+d_tune = 0.6
 
 [node name="MechBooster" parent="TorsoDolly/MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
 mechbody = NodePath("../../..")
@@ -266,13 +266,13 @@ mesh = SubResource("CylinderMesh_4co0s")
 skeleton = NodePath("../..")
 
 [node name="ArmTargeterLeft" parent="TorsoDolly" node_paths=PackedStringArray("player_shoulder", "player_yoke", "arm") instance=ExtResource("4_dacqt")]
-scaling = 20
+scaling = 24
 player_shoulder = NodePath("../Cockpit/PlayerBodyReferences/PlayerShoulderLeft")
 player_yoke = NodePath("../Cockpit/Handles/YokeGrabbableLeft")
 arm = NodePath("../ArmBaseLeft")
 
 [node name="ArmTargeterRight" parent="TorsoDolly" node_paths=PackedStringArray("player_shoulder", "player_yoke", "arm") instance=ExtResource("4_dacqt")]
-scaling = 20
+scaling = 24
 player_shoulder = NodePath("../Cockpit/PlayerBodyReferences/PlayerShoulderRight")
 player_yoke = NodePath("../Cockpit/Handles/YokeGrabbableRight")
 arm = NodePath("../ArmBaseRight")

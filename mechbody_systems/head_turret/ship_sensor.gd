@@ -97,7 +97,7 @@ func _on_sensor_area_body_exited(body):
 
 func _physics_process(delta):
 	
-	tuning_display.text = str(detected)
+	if tuning_display: tuning_display.text = str(detected)
 	
 	# process detected targets
 	for body in detected.keys():

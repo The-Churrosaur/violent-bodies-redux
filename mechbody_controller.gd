@@ -67,12 +67,18 @@ func _physics_process(delta):
 	if movement_mode_controller.get_current_state_id() == "flight":
 		body.front_input += secondary.y * flight_thrust_mult
 	
-	#if movement_mode_controller.get_current_state_id() != "skate":
-		#body.climb_input += primary.y * tranlation_mult
-		#body.yaw_input += primary.x * rotation_mult
+	if movement_mode_controller.get_current_state_id() != "skate":
+		body.climb_input += primary.y * tranlation_mult
+		body.yaw_input += primary.x * rotation_mult
 	
-	body.yaw_input += primary.x * rotation_mult
-	body.pitch_input += primary.y * rotation_mult
+	#body.roll_input += primary.x * rotation_mult
+	#body.pitch_input += primary.y * rotation_mult
+	
+	# test disable headlook while sticking
+	#if abs(primary.y) > 0.1: 
+		#headlook_controller.temp_disabled = true
+	#else:
+		#headlook_controller.temp_disabled = false
 	
 	if movement_mode_controller.get_current_state_id() != "skate":
 		if ry: body.climb_input += tranlation_mult
@@ -156,8 +162,8 @@ func _on_right_input_down(action):
 		if movement_mode_controller.get_current_state_id() == "skate":
 			movement_mode_controller.enter_state("jumping")
 		elif movement_mode_controller.get_current_state_id() == "jumping":
-			movement_mode_controller.enter_state()
-			body.boost_up(0.01)
+			movement_mode_controller.enter_state("hover")
+			body.boost_up(0.002)
 		else:
 			headlook_controller.lean_boost = true
 	

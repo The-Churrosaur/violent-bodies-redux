@@ -3,8 +3,10 @@ extends Label3D
 
 func _on_vhud_button_tap_button_clicked():
 	
-	var spawner = LevelGlobals.level.bot_spawner
-	spawner.enabled = !spawner.enabled
+	var level = LevelGlobals.level
+	var spawner = level.bot_spawner
+	level.toggle_spawners()
+	
 	if spawner.enabled:
 		vhud_button_tap.label.text = "ENEMIES ENABLED"
 	else:

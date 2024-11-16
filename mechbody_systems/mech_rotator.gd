@@ -34,16 +34,17 @@ func _physics_process(delta):
 		rotation_target.look_at(target.global_position)
 
 
-func track_target(new_target, rotate_by_axis = false):
+func track_target(new_target):
+	print("mechrot: tracking new target. ", new_target)
 	target = new_target
 	limb_rotator.active = true
-	limb_rotator.rotate_by_axis = rotate_by_axis
+	limb_rotator.rotate_by_cross = false
 
 
-func track_match_target(new_match_target, rotate_by_axis = false):
+func track_match_target(new_match_target, rotate_by_cross = false):
 	match_target = new_match_target
 	limb_rotator.active = true
-	limb_rotator.rotate_by_axis = rotate_by_axis
+	limb_rotator.rotate_by_cross = rotate_by_cross
 	use_match_target = true
 
 
