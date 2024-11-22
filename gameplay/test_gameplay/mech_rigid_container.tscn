@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bwtsyqg37x6vq"]
+[gd_scene load_steps=14 format=3 uid="uid://bwtsyqg37x6vq"]
 
 [ext_resource type="PackedScene" uid="uid://dsh7i4eks64gc" path="res://mechbody/mechbody/mechbody.tscn" id="1_ji3mg"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/mech_rigid_container.gd" id="1_wghhh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bysrkagylo8yh" path="res://mechbody/mechbody/limb_physics/hand_bit.tscn" id="4_8vmbs"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/SeatJoint.gd" id="4_w4eir"]
 [ext_resource type="PackedScene" uid="uid://cf7icatnvo8eo" path="res://mechbody_systems/tool_grabbing/two_handed_joint.tscn" id="6_7ki1p"]
+[ext_resource type="PackedScene" uid="uid://b61atqrnwgrdt" path="res://my_xr_tools/xr_coordinate_waldo/xr_coordiante_waldo.tscn" id="8_tilp0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ldtqx"]
 friction = 0.0
@@ -151,6 +152,9 @@ visible = false
 
 [node name="PositionalPidController" parent="HandBitRight/Hand/LimbRotator" index="1"]
 p_tune = 1.0
+
+[node name="XRCoordianteWaldo" parent="." node_paths=PackedStringArray("xr_origin") instance=ExtResource("8_tilp0")]
+xr_origin = NodePath("../seatparent/dolly/XROrigin3D")
 
 [editable path="HandBitLeft"]
 [editable path="HandBitLeft/Hand/LimbRotator"]

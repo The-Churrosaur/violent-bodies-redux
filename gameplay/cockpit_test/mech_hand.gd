@@ -21,6 +21,7 @@ extends Node3D
 @export_category("Grabbing")
 @export var lerp_parent_threshold_sq = 0.5
 @export var lerp_parent_threshold_angle = PI/8
+@export var parent_to_handbit = true
 
 var grabbing_primary = false
 var grabbing_secondary = false
@@ -32,6 +33,10 @@ var hovering_area : MechGrabPoint = null
 # grabbable state flags
 enum STATE {RIGID, LERPING, FOLLOWING, NONE}
 var grabbable_state : STATE = STATE.NONE
+
+# grabbable -> hand bit
+#var transferred_colliders : Array[CollisionShape3D]
+
 
 
 #region ===== CALLBACKS =====
@@ -67,7 +72,7 @@ func _physics_process(delta):
 						rotation.z = arm.hand_reference.rotation.z
 				
 				
-				_parent_grabbable(delta)
+				_parent_grabbable()
 			
 			STATE.RIGID:
 				pass
@@ -215,6 +220,8 @@ func _grab_hovered_as_physics():
 
 func _drop_as_primary():
 	
+	_return_colliders(grabbable)
+	
 	if grabbable.grabbed_secondary: grabbable.secondary_grabber.drop_grabbable()
 	if grabbable.is_tool and grabbable.tool == tool_manager.current_tool: 
 		tool_manager.set_tool(tool_manager.current_index)
@@ -263,6 +270,25 @@ func _otherhand_dropped_secondary():
 
 
 
+func _transfer_colliders(grabbable : MechGrabbable):
+	var hand_bit = get_hand_bit()
+	for collider in grabbable.transfer_colliders:
+		collider.reparent(hand_bit.hand)
+		print("collider transferred: ", collider)
+
+
+func _return_colliders(grabbable : MechGrabbable):
+	for collider in grabbable.transfer_colliders:
+		collider.reparent(grabbable)
+
+
+# when grabbing is finalized (done lerping) 
+func _set_parented_locked():
+	grabbable_state = STATE.FOLLOWING
+	_parent_grabbable()
+	_transfer_colliders(grabbable)
+
+
 func _lerp_grabbable(delta):
 
 	var grab_point = grabbable.kinematic_grab_point
@@ -278,16 +304,20 @@ func _lerp_grabbable(delta):
 	var quat_dif = grab_point_quat.angle_to(self_quat)
 	
 	if distance_sq < lerp_parent_threshold_sq and quat_dif < lerp_parent_threshold_angle:
-		grabbable_state = STATE.FOLLOWING
+		_set_parented_locked()
 	
 	#if grab_point.global_transform.is_equal_approx(global_transform):
 		#grabbable_state = STATE.FOLLOWING
 
 
-func _parent_grabbable(delta):
+func _parent_grabbable():
 	var grab_point = grabbable.kinematic_grab_point
 	var grab_point_transform = grab_point.transform.orthonormalized().inverse()
-	grabbable.global_transform = global_transform * grab_point_transform
+	
+	if parent_to_handbit:
+		grabbable.global_transform = get_hand_bit().hand.global_transform * grab_point_transform
+	else:
+		grabbable.global_transform = global_transform * grab_point_transform
 
 
 #endregion

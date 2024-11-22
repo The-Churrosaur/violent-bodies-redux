@@ -1,0 +1,21 @@
+cockpit dom/sub
+
+cockpit parent
+cockpit projector
+
+button connected to a light
+make the whole thing in the cockpit parent 
+-- top layer coordintaes but under cockpit in editor
+
+ideal mvc
+do detection in the parent
+update view
+update mechbody
+
+
+do everything in parent
+simply render all meshinstances in projector
+
+build under parent
+parent has list of projections
+projections are duplicated at load then position set 

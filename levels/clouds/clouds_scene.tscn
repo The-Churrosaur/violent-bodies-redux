@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=23 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_n5fsb"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
@@ -19,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://cchgruq25tsm" path="res://levels/clouds/sky_dome.tscn" id="12_d33gl"]
 [ext_resource type="PackedScene" uid="uid://cdgfmtvu50t1c" path="res://gameplay/test_gameplay/training_bot_ground.tscn" id="14_ddrce"]
 [ext_resource type="PackedScene" uid="uid://dapy8e8aqf5pt" path="res://gameplay/test_gameplay/terrain/geometry.tscn" id="14_q6aba"]
-[ext_resource type="PackedScene" uid="uid://b61atqrnwgrdt" path="res://my_xr_tools/xr_coordinate_waldo/xr_coordiante_waldo.tscn" id="19_bbrlp"]
 
 [sub_resource type="Sky" id="Sky_74yib"]
 
@@ -157,10 +156,6 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Coc
 
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
-
-[node name="XRCoordianteWaldo" parent="." node_paths=PackedStringArray("xr_origin") instance=ExtResource("19_bbrlp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -365.587, 0)
-xr_origin = NodePath("../MechRigidContainer/seatparent/dolly/XROrigin3D")
 
 [connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
 [connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]

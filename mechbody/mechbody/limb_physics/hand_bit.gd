@@ -41,7 +41,7 @@ func _physics_process(delta):
 		target = mechbody.left_arm_targeter 
 	
 	anchor.global_transform = target.arm_target.global_transform
-	hand.global_rotation = target.arm_target.global_rotation
+	#hand.global_rotation = target.arm_target.global_rotation
 	
 	target.arm.target_node = hand
 	

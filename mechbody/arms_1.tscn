@@ -21,6 +21,7 @@ bones/2/scale = Vector3(1, 1, 1)
 process_priority = 1
 root_bone = &"BoneShoulder"
 tip_bone = &"BoneTip"
+override_tip_basis = false
 use_magnet = true
 magnet = Vector3(10, -10, 0)
 target_node = NodePath("../../../Node3D")

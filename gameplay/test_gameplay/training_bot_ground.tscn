@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cdgfmtvu50t1c"]
+[gd_scene load_steps=17 format=3 uid="uid://cdgfmtvu50t1c"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/training_bot.gd" id="1_voulj"]
 [ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_piwu0"]
@@ -13,11 +13,17 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7b3bx"]
 friction = 0.01
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
-radius = 3.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_amryb"]
+size = Vector3(3, 5, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5843n"]
+size = Vector3(3, 5, 3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7lbk"]
 albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
+radius = 3.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wigt3"]
 inherit_velocity_ratio = 0.818
@@ -33,11 +39,11 @@ material = ExtResource("5_cho7r")
 [node name="TrainingBotGround" type="RigidBody3D" node_paths=PackedStringArray("gun") groups=["SensorDetect"]]
 collision_layer = 34
 collision_mask = 34
-mass = 100.0
+mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_7b3bx")
 can_sleep = false
 script = ExtResource("1_voulj")
-impulse = 20.0
+impulse = 2.0
 slerp_speed = 4
 gun = NodePath("enemygun")
 
@@ -45,7 +51,10 @@ gun = NodePath("enemygun")
 boom_delay = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["SensorDetect"]]
-shape = SubResource("SphereShape3D_2g2oc")
+shape = SubResource("BoxShape3D_amryb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_5843n")
 
 [node name="mechmesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 2.28429)

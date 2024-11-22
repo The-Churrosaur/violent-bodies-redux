@@ -1,6 +1,10 @@
 class_name MechGrabbable
 extends RigidBody3D
 
+
+## list of collision shapes to be transferred to the hand while held
+@export var transfer_colliders: Array[CollisionShape3D]
+
 ## when grabbed, will be deactivated and parented at grab point
 @export var kinematic_hold = true
 
