@@ -157,9 +157,6 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Coc
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
-[connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
-[connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
-
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]
 [editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController"]

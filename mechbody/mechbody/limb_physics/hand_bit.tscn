@@ -65,7 +65,7 @@ mesh = SubResource("BoxMesh_oodyh")
 [node name="LimbRotator" parent="Hand" node_paths=PackedStringArray("body", "target") instance=ExtResource("2_mnakk")]
 body = NodePath("..")
 target = NodePath("../../Anchor")
-max_torque_impulse = 5.0
+max_torque_impulse = 20.0
 max_translation_k = 20.0
 constant_damp = 0.8
 rotation_deadzone = 0.0
@@ -73,7 +73,8 @@ translation_deadzone = 0.0
 central_recoil = false
 
 [node name="RotationalPidController" parent="Hand/LimbRotator" index="0"]
-p_tune = 0.4
+p_tune = 1.0
+d_tune = 0.1
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
 p_tune = 8.0
