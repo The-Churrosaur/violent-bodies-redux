@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=24 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_n5fsb"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
 [ext_resource type="PackedScene" uid="uid://notg23vl4d5l" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_gun.tscn" id="3_gyprs"]
+[ext_resource type="PackedScene" uid="uid://cbi836x5vwgeo" path="res://utils/remote_node_projector.tscn" id="3_j6thb"]
 [ext_resource type="PackedScene" uid="uid://dfqvdp77a4ugs" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_laser.tscn" id="3_jru3v"]
 [ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="3_xdm3k"]
@@ -18,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cchgruq25tsm" path="res://levels/clouds/sky_dome.tscn" id="12_d33gl"]
 [ext_resource type="PackedScene" uid="uid://cdgfmtvu50t1c" path="res://gameplay/test_gameplay/training_bot_ground.tscn" id="14_ddrce"]
 [ext_resource type="PackedScene" uid="uid://dapy8e8aqf5pt" path="res://gameplay/test_gameplay/terrain/geometry.tscn" id="14_q6aba"]
+[ext_resource type="PackedScene" uid="uid://b61atqrnwgrdt" path="res://my_xr_tools/xr_coordinate_waldo/xr_coordiante_waldo.tscn" id="19_bbrlp"]
 
 [sub_resource type="Sky" id="Sky_74yib"]
 
@@ -42,11 +44,19 @@ lean_skate_mult = 12
 
 [node name="Base" type="Node3D" parent="."]
 
+[node name="RemoteNodeProjector" parent="Base" node_paths=PackedStringArray("projection_reference", "project_children") instance=ExtResource("3_j6thb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 174.715, -385.115, -12.7265)
+projection_reference = NodePath("Marker3D")
+project_children = [NodePath("GrabbableGun")]
+
+[node name="Marker3D" type="Marker3D" parent="Base/RemoteNodeProjector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.424, 10.2539, 0)
+
+[node name="GrabbableGun" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, 0, 0)
+
 [node name="GrabbableGun2" parent="Base" instance=ExtResource("3_jru3v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -385.115, -12.7265)
-
-[node name="GrabbableGun" parent="Base" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 179.83, -385.115, -12.7265)
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
 
@@ -148,6 +158,10 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Coc
 [node name="Geometry" parent="." instance=ExtResource("14_q6aba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 
+[node name="XRCoordianteWaldo" parent="." node_paths=PackedStringArray("xr_origin") instance=ExtResource("19_bbrlp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -365.587, 0)
+xr_origin = NodePath("../MechRigidContainer/seatparent/dolly/XROrigin3D")
+
 [connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
 [connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
 
@@ -177,7 +191,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -388.556, 0)
 [editable path="MechRigidContainer/HandBitLeft/Hand/LimbRotator"]
 [editable path="MechRigidContainer/HandBitRight"]
 [editable path="MechRigidContainer/HandBitRight/Hand/LimbRotator"]
-[editable path="Base/GrabbableGun"]
-[editable path="Base/GrabbableGun/BasicGun"]
-[editable path="Base/GrabbableGun/BasicGun/stupidgun"]
+[editable path="Base/RemoteNodeProjector/GrabbableGun"]
+[editable path="Base/RemoteNodeProjector/GrabbableGun/BasicGun"]
+[editable path="Base/RemoteNodeProjector/GrabbableGun/BasicGun/stupidgun"]
 [editable path="Cloudsmesh"]

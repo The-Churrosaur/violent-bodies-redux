@@ -62,6 +62,7 @@ func _on_controller_button_released(action):
 
 
 func _on_grab_area_body_entered(body):
+	#print("grabber, grab area entered")
 	if grabbed_grabbable != null: return
 	if (body is MyXRGrabbable) and (detected_grabbable == null):
 		detected_grabbable = body

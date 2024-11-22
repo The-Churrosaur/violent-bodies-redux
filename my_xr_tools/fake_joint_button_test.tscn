@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxcokyr43ct1v"]
+
+[ext_resource type="Script" path="res://my_xr_tools/fake_joint_button.gd" id="1_i40gd"]
+[ext_resource type="PackedScene" uid="uid://drvjrx7jx7pwb" path="res://my_xr_tools/my_xr_grabbable.tscn" id="2_usgnp"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nj883"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5657y"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_js6v2"]
+margin = 0.005
+height = 0.05
+radius = 0.025
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8u8gm"]
+margin = 0.005
+height = 0.05
+radius = 0.025
+
+[node name="FakeJointButton" type="Node3D" node_paths=PackedStringArray("button_area", "button_anim", "button_grabbable")]
+script = ExtResource("1_i40gd")
+button_area = NodePath("Area3D")
+button_anim = NodePath("MeshInstance3D")
+button_grabbable = NodePath("MyXrGrabbable")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_nj883")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_5657y")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_js6v2")
+
+[node name="MyXrGrabbable" parent="." instance=ExtResource("2_usgnp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00878829, 0)
+freeze = true
+grabbable = false
+get_controller_input_while_hovered = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MyXrGrabbable"]
+shape = SubResource("CylinderShape3D_8u8gm")
+
+[connection signal="hovered" from="MyXrGrabbable" to="." method="_on_my_xr_grabbable_hovered"]

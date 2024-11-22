@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbi836x5vwgeo"]
+
+[ext_resource type="Script" path="res://utils/remote_node_projector.gd" id="1_icrlk"]
+
+[node name="RemoteNodeProjector" type="Node3D"]
+script = ExtResource("1_icrlk")

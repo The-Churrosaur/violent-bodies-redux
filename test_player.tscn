@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dlsarb7iw7bpi"]
+[gd_scene load_steps=16 format=3 uid="uid://dlsarb7iw7bpi"]
 
 [ext_resource type="Script" path="res://test_player.gd" id="1_bbutg"]
 [ext_resource type="PackedScene" uid="uid://dcpvwyws4b374" path="res://effects/post_process_anime_plane.tscn" id="2_vd27l"]
@@ -12,6 +12,10 @@
 [ext_resource type="Script" path="res://Label3D.gd" id="8_2vewp"]
 [ext_resource type="PackedScene" uid="uid://doksrptytk60j" path="res://assets/cockpit/controller_mockup.tscn" id="8_348w2"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="9_nimxn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jvub6"]
+margin = 0.005
+radius = 0.05
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fq2hl"]
 margin = 0.005
@@ -114,9 +118,20 @@ script = ExtResource("3_1jxnw")
 type = 1
 hand_grabber = NodePath("MyXrHandGrabber")
 
-[node name="MyXrHandGrabber" parent="XRController3DRight" node_paths=PackedStringArray("controller") instance=ExtResource("4_l6r5n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0575825)
+[node name="MyXrHandGrabber" parent="XRController3DRight" node_paths=PackedStringArray("controller", "grab_area") instance=ExtResource("4_l6r5n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.041544, 0.0808814)
 controller = NodePath("..")
+grab_area = NodePath("GrabArea2")
+
+[node name="GrabArea2" type="Area3D" parent="XRController3DRight/MyXrHandGrabber"]
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRController3DRight/MyXrHandGrabber/GrabArea2"]
+shape = SubResource("SphereShape3D_jvub6")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="XRController3DRight/MyXrHandGrabber/GrabArea2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00414073, 0.0323141, -0.0811234)
+shape = SubResource("SphereShape3D_fq2hl")
 
 [node name="FunctionPickup" parent="XRController3DRight" instance=ExtResource("4_mcp2j")]
 
@@ -136,7 +151,7 @@ visible = false
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="VelocityLabel4" type="Label3D" parent="XRController3DRight/RightHand/ControllerMockup/Node3D"]
-transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, -0.00159635, -0.0120227, -0.0506071)
+transform = Transform3D(1, 0, 0, 0, -8.9407e-08, 1, 0, -1, -8.9407e-08, -0.00159633, -0.0120227, -0.0506071)
 pixel_size = 0.0002
 modulate = Color(0, 1, 0, 1)
 outline_modulate = Color(0, 0, 0, 0)

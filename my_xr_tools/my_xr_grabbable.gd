@@ -152,10 +152,11 @@ func _disconnect_controller_input(controller):
 
 func _hover(grabber):
 	if !hoverable: return
+	print("grabbable hovered: ", grabber)
 	if get_controller_input_while_hovered:
 		controller = grabber.controller
-		if controller == null: return
-		_setup_controller_input(controller)
+		if controller != null: _setup_controller_input(controller)
+	hovered.emit(grabber)
 
 
 func _release_hover(grabber):
@@ -169,8 +170,9 @@ func _grab(grabber):
 	if !grabbable: return
 	is_grabbed = true
 	hand_grabber = grabber
-	controller = grabber.controller
-	_setup_controller_input(controller)
+	if get_controller_input:
+		controller = grabber.controller
+		if controller != null: _setup_controller_input(controller)
 	grabbed.emit(grabber)
 
 
