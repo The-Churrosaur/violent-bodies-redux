@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://bveg5x3g3b2g2"]
+
+[ext_resource type="PackedScene" uid="uid://c2p1lav7k6rqp" path="res://mechbody_systems/dynamic_tools/mech_grabbable.tscn" id="1_204kx"]
+[ext_resource type="Script" path="res://mechbody_systems/dynamic_tools/mech_grabbable_chopsticks.gd" id="2_kes3v"]
+[ext_resource type="PackedScene" uid="uid://dn13cscigbirg" path="res://gameplay/mechtools/MechChopsticksTool.tscn" id="2_mguhp"]
+[ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="3_55qlt"]
+[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="4_6088k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d57kk"]
+size = Vector3(0.1, 0.1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k3eb1"]
+size = Vector3(0.1, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wdc1r"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_kqbmy"]
+material = SubResource("StandardMaterial3D_wdc1r")
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1mdrg"]
+height = 0.2
+radial_segments = 10
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b2p77"]
+radius = 1.0
+height = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xq1n"]
+material = ExtResource("4_6088k")
+size = Vector3(2, 2, 2)
+
+[node name="MechGrabbable" node_paths=PackedStringArray("transfer_colliders", "kinematic_grab_point", "tool") instance=ExtResource("1_204kx")]
+top_level = true
+collision_layer = 33
+collision_mask = 33
+script = ExtResource("2_kes3v")
+transfer_colliders = [NodePath("CollisionShape3D")]
+kinematic_hold = false
+kinematic_grab_point = NodePath("PrimaryGrab")
+kinematic_lerp = 0.8
+is_tool = true
+tool = NodePath("MechChopsticksTool")
+
+[node name="JoltGeneric6DOFJoint3D" type="JoltGeneric6DOFJoint3D" parent="." index="0"]
+angular_motor_x/target_velocity = 0.0174533
+angular_motor_y/target_velocity = 0.0174533
+angular_spring_x/damping = 0.9
+node_a = NodePath("..")
+node_b = NodePath("../TopStick")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.450955, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.33759)
+shape = SubResource("BoxShape3D_d57kk")
+
+[node name="MechChopsticksTool" parent="." index="2" instance=ExtResource("2_mguhp")]
+
+[node name="PrimaryGrab" type="Marker3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.33759)
+mesh = SubResource("BoxMesh_k3eb1")
+
+[node name="TopStick" type="RigidBody3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-15, 1.36534, 3.89515)
+top_level = true
+collision_layer = 33
+collision_mask = 33
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TopStick" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.931)
+shape = SubResource("BoxShape3D_d57kk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TopStick" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77636e-15, 0, 0.931)
+mesh = SubResource("BoxMesh_k3eb1")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TopStick/MeshInstance3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.999968, -0.00801098, 0, 0.00801098, 0.999968, 0, 0.102615, 0)
+mesh = SubResource("PrismMesh_kqbmy")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." index="6"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.482, 0)
+mesh = SubResource("CylinderMesh_1mdrg")
+
+[node name="PrimaryGrabArea" parent="." index="7" node_paths=PackedStringArray("grabbable") instance=ExtResource("3_55qlt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.06929, -0.160362)
+grabbable = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PrimaryGrabArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57746, 0)
+shape = SubResource("CapsuleShape3D_b2p77")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PrimaryGrabArea/CollisionShape3D" index="0"]
+mesh = SubResource("BoxMesh_7xq1n")

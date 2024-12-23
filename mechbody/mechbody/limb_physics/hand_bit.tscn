@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bysrkagylo8yh"]
+[gd_scene load_steps=22 format=3 uid="uid://bysrkagylo8yh"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/limb_physics/hand_bit.gd" id="1_nifvo"]
 [ext_resource type="Texture2D" uid="uid://b6mum5co6l0o8" path="res://icon.svg" id="2_aml5g"]
@@ -7,8 +7,23 @@
 [ext_resource type="AudioStream" uid="uid://b7mn40wvdo1hr" path="res://assets/audio/thump.wav" id="3_5omky"]
 [ext_resource type="AudioStream" uid="uid://i0kc5cytbpol" path="res://assets/audio/42884__digifishmusic__electromechanics-6.wav" id="4_safnp"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ouvv3"]
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sk1rc"]
+size = Vector3(0.4, 0.2, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b0bne"]
+size = Vector3(0.4, 0.2, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a14qw"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_5japn"]
+material = SubResource("StandardMaterial3D_a14qw")
+size = Vector3(0.2, 0.2, 1)
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_663pm"]
-friction = 20.0
 rough = true
 bounce = 0.1
 absorbent = true
@@ -19,6 +34,18 @@ absorbent = true
 height = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_oodyh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_42r2n"]
+size = Vector3(0.4, 0.2, 7)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oti1d"]
+top_radius = 0.8
+bottom_radius = 0.8
+height = 0.2
+radial_segments = 10
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1ytc"]
+size = Vector3(0.4, 0.2, 5)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2k7lh"]
 radius = 1.0
@@ -36,15 +63,39 @@ script = ExtResource("1_nifvo")
 hand = NodePath("Hand")
 anchor = NodePath("Anchor")
 
+[node name="TopStick" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.011, -3.70747)
+top_level = true
+visible = false
+collision_layer = 0
+collision_mask = 32
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_ouvv3")
+continuous_cd = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TopStick"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.931)
+shape = SubResource("BoxShape3D_sk1rc")
+disabled = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TopStick"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+mesh = SubResource("BoxMesh_b0bne")
+skeleton = NodePath("../../Hand")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TopStick/MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 0.999968, -0.00801098, 0, 0.00801098, 0.999968, 0, 0.102615, 0)
+mesh = SubResource("PrismMesh_5japn")
+
 [node name="Hand" type="RigidBody3D" parent="."]
-collision_layer = 40
+collision_layer = 8
 collision_mask = 40
 physics_material_override = SubResource("PhysicsMaterial_663pm")
 gravity_scale = 0.0
 continuous_cd = true
 max_contacts_reported = 2
 contact_monitor = true
-angular_damp = 10.0
+angular_damp = 25.789
 script = ExtResource("2_coggj")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Hand"]
@@ -65,7 +116,7 @@ mesh = SubResource("BoxMesh_oodyh")
 [node name="LimbRotator" parent="Hand" node_paths=PackedStringArray("body", "target") instance=ExtResource("2_mnakk")]
 body = NodePath("..")
 target = NodePath("../../Anchor")
-max_torque_impulse = 20.0
+max_torque_impulse = 80.0
 max_translation_k = 20.0
 constant_damp = 0.8
 rotation_deadzone = 0.0
@@ -73,8 +124,8 @@ translation_deadzone = 0.0
 central_recoil = false
 
 [node name="RotationalPidController" parent="Hand/LimbRotator" index="0"]
-p_tune = 1.0
-d_tune = 0.1
+p_tune = 0.4
+i_tune = 0.01
 
 [node name="PositionalPidController" parent="Hand/LimbRotator" index="1"]
 p_tune = 8.0
@@ -82,17 +133,56 @@ i_tune = 0.5
 max_i = 50.0
 log_size = 5
 
+[node name="Chopstick" type="Node3D" parent="Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.46315)
+visible = false
+
+[node name="ChopstickJoint" type="JoltGeneric6DOFJoint3D" parent="Hand/Chopstick"]
+linear_limit_spring_x/enabled = true
+linear_limit_spring_y/enabled = true
+linear_limit_spring_z/enabled = true
+linear_spring_x/frequency = 100.0
+linear_spring_x/damping = 2.0
+linear_spring_y/frequency = 100.0
+linear_spring_y/damping = 2.0
+linear_spring_z/frequency = 100.0
+linear_spring_z/damping = 2.0
+angular_limit_x/upper = 0.523599
+angular_limit_x/lower = -0.174533
+angular_motor_x/enabled = true
+angular_motor_x/target_velocity = -0.174533
+angular_motor_x/max_torque = 10.0
+node_a = NodePath("../..")
+node_b = NodePath("../../../TopStick")
+enabled = false
+exclude_nodes_from_collision = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03303, 1.73861)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Hand/Chopstick"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+mesh = SubResource("BoxMesh_42r2n")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Hand/Chopstick"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -1.77636e-15, 0.635855, 1.88277)
+mesh = SubResource("CylinderMesh_oti1d")
+skeleton = NodePath("../../../TopStick")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.46315)
+shape = SubResource("BoxShape3D_j1ytc")
+disabled = true
+
 [node name="Anchor" type="RigidBody3D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 0
 freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Anchor"]
-visible = false
 shape = SubResource("SphereShape3D_2k7lh")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Anchor"]
-visible = false
 mesh = SubResource("SphereMesh_wgu1x")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Anchor"]
@@ -100,6 +190,10 @@ stream = ExtResource("4_safnp")
 volume_db = -0.647
 max_db = -8.585
 autoplay = true
+
+[node name="Label3D" type="Label3D" parent="Anchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73504, 0)
+text = "adsfdasf"
 
 [connection signal="body_entered" from="Hand" to="Hand" method="_on_body_entered"]
 

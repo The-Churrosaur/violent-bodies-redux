@@ -7,7 +7,7 @@
 
 [node name="GrabberTool" type="Node3D"]
 script = ExtResource("1_v1yq2")
-tool_name = "Grabber"
+tool_name = "Chopsticks"
 
 [node name="MyMechHandGrabber" parent="." node_paths=PackedStringArray("grab_area", "hold_reference") instance=ExtResource("2_2ewf0")]
 grab_area = NodePath("Area3D")

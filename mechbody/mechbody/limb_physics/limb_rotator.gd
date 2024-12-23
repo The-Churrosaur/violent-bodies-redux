@@ -143,8 +143,11 @@ func _apply_translation():
 	var length = towards.length()
 	if length < translation_deadzone: return
 	var k = min(ppid.solve(length), max_translation_k)
-	#if debug: print("TRANS K: ", k)
-	
+	if debug: print("TRANS K: ", k)
+	#var k = ppid.solve(length)
+	var label_3d = $"../../Anchor/Label3D"
+	label_3d.text = "TRANKS: " + str(k)
+
 	# damping motion relative to parent body
 	var relative_vel = recoil_body.linear_velocity - body.linear_velocity
 	var d = relative_vel * constant_damp
@@ -157,6 +160,8 @@ func _apply_translation():
 	
 	#if debug: print("DISTANCE: ", length)
 	#if debug: print("IMPULSE: ", impulse.length())
+	#label_3d.text = "IMPULSE: " + str(impulse.length())
+	label_3d.text = "D: " + str(d.length())
 	if debug: print("D: ", d.length())
 	
 	body.apply_central_impulse(impulse + d)

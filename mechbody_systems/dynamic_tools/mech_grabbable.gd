@@ -32,3 +32,10 @@ var grabbed_secondary = false
 
 var primary_grabber : MechHand
 var secondary_grabber : MechHand
+
+
+func start_grabbing():
+	pass
+
+func finish_grabbing():
+	pass 

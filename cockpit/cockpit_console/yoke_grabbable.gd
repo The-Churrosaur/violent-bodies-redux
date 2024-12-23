@@ -17,7 +17,7 @@ func _physics_process(delta):
 
 func _hover(grabber : MyXRHandGrabber):
 	super(grabber)
-	if controller != null: grabber.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.1, 0)
+	if grabber.controller != null: grabber.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.1, 0)
 
 
 func _grab(grabber : MyXRHandGrabber):

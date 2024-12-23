@@ -139,16 +139,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.44749)
 mechbody = NodePath("../Mechbody")
 other_hand = NodePath("../HandBitRight")
 
-[node name="HandBitRight" parent="." node_paths=PackedStringArray("mechbody", "other_hand", "joints") instance=ExtResource("4_8vmbs")]
+[node name="HandBitRight" parent="." node_paths=PackedStringArray("mechbody", "other_hand", "current_joint", "joints") instance=ExtResource("4_8vmbs")]
 mechbody = NodePath("../Mechbody")
 other_hand = NodePath("../HandBitLeft")
 hands = 1
-joints = [NodePath("Hand/JoltGeneric6DOFJoint3D")]
+current_joint = NodePath("Hand/JoltGeneric6DOFJoint3D2")
+joints = [NodePath("Hand/JoltGeneric6DOFJoint3D2")]
 
-[node name="JoltGeneric6DOFJoint3D" parent="HandBitRight/Hand" index="3" instance=ExtResource("6_7ki1p")]
+[node name="JoltGeneric6DOFJoint3D2" parent="HandBitRight/Hand" index="0" instance=ExtResource("6_7ki1p")]
+linear_limit_x/upper = 1.0
+linear_limit_x/lower = 1.0
+linear_limit_y/upper = 1.0
+linear_limit_y/lower = 1.0
+linear_limit_z/upper = 1.0
+linear_limit_z/lower = 1.0
+linear_limit_spring_x/frequency = 10.0
+linear_limit_spring_y/frequency = 10.0
+linear_limit_spring_z/frequency = 10.0
+angular_limit_z/enabled = false
 node_a = NodePath("..")
 node_b = NodePath("../../../HandBitLeft/Hand")
-visible = false
 
 [node name="PositionalPidController" parent="HandBitRight/Hand/LimbRotator" index="1"]
 p_tune = 1.0

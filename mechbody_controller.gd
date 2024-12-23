@@ -59,6 +59,9 @@ func _physics_process(delta):
 	var lx = _get_left_input("ax_button")
 	var ly = _get_left_input("by_button")
 	
+	var rsqueeze = _get_right_input("grip")
+	var lsqueeze = _get_left_input("grip")
+	
 	# STICK MOVEMENT
 	
 	body.front_input += secondary.y * tranlation_mult
@@ -101,9 +104,14 @@ func _physics_process(delta):
 		
 		#body.legbody.physics_material_override.friction = 1.1 - max(abs(secondary.y), abs(secondary.x))
 		
-		var fric = 0.2
+		var fric = 0.4
 		if max(abs(secondary.y), abs(secondary.x)) > 0.1: fric = 0
 		body.legbody.physics_material_override.friction = fric
+	#
+	#if rsqueeze >= 0.9:
+		#body.right_hand_bit.limb_rotator.max_torque_impulse = 40
+	#else:
+		#body.right_hand_bit.limb_rotator.max_torque_impulse = 20
 
 
 func _on_input_down(action, controller):

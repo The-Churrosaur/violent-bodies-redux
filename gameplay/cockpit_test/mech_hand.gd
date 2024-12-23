@@ -50,9 +50,9 @@ func _ready():
 func _physics_process(delta):
 	# keeps self parented to hand
 	# just testing
-	hand_reference_tracker.global_transform = arm.hand_reference.global_transform
-	global_transform = hand_reference_tracker.global_transform
-	#global_transform = get_hand_bit().hand.global_transform
+	#hand_reference_tracker.global_transform = arm.hand_reference.global_transform
+	#global_transform = hand_reference_tracker.global_transform
+	global_transform = get_hand_bit().hand.global_transform
 	#trigger_tool()
 	#scale = Vector3.ONE
 	
@@ -66,10 +66,17 @@ func _physics_process(delta):
 			
 			STATE.FOLLOWING:
 				
-				if grabbable.grabbed_secondary:
+				if grabbing_primary and grabbable.grabbed_secondary:
 					if other_hand != null: 
+						#
 						look_at(other_hand.global_position)
-						rotation.z = arm.hand_reference.rotation.z
+						#rotation.z = arm.hand_reference.rotation.z
+						#arm_targeter.alt_lookat_target = other_hand
+						pass
+				
+				else:
+					#arm_targeter.alt_lookat_target = null
+					pass
 				
 				
 				_parent_grabbable()
@@ -285,6 +292,8 @@ func _return_colliders(grabbable : MechGrabbable):
 # when grabbing is finalized (done lerping) 
 func _set_parented_locked():
 	grabbable_state = STATE.FOLLOWING
+	grabbable.freeze = true
+	grabbable.finish_grabbing()
 	_parent_grabbable()
 	_transfer_colliders(grabbable)
 

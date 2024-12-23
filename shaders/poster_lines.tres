@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=51 format=3 uid="uid://il23fnrm68va"]
+[gd_resource type="VisualShader" load_steps=53 format=3 uid="uid://il23fnrm68va"]
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_tk6qu"]
 source = 5
@@ -130,8 +130,8 @@ source = 5
 op_type = 0
 
 [sub_resource type="Curve" id="Curve_vn2dg"]
-_data = [Vector2(0, 0), 0.0, -0.249031, 0, 0, Vector2(0.0989711, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 0.8), 0.0, 0.0, 0, 0, Vector2(0.5, 0.8), 0.0, 0.0, 1, 0, Vector2(0.50001, 1), 0.0, 0.0, 0, 0]
-point_count = 5
+_data = [Vector2(0, 0), 0.0, -0.249031, 0, 0, Vector2(1e-05, 0.768633), 0.0, 0.0, 0, 0, Vector2(0.5, 0.8), 0.0627355, 0.0, 1, 0, Vector2(0.50001, 1), 0.0, 0.0, 0, 0]
+point_count = 4
 metadata/_snap_enabled = true
 
 [sub_resource type="CurveTexture" id="CurveTexture_ou5xo"]
@@ -144,6 +144,12 @@ texture = SubResource("CurveTexture_ou5xo")
 parameter_name = "lambert_weigt"
 default_value_enabled = true
 default_value = 0.1
+
+[sub_resource type="VisualShaderNodeCurveTexture" id="VisualShaderNodeCurveTexture_5m2kv"]
+texture = SubResource("CurveTexture_ou5xo")
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_kk5kh"]
+input_name = "specular"
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_maofu"]
 input_name = "attenuation"
@@ -159,7 +165,7 @@ operator = 2
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx, shadows_disabled;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_disabled, shadows_disabled;
 
 uniform sampler2D Albedo : filter_nearest;
 uniform vec4 ColorParameter : source_color;
@@ -385,6 +391,7 @@ void light() {
 
 }
 "
+modes/specular = 2
 flags/shadows_disabled = true
 nodes/fragment/0/position = Vector2(2040, 260)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_hr6a5")
@@ -485,4 +492,8 @@ nodes/light/42/node = SubResource("VisualShaderNodeCurveTexture_4qu4o")
 nodes/light/42/position = Vector2(-700, -320)
 nodes/light/43/node = SubResource("VisualShaderNodeFloatParameter_3uu2h")
 nodes/light/43/position = Vector2(-620, 120)
-nodes/light/connections = PackedInt32Array(2, 0, 4, 0, 3, 0, 4, 1, 7, 0, 8, 0, 6, 0, 7, 1, 8, 0, 11, 1, 10, 0, 11, 0, 21, 0, 22, 1, 5, 0, 22, 0, 22, 0, 8, 1, 33, 0, 34, 2, 4, 0, 32, 1, 11, 0, 0, 0, 41, 0, 34, 0, 4, 0, 42, 0, 32, 0, 7, 0, 42, 0, 32, 0, 43, 0, 32, 2)
+nodes/light/44/node = SubResource("VisualShaderNodeCurveTexture_5m2kv")
+nodes/light/44/position = Vector2(300, -500)
+nodes/light/45/node = SubResource("VisualShaderNodeInput_kk5kh")
+nodes/light/45/position = Vector2(-80, -400)
+nodes/light/connections = PackedInt32Array(2, 0, 4, 0, 3, 0, 4, 1, 7, 0, 8, 0, 6, 0, 7, 1, 8, 0, 11, 1, 21, 0, 22, 1, 5, 0, 22, 0, 22, 0, 8, 1, 33, 0, 34, 2, 4, 0, 32, 1, 11, 0, 0, 0, 41, 0, 34, 0, 4, 0, 42, 0, 32, 0, 7, 0, 42, 0, 32, 0, 43, 0, 32, 2, 10, 0, 11, 0, 45, 0, 44, 0)

@@ -35,6 +35,9 @@ func _on_input_down(action, controller):
 		stick_grabbed.emit(controller)
 
 
+func _on_float_changed(action : String, value : float, controller : MyXRController):
+	pass
+
 func _on_input_up(action, controller):
 	super(action, controller)
 	
@@ -50,5 +53,6 @@ func _on_input_up(action, controller):
 		
 		
 		stick_released.emit(controller)
-	
-	
+
+func _physics_process(delta):
+	pass
