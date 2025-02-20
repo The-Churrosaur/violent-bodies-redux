@@ -189,6 +189,3 @@ func _target_lost(body):
 	sensor_display.text = "sensor lost new target: " + str(body)
 	
 	_new_target(body)
-
-
-

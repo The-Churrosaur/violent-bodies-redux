@@ -41,5 +41,3 @@ func draw():
 	# call
 	mesh.clear_surfaces()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINE_STRIP, surface_array)
-
-

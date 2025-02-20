@@ -54,7 +54,7 @@ func predict(enemy_body : PhysicsBody3D):
 		# if error increases over time, return no solution
 		var current_error = e_p.length_squared()
 		if last_error != null and last_error < current_error: 
-			print("collision error increasing, no solution")
+			#print("collision error increasing, no solution")
 			return null
 		last_error = current_error
 		

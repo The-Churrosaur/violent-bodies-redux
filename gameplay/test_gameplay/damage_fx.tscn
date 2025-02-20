@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8k6oppug00w8"]
+[gd_scene load_steps=8 format=3 uid="uid://c8k6oppug00w8"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/damage_fx.gd" id="1_nb58v"]
+[ext_resource type="PackedScene" uid="uid://d0jdcfqgvui6p" path="res://effects/good_smoke.tscn" id="2_5go8v"]
 
 [sub_resource type="Gradient" id="Gradient_mhaqi"]
 offsets = PackedFloat32Array(0, 0.322115, 0.995192)
@@ -11,8 +12,8 @@ gradient = SubResource("Gradient_mhaqi")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4led3"]
 inherit_velocity_ratio = 0.773
-initial_velocity_min = 50.0
-initial_velocity_max = 200.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 2.0
@@ -33,10 +34,13 @@ script = ExtResource("1_nb58v")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 15
+amount = 30
 lifetime = 0.2
 one_shot = true
 explosiveness = 1.0
 transform_align = 2
 process_material = SubResource("ParticleProcessMaterial_4led3")
 draw_pass_1 = SubResource("SphereMesh_nkf0r")
+
+[node name="bubbling" parent="." instance=ExtResource("2_5go8v")]
+amount = 1

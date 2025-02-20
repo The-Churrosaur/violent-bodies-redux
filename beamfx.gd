@@ -3,6 +3,7 @@ class_name Sword
 extends MechTool
 
 
+@export var recoil = 10
 @export var particles :Array[GPUParticles3D]
 @export var controller_action = "trigger_click"
 
@@ -38,12 +39,13 @@ func on_controller_input_released(action):
 func _on_area_3d_area_entered(area):
 	if area.is_in_group("laser"):
 		if tool_active:
-			grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
+			if grabbable_controller.controller != null:
+				grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
+			_recoil()
 	else:
 		if tool_active: 
 			#grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
 			pass
-
 
 
 # PUBLIC -----------------------------------------------------------------------
@@ -73,4 +75,7 @@ func _power_off():
 	damage_area.monitorable = false
 
 
-
+func _recoil():
+	var bit : HandBit = hand.get_hand_bit()
+	var impulse = bit.hand.linear_velocity * -1 * recoil
+	bit.hand.apply_impulse(impulse, $RecoilPoint.global_position) # TODO

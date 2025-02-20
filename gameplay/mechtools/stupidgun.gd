@@ -122,7 +122,7 @@ func _set_projectile():
 	bullet.global_transform = muzzle.global_transform
 	bullet.global_rotation = global_rotation
 	bullet.launch_velocity = launching_rigidbody.linear_velocity
-	$Label3D.text = str(variant_reservior.count)
+	$Label3D.text = str(variant_reservior.index)
 
 	#print("applying bullet impulse: ", launch_force)
 	#bullet.launched_velocity = launching_rigidbody.linear_velocity
@@ -131,7 +131,3 @@ func _set_projectile():
 	#await get_tree().physics_frame
 	#await get_tree().physics_frame
 	#print(bullet.linear_velocity.length())
-
-
-
-

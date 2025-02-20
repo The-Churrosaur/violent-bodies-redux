@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://11c031wphmm0"]
+[gd_scene load_steps=14 format=3 uid="uid://11c031wphmm0"]
 
 [ext_resource type="Script" path="res://gameplay/cockpit_test/cockpit.gd" id="1_wnyec"]
 [ext_resource type="ArrayMesh" uid="uid://d33xgs6swlxjo" path="res://assets/cockpit/cockpit.obj" id="2_cbenv"]
 [ext_resource type="PackedScene" uid="uid://c6mitjbba156w" path="res://gameplay/cockpit_test/handles_ik.tscn" id="3_x8qfj"]
+[ext_resource type="PackedScene" uid="uid://d3w0j50u1q2wp" path="res://cockpit/handstick/hand_stick.tscn" id="4_s5u2g"]
 [ext_resource type="PackedScene" uid="uid://bwgffr50u1d7o" path="res://cockpit/cockpit_console/yoke_grabbable.tscn" id="5_8uayl"]
 [ext_resource type="PackedScene" uid="uid://doksrptytk60j" path="res://assets/cockpit/controller_mockup.tscn" id="5_l0hp6"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="6_6ogcc"]
@@ -46,6 +47,9 @@ visible = false
 mesh = SubResource("CylinderMesh_1lqo6")
 
 [node name="Handles" type="Node3D" parent="."]
+
+[node name="HandStick" parent="Handles" instance=ExtResource("4_s5u2g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 
 [node name="handlesIKLeft" parent="Handles" node_paths=PackedStringArray("handle") instance=ExtResource("3_x8qfj")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.4, 0.684, -2.306)
@@ -113,6 +117,9 @@ font_size = 25
 
 [node name="handles_new" parent="Handles/YokeGrabbableLeft" instance=ExtResource("7_llkvk")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.137, 0, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Handles/YokeGrabbableLeft"]
+remote_path = NodePath("../../HandStick/Stick")
 
 [node name="handlesIKRight" parent="Handles" node_paths=PackedStringArray("handle") instance=ExtResource("3_x8qfj")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.4, 0.681, -2.314)
@@ -184,3 +191,5 @@ script = ExtResource("7_m65vc")
 [node name="Blockpitng" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31182, 0.834726)
 mesh = ExtResource("10_3vg7a")
+
+[editable path="Handles/HandStick"]

@@ -28,4 +28,3 @@ func enter_state():
 
 func exit_state():
 	super()
-

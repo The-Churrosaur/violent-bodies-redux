@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dapy8e8aqf5pt"]
+[gd_scene load_steps=17 format=3 uid="uid://dapy8e8aqf5pt"]
 
 [ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="1_u72lw"]
 [ext_resource type="Script" path="res://gameplay/test_gameplay/terrain/multimesh_collider_tool.gd" id="2_pssf8"]
 [ext_resource type="Texture2D" uid="uid://ctn6q2p4ft56d" path="res://assets/shiptex.png" id="3_mcwns"]
+[ext_resource type="Texture2D" uid="uid://0uumhs25ky4d" path="res://assets.png" id="3_tpr4g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vbil5"]
 albedo_texture = ExtResource("3_mcwns")
@@ -21,12 +22,13 @@ buffer = PackedFloat32Array(0, 0, -3.65626, -71.8729, 0, 3.65626, 0, 466.709, 3.
 [sub_resource type="BoxShape3D" id="BoxShape3D_r0m54"]
 size = Vector3(10, 40, 10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1lmve"]
-albedo_texture = ExtResource("3_mcwns")
-uv1_scale = Vector3(100, 100, 100)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vkwc"]
+albedo_color = Color(1, 0.670588, 1, 1)
+albedo_texture = ExtResource("3_tpr4g")
+uv1_scale = Vector3(50, 50, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_k8jgp"]
-material = SubResource("StandardMaterial3D_1lmve")
+material = SubResource("StandardMaterial3D_4vkwc")
 size = Vector3(2000, 200, 2000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m87jg"]
@@ -938,6 +940,7 @@ shape = SubResource("BoxShape3D_r0m54")
 
 [node name="car" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.6997)
+visible = false
 mesh = SubResource("BoxMesh_oj8oc")
 
 [node name="MultiMeshInstance3D3" type="MultiMeshInstance3D" parent="."]
@@ -945,6 +948,7 @@ visible = false
 multimesh = SubResource("MultiMesh_shynl")
 
 [node name="human" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_cc2ly")
 
 [node name="MultiMeshInstance3D4" type="MultiMeshInstance3D" parent="."]

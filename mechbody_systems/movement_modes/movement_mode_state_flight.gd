@@ -28,4 +28,3 @@ func exit_state():
 
 func can_enter() -> bool :
 	return true
-

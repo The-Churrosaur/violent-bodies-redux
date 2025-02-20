@@ -191,7 +191,7 @@ render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specul
 
 
 // Varyings
-varying float ParticleLifetime;
+varying float var_ParticleLifetime;
 
 uniform float x_divide;
 uniform float wave_divide;
@@ -277,7 +277,7 @@ void vertex() {
 
 
 // VaryingSetter:14
-	ParticleLifetime = n_out13p2;
+	var_ParticleLifetime = n_out13p2;
 
 
 }

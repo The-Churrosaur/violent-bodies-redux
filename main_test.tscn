@@ -156,7 +156,6 @@ player = NodePath("../../MechRigidContainer/Mechbody")
 [node name="BotSpawner" parent="Base" node_paths=PackedStringArray("bot_target") instance=ExtResource("10_4e2ph")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7019, -25.8647, -403.568)
 bot_target = NodePath("../../MechRigidContainer/Mechbody")
-enabled = false
 
 [node name="Geometry" parent="Base" instance=ExtResource("11_hlgp2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -258.479, 0)
@@ -170,5 +169,9 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 603.5, -25.8127, 330.089)
 player_target = NodePath("../MechRigidContainer/Mechbody")
 
 [editable path="MechRigidContainer"]
+[editable path="MechRigidContainer/HandBitLeft"]
+[editable path="MechRigidContainer/HandBitLeft/Hand/LimbRotator"]
+[editable path="MechRigidContainer/HandBitRight"]
+[editable path="MechRigidContainer/HandBitRight/Hand/LimbRotator"]
 [editable path="Cloudsmesh"]
 [editable path="Cloudsmesh2"]

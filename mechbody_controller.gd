@@ -36,6 +36,10 @@ extends XRInputProcessor
 var alt_look = true
 var headlook_hold = false
 
+var pitch_assist_input = 0
+var yaw_assist_input = 0
+var roll_assist_input = 0
+
 
 
 # CALLBACKS ========================================================================================

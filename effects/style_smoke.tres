@@ -104,7 +104,7 @@ render_mode blend_mix, depth_draw_always, cull_back, diffuse_lambert, specular_s
 
 
 // Varyings
-varying float ParticleLifetime;
+varying float var_ParticleLifetime;
 
 uniform float Fresnel = 1;
 uniform float CrackMovementSpeed = 1;
@@ -123,7 +123,7 @@ void vertex() {
 
 
 // VaryingSetter:2
-	ParticleLifetime = n_out3p2;
+	var_ParticleLifetime = n_out3p2;
 
 
 }
@@ -204,7 +204,7 @@ void fragment() {
 
 
 // VaryingGetter:27
-	float n_out27p0 = ParticleLifetime;
+	float n_out27p0 = var_ParticleLifetime;
 
 
 // CurveTexture:29

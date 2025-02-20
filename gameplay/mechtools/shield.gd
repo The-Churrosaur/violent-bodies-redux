@@ -35,4 +35,3 @@ func _shield_off():
 	mesh_instance_3d.visible = false
 	area_3d.monitorable = false
 	powered = false
-

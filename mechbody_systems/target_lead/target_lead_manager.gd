@@ -46,4 +46,3 @@ func set_new_weapon(weapon : BasicMechGun):
 	current_weapon = weapon
 	lead_computer.muzzle_reference = weapon.muzzle
 	lead_computer.projectile_velocity = weapon.get_muzzle_velocity()
-

@@ -62,4 +62,3 @@ func exit_state():
 	mechbody.yaw_mult = 1.0
 	
 	mechbody.angular_damp = 2
-

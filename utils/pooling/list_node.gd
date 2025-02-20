@@ -4,4 +4,4 @@ extends RefCounted
 
 var data
 var next : ListNode
-
+var index = 0

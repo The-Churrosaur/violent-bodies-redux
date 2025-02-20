@@ -14,10 +14,12 @@ extends RigidBody3D
 @onready var health = $HealthModule
 @onready var mechmesh = $mechmesh
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
+@onready var lead_computer = $LeadComputer
 
 
 var r = RandomNumberGenerator.new()
 
+var spawner
 var destroyed = false
 
 
@@ -32,33 +34,48 @@ func _process(delta):
 
 func _physics_process(delta):
 	
-	apply_central_impulse(-transform.basis.z * impulse * delta)
-	
 	
 	if player == null : return
 	
-	$looker.look_at(player.global_position)
+	#$looker.look_at(player.global_position)
+	var target_pos = lead_computer.predict(player)
+	if target_pos != null: $looker.look_at(target_pos)
+	else: $looker.look_at(player.global_position)
 	
 	var a = Quaternion(transform.basis)
 	var b = Quaternion($looker.global_transform.basis)
 	var c = a.slerp(b, slerp_speed * delta)
 	transform.basis = Basis(c)
 	
+	#global_transform = global_transform.interpolate_with($looker.global_transform, slerp_speed * delta)
+	
 	#print("drone ", linear_velocity)
+	
+	#if global_position.distance_squared_to(player.global_position) < 1000:
+		#apply_central_impulse(transform.basis.z * impulse * delta * 50)
+	#else:
+		#apply_central_impulse(-transform.basis.z * impulse * delta)
+	apply_central_impulse(-transform.basis.z * impulse * delta)
 	
 
 
 func _on_timer_timeout():
 	#apply_impulse(Vector3(r.randf(), r.randf(), r.randf()) * impulse)
 	#jitter_timer.start(1 + r.randf())
+	#var impact = lead_computer.predict(player)
+	#$looker.look_at(impact)
 	pass
 	
 
 
 func _on_shooter_timer_timeout():
-	gun.trigger()
+	gun.pull_trigger()
 	apply_impulse(-transform.basis.z * impulse * 2)
 	shoot_timer.start(1 + r.randf())
+	
+	await get_tree().create_timer(0.3).timeout
+	gun.release_trigger()
+	
 
 
 func _on_area_3d_area_entered(area):
@@ -78,6 +95,8 @@ func _damage(amount = 10):
 func explode():
 	if destroyed: return
 	destroyed = true
+	
+	spawner.bots -= 1
 	
 	freeze = true
 	mechmesh.visible = false

@@ -34,4 +34,3 @@ func on_mask_collider_area_exited(area):
 	if area is HeadPointer: 
 		masked == false
 		headlook_controller.temp_disabled = false
-

@@ -25,4 +25,3 @@ func _physics_process(delta):
 	camera_position.position = headset.position
 	
 	#print("waldo position... ", right_controller_position.global_position)
-

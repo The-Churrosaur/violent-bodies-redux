@@ -11,4 +11,3 @@ func play_fx():
 func stop_fx():
 	smoke_puff.emitting =false
 	shockwave.emitting = false
-

@@ -8,9 +8,12 @@ extends Node3D
 @export var roll_disabled = false
 @export var yaw_disabled = false
 @export var lean_boost = false
+@export var lean_assist = true
 
 @export_group("references")
 @export var body : MechBody
+@export var body_controller : MechbodyController
+@export var hand_stick : HandStick
 @export var headset_local : HeadsetLocalTransform
 # look rotation / movement is in relation to this node 
 @export var cockpit_headset_reference : Node3D
@@ -65,7 +68,16 @@ func _physics_process(delta):
 	var x = headset_local.rotation.x
 	var y = headset_local.rotation.y
 	
-	if abs(y) > look_yaw:
+	if lean_assist:
+		hand_stick.pitch_assist_input = x
+		hand_stick.yaw_assist_input = y
+		hand_stick.roll_assist_input = get_headset_xz().x * lean_roll_mult
+		
+		return
+		#TODO
+	
+	
+	if abs(y) > look_yaw: 
 		body.yaw_input -= y * look_mult
 	
 	
@@ -133,4 +145,3 @@ func _on_head_velocity_tracker_timeout():
 	var head_current_position = headset_local.position
 	if head_last_position == null: head_last_position = head_current_position
 	head_velocity = head_current_position - head_last_position
-

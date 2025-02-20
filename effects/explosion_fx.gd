@@ -23,6 +23,3 @@ func start_explosion_sequence():
 
 func _on_nova_finished():
 	emit_signal("explosion_ended")
-
-
-

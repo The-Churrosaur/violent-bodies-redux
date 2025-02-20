@@ -23,5 +23,3 @@ func _add_shapes():
 		body.add_child(copy)
 		copy.owner = get_tree().edited_scene_root
 		copy.transform = transform
-
-

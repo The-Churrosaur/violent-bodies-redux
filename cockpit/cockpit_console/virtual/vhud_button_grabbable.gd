@@ -36,4 +36,3 @@ func _press():
 func _release():
 	animation_player.play("release")
 	
-

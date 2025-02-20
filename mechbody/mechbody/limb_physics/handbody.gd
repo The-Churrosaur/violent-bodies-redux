@@ -15,4 +15,3 @@ func _on_body_entered(body):
 	await get_tree().create_timer(1.0).timeout
 	bonk_enabled = true
 	
-

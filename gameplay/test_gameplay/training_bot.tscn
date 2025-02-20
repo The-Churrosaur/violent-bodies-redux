@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c38fl22da0jew"]
+[gd_scene load_steps=15 format=3 uid="uid://c38fl22da0jew"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/training_bot.gd" id="1_qefqv"]
 [ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_7u7ub"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bisjoacj4bgel" path="res://gameplay/mechtools/enemystupidgun.tscn" id="8_62xk6"]
 [ext_resource type="PackedScene" uid="uid://c8k6oppug00w8" path="res://gameplay/test_gameplay/damage_fx.tscn" id="9_s1n2a"]
 [ext_resource type="AudioStream" uid="uid://b0hek6a22ax66" path="res://assets/audio/269064__mickboere__jet-loop-01.wav" id="10_0joy1"]
+[ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="11_6hi4e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
 radius = 3.0
@@ -32,6 +33,8 @@ mass = 100.0
 gravity_scale = 0.0
 can_sleep = false
 script = ExtResource("1_qefqv")
+impulse = 1000.0
+slerp_speed = 10
 gun = NodePath("enemygun")
 
 [node name="explosionFX" parent="." instance=ExtResource("2_7u7ub")]
@@ -49,7 +52,6 @@ surface_material_override/0 = ExtResource("4_j6s1e")
 autostart = true
 
 [node name="Timer2" type="Timer" parent="."]
-wait_time = 0.3
 autostart = true
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -101,6 +103,11 @@ unit_size = 47.74
 max_db = 6.0
 autoplay = true
 doppler_tracking = 2
+
+[node name="LeadComputer" parent="." node_paths=PackedStringArray("launching_body", "muzzle_reference") instance=ExtResource("11_6hi4e")]
+launching_body = NodePath("..")
+muzzle_reference = NodePath("../enemygun")
+projectile_velocity = 500.0
 
 [connection signal="explosion_ended" from="explosionFX" to="." method="_on_explosion_fx_explosion_ended"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

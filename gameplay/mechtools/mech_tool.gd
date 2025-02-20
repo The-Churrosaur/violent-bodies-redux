@@ -15,6 +15,9 @@ extends Node3D
 ## for parsing control inputs
 var grabbable_controller : MyXRGrabbable
 
+## hand
+var hand : MechHand
+
 ## get is this tool active
 var tool_active = false
 
@@ -48,13 +51,15 @@ func input(action : String, value = null):
 
 
 ## can optionally pass in a grabbable controller for this tool to parse input
-func activate(hand, controller : MyXRGrabbable = null):
+func activate(_hand, controller : MyXRGrabbable = null):
 	
 	tool_active = true
 	
 	if controller != null:
 		grabbable_controller = controller
 		_connect_controller(grabbable_controller)
+	
+	hand = _hand
 
 
 ## disconnects this tool from grabbable

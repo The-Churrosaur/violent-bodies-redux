@@ -9,7 +9,3 @@ extends Node
 
 var live_head = 0
 var dead_head = 0
-
-
-
-

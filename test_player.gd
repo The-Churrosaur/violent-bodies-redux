@@ -17,4 +17,3 @@ func _ready():
 	XRPlayerGlobals.set_xr_nodes(lhand, rhand, headset, self)
 	
 	print("globals populated")
-

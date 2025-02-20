@@ -77,4 +77,3 @@ func _stick_to_hand():
 func _unstick_from_hand():
 	state = STATE.RIGID
 	freeze = false
-

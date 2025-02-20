@@ -18,7 +18,6 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 @export var muzzle_flash : Node3D
 
 @export var mechbody : MechBody
-@export var hand : MechHand
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 

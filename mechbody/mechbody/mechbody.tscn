@@ -27,7 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://doptv24orlqm0" path="res://gameplay/cockpit_test/mech_hand.tscn" id="15_gnibp"]
 [ext_resource type="PackedScene" uid="uid://1lbpniy8x6b" path="res://cockpit/cockpit_console/virtual/vhud_button_orbit.tscn" id="16_amfh4"]
 [ext_resource type="PackedScene" uid="uid://bydqfltfgashh" path="res://mechbody_systems/mech_hand_tool_manager.tscn" id="16_bccqt"]
-[ext_resource type="PackedScene" uid="uid://bak1wwgkoec2" path="res://gameplay/mechtools/beamfx2.tscn" id="17_jdv0r"]
 [ext_resource type="PackedScene" uid="uid://dfsksqu0ew2gv" path="res://mechbody_systems/pull_thruster.tscn" id="17_qxjyk"]
 [ext_resource type="PackedScene" uid="uid://d22hjj56tl3jg" path="res://cockpit/cockpit_console/virtual/vhud_hover_button.tscn" id="18_0vn8x"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="18_5uqvi"]
@@ -41,6 +40,7 @@
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="24_4gwjq"]
 [ext_resource type="PackedScene" uid="uid://cnsnlbln6h62j" path="res://mechbody_systems/tool_grabbing/grabber_tool.tscn" id="24_ia80r"]
 [ext_resource type="PackedScene" uid="uid://ksayj6looa0t" path="res://mechbody_systems/head_turret/head_turret.tscn" id="27_jujma"]
+[ext_resource type="PackedScene" uid="uid://bak1wwgkoec2" path="res://gameplay/mechtools/sword_tool.tscn" id="31_2uffh"]
 [ext_resource type="PackedScene" uid="uid://duu1j4emi4xo2" path="res://mechbody_systems/head_turret/ship_sensor.tscn" id="32_21wed"]
 [ext_resource type="Script" path="res://cockpit/cockpit_console/movement_mode_panel.gd" id="34_ei38e"]
 [ext_resource type="PackedScene" uid="uid://bktunb3uxfbek" path="res://mechbody_systems/floor_detector.tscn" id="36_lq8jm"]
@@ -90,8 +90,8 @@ mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_pfxel")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.5, 0)
-max_contacts_reported = 2
 contact_monitor = true
+max_contacts_reported = 2
 linear_damp = 0.1
 angular_damp = 10.0
 script = ExtResource("1_m8lij")
@@ -191,9 +191,11 @@ d_tune = 0.6
 [node name="MechBooster" parent="TorsoDolly/MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
 mechbody = NodePath("../../..")
 
-[node name="HeadlookController" parent="TorsoDolly" node_paths=PackedStringArray("body", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
+[node name="HeadlookController" parent="TorsoDolly" node_paths=PackedStringArray("body", "body_controller", "hand_stick", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
 body = NodePath("../..")
+body_controller = NodePath("../MechbodyController")
+hand_stick = NodePath("../Cockpit/Handles/HandStick")
 headset_local = NodePath("HeadsetLocal")
 cockpit_headset_reference = NodePath("../Cockpit/PlayerBodyReferences/HeadsetReference")
 cockpit_inputs = NodePath("../Cockpit/GlobalCockpitInputProcessor")
@@ -282,10 +284,16 @@ arm = NodePath("../ArmBaseRight")
 
 [node name="Cockpit" parent="TorsoDolly" instance=ExtResource("6_te8af")]
 
+[node name="HandStick" parent="TorsoDolly/Cockpit/Handles" index="0" node_paths=PackedStringArray("mechbody")]
+mechbody = NodePath("../../../..")
+
+[node name="Stick" parent="TorsoDolly/Cockpit/Handles/HandStick" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
+
 [node name="handles_new" parent="TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="YokeGrabbableRight" parent="TorsoDolly/Cockpit/Handles" index="5"]
+[node name="YokeGrabbableRight" parent="TorsoDolly/Cockpit/Handles" index="6"]
 collision_layer = 3
 collision_mask = 1
 
@@ -413,7 +421,7 @@ hand = NodePath("..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 thrust = 400
 
-[node name="beamfx2" parent="TorsoDolly/LeftHand" instance=ExtResource("17_jdv0r")]
+[node name="beamfx2" parent="TorsoDolly/LeftHand" instance=ExtResource("31_2uffh")]
 transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41998, 3.439e-14, -2.41998, 1.77304, 9.53674e-07, -1.05558, -0.471303)
 
 [node name="BasicGun" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
@@ -435,7 +443,7 @@ arm_targeter = NodePath("../ArmTargeterRight")
 other_hand = NodePath("../LeftHand")
 
 [node name="MechHandToolManager" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../beamfx"), NodePath("../GrabberTool"), NodePath("../BasicGun")]
+tools = [NodePath("../beamfx"), null, NodePath("../BasicGun")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 hand = NodePath("..")
 
@@ -449,7 +457,7 @@ mechbody = NodePath("../../..")
 [node name="stupidgun" parent="TorsoDolly/RightHand/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
 launching_rigidbody = NodePath("../../../..")
 
-[node name="beamfx" parent="TorsoDolly/RightHand" instance=ExtResource("17_jdv0r")]
+[node name="beamfx" parent="TorsoDolly/RightHand" instance=ExtResource("31_2uffh")]
 transform = Transform3D(3, 0, 0, 0, 1.73272, 2.44902, 0, -2.44902, 1.73272, 0, 0.366668, -2.3511)
 
 [node name="GrabberTool" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("mechbody") instance=ExtResource("24_ia80r")]
@@ -555,6 +563,7 @@ disabled = true
 [editable path="TorsoDolly/MechbodyController/MechRotator/LimbRotator"]
 [editable path="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
 [editable path="TorsoDolly/Cockpit"]
+[editable path="TorsoDolly/Cockpit/Handles/HandStick"]
 [editable path="TorsoDolly/Cockpit/TutorialScreenManager"]
 [editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen"]
 [editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen1"]
