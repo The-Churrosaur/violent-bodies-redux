@@ -23,10 +23,6 @@ XRPlayerGlobals="*res://globals/xr_player_globals.gd"
 LevelGlobals="*res://globals/level_globals.tscn"
 UtilityGlobals="*res://globals/utility_globals.gd"
 
-[debug]
-
-settings/stdout/verbose_stdout=true
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
