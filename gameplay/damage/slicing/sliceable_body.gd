@@ -3,13 +3,10 @@ class_name SliceableBody
 extends RigidBody3D
 
 
-# TODO recursive slicing doesn't work with separate caps
-
-
 @export_group("Parameters")
 
-@export var create_collision_on_slice = true
-@export var collision_convex_hulls = 10
+@export var create_collision_on_slice = false
+@export var collision_convex_hulls = 3
 @export var physics_push = 100
 @export var physics_torque = 0.2
 @export var recursive_sliceable = true
@@ -22,14 +19,17 @@ extends RigidBody3D
 @export var capper : MeshSlicerCapper
 
 
+var iteration = 0
+
 
 func _ready() -> void:
 	
-	await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(0.5).timeout
 	
 	var random_vec = Vector3(randf(), randf(), randf())
 	
-	slice(Plane(random_vec, 2))
+	if iteration < 7:
+		slice(Plane(random_vec, 2))
 
 
 
@@ -54,6 +54,8 @@ func slice(plane : Plane):
 	if recursive_sliceable: 
 		upper_body = recursive_packed.instantiate()
 		lower_body = recursive_packed.instantiate()
+		upper_body.iteration = iteration + 1
+		lower_body.iteration = iteration + 1
 	else:
 		upper_body = RigidBody3D.new()
 		lower_body = RigidBody3D.new()
@@ -115,6 +117,7 @@ func _set_collision_shapes(meshinstance : MeshInstance3D, body : RigidBody3D):
 	var shapes = staticbody.get_children()
 	
 	for shape in shapes:
-		body.add_child(shape)
+		shape.reparent(body)
+		#body.add_child(shape)
 	
 	staticbody.queue_free()

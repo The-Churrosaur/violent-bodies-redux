@@ -3,3 +3,4 @@
 [ext_resource type="PackedScene" uid="uid://bkk665ryyy0y7" path="res://gameplay/damage/slicing/sliceable_body.tscn" id="1_ripuy"]
 
 [node name="SliceableBody" instance=ExtResource("1_ripuy")]
+collision_convex_hulls = 1

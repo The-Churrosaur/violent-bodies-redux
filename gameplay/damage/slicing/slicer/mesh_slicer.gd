@@ -6,8 +6,9 @@ extends Node3D
 @export var plane : Plane
 @export var cap_uv = Vector2.ZERO
 @export var cap_material : Material
-
 @export var epsilon = 0.0001
+
+@export var capper : MeshSlicerCapper
 
 
 var markers = []
@@ -16,12 +17,10 @@ var markers = []
 
 func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = true):
 	
+	# arraymeshes
 	
-	# build tris into here
-	
-	var upper_surface_builder = SurfaceArrayBuilder.new()
-	var lower_surface_builder = SurfaceArrayBuilder.new()
-	
+	var arraymesh_upper = ArrayMesh.new()
+	var arraymesh_lower = ArrayMesh.new()
 	
 	# store intersection points for later (cap filling)
 	
@@ -32,6 +31,11 @@ func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = tr
 	# cycle through mesh surfaces in mesh
 	
 	for surface in range(mesh_instance.mesh.get_surface_count()): 
+		
+		# build tris into here
+	
+		var upper_surface_builder = SurfaceArrayBuilder.new()
+		var lower_surface_builder = SurfaceArrayBuilder.new()
 		
 		# mdt
 		
@@ -199,30 +203,21 @@ func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = tr
 		
 		if upper_surface_builder.is_empty() or lower_surface_builder.is_empty(): return null
 		
-	
-	# create meshes
-	
-	
-	# create arraymeshes from builders
-	
-	var arraymesh_upper = ArrayMesh.new()
-	var arraymesh_lower = ArrayMesh.new()
-	
-	arraymesh_upper.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_surface_builder.build())
-	arraymesh_lower.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_surface_builder.build())
-	
-	# color meshes
-	
-	arraymesh_upper.surface_set_material(arraymesh_upper.get_surface_count() - 1, 
-										 mesh_instance.get_active_material(0))
-	arraymesh_lower.surface_set_material(arraymesh_lower.get_surface_count() - 1,
-										 mesh_instance.get_active_material(0))
+		# populate arraymesh with this surface
+		
+		arraymesh_upper.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_surface_builder.build())
+		arraymesh_lower.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_surface_builder.build())
 	
 	
 	# create mesh instances
 	
 	var upper_meshinstance = _create_mesh_instance(arraymesh_upper, mesh_instance)
 	var lower_meshinstance = _create_mesh_instance(arraymesh_lower, mesh_instance)
+	
+	# color meshes (surface override for base material)
+	
+	upper_meshinstance.set_surface_override_material(0, mesh_instance.get_surface_override_material(0))
+	lower_meshinstance.set_surface_override_material(0, mesh_instance.get_surface_override_material(0))
 	
 	
 	# return meshes,

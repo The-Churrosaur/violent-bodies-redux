@@ -3,7 +3,7 @@ extends Node3D
 
 
 @export var cap_material : Material
-@export var centroid_calc = true
+@export var centroid_calc = false
 
 
 func cap(intersections : Dictionary, plane : Plane,
@@ -35,8 +35,8 @@ func _flat_cap(intersections : Dictionary, plane : Plane,
 		intersection_sum += pair[0] + pair[1]
 		uv_sum += pair[2] + pair[3]
 	
-	var intersection_com = intersection_sum / intersections.size()
-	var cap_uv = uv_sum / intersections.size()
+	var intersection_com = intersection_sum / (intersections.size() * 2)
+	var cap_uv = uv_sum / (intersections.size() * 2)
 	
 	
 	# try to get centroid of shape instead of COM
@@ -55,7 +55,7 @@ func _flat_cap(intersections : Dictionary, plane : Plane,
 			
 			centroid_sum += (b * area) + (c * area)
 		
-		intersection_com = centroid_sum / intersections.size() 
+		intersection_com = centroid_sum / (intersections.size() * 2) 
 	
 	
 	# iterate through intersection pairs and create triangles
@@ -102,17 +102,24 @@ func _flat_cap(intersections : Dictionary, plane : Plane,
 	
 	# check for no verts (tiny cut)
 	
-	if upper_cap_builder.is_empty() or lower_cap_builder.is_empty(): return
+	#if upper_cap_builder.is_empty() or lower_cap_builder.is_empty(): return
 	#if upper_cap_builder.verts.size() <= 1 or lower_cap_builder.verts.size() <= 1: return
 	
 	
 	# if multiple surfaces, appends/replaces last one 
 	# (don't add like a million surfaces over multiple slices)
 	
-	if upper_mesh.get_surface_count() > 1: 
-		upper_cap_builder.append_surface(upper_mesh, upper_mesh.get_surface_count() - 1)
-		upper_mesh.surface_re
-	 
+	#print("NUMBER OF SURFACES: ", upper_mesh.get_surface_count())
+	#var upper_surface_idx = upper_mesh.get_surface_count() - 1
+	#if upper_surface_idx > 0: 
+		#print("REMOVING SURFACE: ", upper_surface_idx)
+		#upper_cap_builder.append_surface(upper_mesh, upper_surface_idx)
+		#upper_mesh.surface_remove(upper_surface_idx)
+	 #
+	#if lower_mesh.get_surface_count() > 1: 
+		#lower_cap_builder.append_surface(lower_mesh, lower_mesh.get_surface_count() - 1)
+		#lower_mesh.surface_remove(lower_mesh.get_surface_count() - 1)
+	
 	
 	# build new geo onto existing arraymeshes (new surface)
 	
@@ -122,5 +129,8 @@ func _flat_cap(intersections : Dictionary, plane : Plane,
 	
 	# apply material to new surface
 	
-	upper_mesh.surface_set_material(upper_mesh.get_surface_count() - 1, cap_material)
-	lower_mesh.surface_set_material(lower_mesh.get_surface_count() - 1, cap_material)
+	for i in range(upper_mesh.get_surface_count()):
+		upper_mesh.surface_set_material(i, cap_material)
+	
+	for i in range(lower_mesh.get_surface_count()):
+		lower_mesh.surface_set_material(i, cap_material)

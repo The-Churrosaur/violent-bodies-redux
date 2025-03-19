@@ -72,6 +72,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -382.301, -21.38)
 
 [node name="TurretEnemy" parent="Base" instance=ExtResource("7_l8xye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -377.662, -14.2594)
+enabled = false
 
 [node name="GrabbableGun2" parent="Base" instance=ExtResource("3_jru3v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -385.115, -12.7265)
@@ -192,9 +193,6 @@ player_target = NodePath("../MechRigidContainer/Mechbody")
 
 [node name="PlayspaceRecenterer" parent="." node_paths=PackedStringArray("default_head_reference") instance=ExtResource("11_agqa7")]
 default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Cockpit/PlayerBodyReferences/HeadsetReference")
-
-[connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
-[connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
 
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]
