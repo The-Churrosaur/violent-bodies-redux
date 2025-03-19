@@ -7,7 +7,8 @@ extends RigidBody3D
 @export var player : Node3D
 @export var slerp_speed = 2 # per second
 
-@export var gun : StupidGun
+@export var gun : GunBase
+
 
 @onready var jitter_timer = $Timer
 @onready var shoot_timer = $Timer2
@@ -37,7 +38,7 @@ func _physics_process(delta):
 	
 	if player == null : return
 	
-	#$looker.look_at(player.global_position)
+	$looker.look_at(player.global_position)
 	var target_pos = lead_computer.predict(player)
 	if target_pos != null: $looker.look_at(target_pos)
 	else: $looker.look_at(player.global_position)
@@ -75,6 +76,7 @@ func _on_shooter_timer_timeout():
 	
 	await get_tree().create_timer(0.3).timeout
 	gun.release_trigger()
+	pass
 	
 
 

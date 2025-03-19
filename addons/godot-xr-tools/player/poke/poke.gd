@@ -35,7 +35,7 @@ const DEFAULT_MASK := 0b0000_0000_0100_0000_1111_1111_1111_1111
 ## Set the poke teleport distance
 @export var teleport_distance : float = 0.1: set = set_teleport_distance
 
-@export_category("Poke Collison")
+@export_subgroup("Poke Collison")
 
 ## Sets the collision layer
 @export_flags_3d_physics var layer : int = DEFAULT_LAYER: set = set_layer

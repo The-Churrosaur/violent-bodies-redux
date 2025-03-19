@@ -8,7 +8,7 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 @export var play_audio = true
 @export var play_muzzle_flash = true
 
-@export var gun : StupidGun
+@export var gun : GunBase
 @export var trigger_action : String = "trigger_click"
 @export var launching_rigidbody : RigidBody3D
 @export var muzzle : Node3D

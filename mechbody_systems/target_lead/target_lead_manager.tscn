@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://mechbody_systems/target_lead/target_lead_manager.gd" id="1_e51oj"]
 [ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="2_c1aev"]
-[ext_resource type="PackedScene" uid="uid://bocowncaie7sq" path="res://cockpit/cockpit_console/target_lead_ui.tscn" id="3_cxjhh"]
+[ext_resource type="PackedScene" uid="uid://bocowncaie7sq" path="res://mechbody/cockpit/cockpit_console/target_lead_ui.tscn" id="3_cxjhh"]
 
 [node name="TargetLeadManager" type="Node3D"]
 script = ExtResource("1_e51oj")

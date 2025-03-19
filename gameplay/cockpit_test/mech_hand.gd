@@ -18,7 +18,7 @@ extends Node3D
 @export var two_handed = false
 @export var hands : UtilityGlobals.hands
 
-@export_category("Grabbing")
+@export_subgroup("Grabbing")
 @export var lerp_parent_threshold_sq = 0.5
 @export var lerp_parent_threshold_angle = PI/8
 @export var parent_to_handbit = true

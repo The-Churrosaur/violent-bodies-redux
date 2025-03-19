@@ -1,39 +1,39 @@
-[gd_scene load_steps=55 format=3 uid="uid://dsh7i4eks64gc"]
+[gd_scene load_steps=57 format=3 uid="uid://dsh7i4eks64gc"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/mechbody.gd" id="1_m8lij"]
 [ext_resource type="PackedScene" uid="uid://dvg5e6hisacwi" path="res://mechbody_controller.tscn" id="2_u33eb"]
-[ext_resource type="PackedScene" uid="uid://dmi72ycp1fhnh" path="res://cockpit/helmet/headlook_controller.tscn" id="3_flh8s"]
+[ext_resource type="PackedScene" uid="uid://dmi72ycp1fhnh" path="res://mechbody/cockpit/helmet/headlook_controller.tscn" id="3_flh8s"]
 [ext_resource type="PackedScene" uid="uid://c2sijngkb66vc" path="res://mechbody_systems/movement_modes/movement_mode_controller.tscn" id="3_hvm2a"]
-[ext_resource type="PackedScene" uid="uid://bj8xdrcrm0gr7" path="res://cockpit/helmet/headset_local.tscn" id="4_08ba4"]
+[ext_resource type="PackedScene" uid="uid://bj8xdrcrm0gr7" path="res://mechbody/cockpit/helmet/headset_local.tscn" id="4_08ba4"]
 [ext_resource type="PackedScene" uid="uid://cjemm0ivcuagh" path="res://mechbody/mechbody/arm_targeter.tscn" id="4_dacqt"]
 [ext_resource type="PackedScene" uid="uid://d7shxo4pgi84" path="res://mechbody_systems/mech_rotator.tscn" id="4_sgfu2"]
-[ext_resource type="PackedScene" uid="uid://csi3y137kmq17" path="res://cockpit/helmet/headlook_mask.tscn" id="4_usege"]
-[ext_resource type="PackedScene" uid="uid://dpalp6m12ya6d" path="res://cockpit/helmet/head_pointer.tscn" id="5_axe8k"]
+[ext_resource type="PackedScene" uid="uid://csi3y137kmq17" path="res://mechbody/cockpit/helmet/headlook_mask.tscn" id="4_usege"]
+[ext_resource type="PackedScene" uid="uid://dpalp6m12ya6d" path="res://mechbody/cockpit/helmet/head_pointer.tscn" id="5_axe8k"]
 [ext_resource type="PackedScene" uid="uid://bfy62cmsx6bx5" path="res://mechbody_systems/mech_booster.tscn" id="5_pl81u"]
 [ext_resource type="PackedScene" uid="uid://1t2q4b1xyydv" path="res://tutorial/vhud_button_test.tscn" id="6_rm64o"]
 [ext_resource type="PackedScene" uid="uid://11c031wphmm0" path="res://gameplay/cockpit_test/cockpit.tscn" id="6_te8af"]
 [ext_resource type="PackedScene" uid="uid://clxk15o7wcj52" path="res://mechbody_systems/head_turret/head_sensor_manager.tscn" id="6_yw0ob"]
-[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="7_nvspr"]
+[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://mechbody/cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="7_nvspr"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="7_on0n2"]
-[ext_resource type="PackedScene" uid="uid://b4iihifcltjgl" path="res://cockpit/cockpit_console/virtual/vhud_navball.tscn" id="8_0paey"]
+[ext_resource type="PackedScene" uid="uid://b4iihifcltjgl" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_navball.tscn" id="8_0paey"]
 [ext_resource type="PackedScene" uid="uid://gki373q68bxq" path="res://mechbody_systems/target_lead/target_lead_manager.tscn" id="8_n8k65"]
-[ext_resource type="PackedScene" uid="uid://b2f60supm40o3" path="res://cockpit/cockpit_console/virtual/vhud_button_flight.tscn" id="9_2oyiw"]
-[ext_resource type="PackedScene" uid="uid://b6nfk3kxym0q7" path="res://cockpit/cockpit_console/shoot_text.tscn" id="9_57rmj"]
-[ext_resource type="PackedScene" uid="uid://pg6cfq624hgv" path="res://cockpit/cockpit_console/projectile_path_ui.tscn" id="9_y8a4w"]
+[ext_resource type="PackedScene" uid="uid://b2f60supm40o3" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_button_flight.tscn" id="9_2oyiw"]
+[ext_resource type="PackedScene" uid="uid://b6nfk3kxym0q7" path="res://mechbody/cockpit/cockpit_console/shoot_text.tscn" id="9_57rmj"]
+[ext_resource type="PackedScene" uid="uid://pg6cfq624hgv" path="res://mechbody/cockpit/cockpit_console/projectile_path_ui.tscn" id="9_y8a4w"]
 [ext_resource type="PackedScene" uid="uid://xafcxs7kldnt" path="res://tutorial/tutorial_screen_manager.tscn" id="10_vfi34"]
-[ext_resource type="PackedScene" uid="uid://ci72t7qulxnt6" path="res://cockpit/cockpit_console/global_cockpit_input_processor.tscn" id="11_fkl0l"]
-[ext_resource type="PackedScene" uid="uid://c3jd3ogxpot6g" path="res://cockpit/cockpit_console/virtual/vhud_head_button.tscn" id="12_7po0h"]
+[ext_resource type="PackedScene" uid="uid://ci72t7qulxnt6" path="res://mechbody/cockpit/cockpit_console/global_cockpit_input_processor.tscn" id="11_fkl0l"]
+[ext_resource type="PackedScene" uid="uid://c3jd3ogxpot6g" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_head_button.tscn" id="12_7po0h"]
 [ext_resource type="PackedScene" uid="uid://dblov20n4ihk2" path="res://gameplay/cockpit_test/arm_base.tscn" id="14_x4iok"]
 [ext_resource type="PackedScene" uid="uid://doptv24orlqm0" path="res://gameplay/cockpit_test/mech_hand.tscn" id="15_gnibp"]
-[ext_resource type="PackedScene" uid="uid://1lbpniy8x6b" path="res://cockpit/cockpit_console/virtual/vhud_button_orbit.tscn" id="16_amfh4"]
+[ext_resource type="PackedScene" uid="uid://1lbpniy8x6b" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_button_orbit.tscn" id="16_amfh4"]
 [ext_resource type="PackedScene" uid="uid://bydqfltfgashh" path="res://mechbody_systems/mech_hand_tool_manager.tscn" id="16_bccqt"]
 [ext_resource type="PackedScene" uid="uid://dfsksqu0ew2gv" path="res://mechbody_systems/pull_thruster.tscn" id="17_qxjyk"]
-[ext_resource type="PackedScene" uid="uid://d22hjj56tl3jg" path="res://cockpit/cockpit_console/virtual/vhud_hover_button.tscn" id="18_0vn8x"]
+[ext_resource type="PackedScene" uid="uid://d22hjj56tl3jg" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_hover_button.tscn" id="18_0vn8x"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="18_5uqvi"]
-[ext_resource type="PackedScene" uid="uid://c0y2fw8ptlqec" path="res://cockpit/cockpit_console/joint_button_test.tscn" id="18_s2jok"]
+[ext_resource type="PackedScene" uid="uid://c0y2fw8ptlqec" path="res://mechbody/cockpit/cockpit_console/joint_button_test.tscn" id="18_s2jok"]
 [ext_resource type="PackedScene" uid="uid://cnlpm1f8k8x7h" path="res://gameplay/mechtools/shield.tscn" id="19_rcdnm"]
-[ext_resource type="PackedScene" uid="uid://i585ochs4pe7" path="res://cockpit/cockpit_console/virtual/vhud_button_gross_aim.tscn" id="20_pdgfg"]
-[ext_resource type="PackedScene" uid="uid://ct1mqoq7ffeph" path="res://cockpit/cockpit_console/controls/flight_module_panel.tscn" id="21_1vnex"]
+[ext_resource type="PackedScene" uid="uid://i585ochs4pe7" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_button_gross_aim.tscn" id="20_pdgfg"]
+[ext_resource type="PackedScene" uid="uid://ct1mqoq7ffeph" path="res://mechbody/cockpit/cockpit_console/controls/flight_module_panel.tscn" id="21_1vnex"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="21_wkj61"]
 [ext_resource type="PackedScene" uid="uid://cwn381pjcowiv" path="res://effects/wind_particles.tscn" id="22_lnq4c"]
 [ext_resource type="ArrayMesh" uid="uid://bsrxmndxpa0gm" path="res://assets/gunmech_actual.obj" id="23_4d7fq"]
@@ -42,8 +42,9 @@
 [ext_resource type="PackedScene" uid="uid://ksayj6looa0t" path="res://mechbody_systems/head_turret/head_turret.tscn" id="27_jujma"]
 [ext_resource type="PackedScene" uid="uid://bak1wwgkoec2" path="res://gameplay/mechtools/sword_tool.tscn" id="31_2uffh"]
 [ext_resource type="PackedScene" uid="uid://duu1j4emi4xo2" path="res://mechbody_systems/head_turret/ship_sensor.tscn" id="32_21wed"]
-[ext_resource type="Script" path="res://cockpit/cockpit_console/movement_mode_panel.gd" id="34_ei38e"]
+[ext_resource type="Script" path="res://mechbody/cockpit/cockpit_console/movement_mode_panel.gd" id="34_ei38e"]
 [ext_resource type="PackedScene" uid="uid://bktunb3uxfbek" path="res://mechbody_systems/floor_detector.tscn" id="36_lq8jm"]
+[ext_resource type="PackedScene" uid="uid://btndc5a47j8yx" path="res://gameplay/combat/weapons_detection/sensor_detection/trackable_area.tscn" id="45_tkifo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pfxel"]
 friction = 0.0
@@ -83,7 +84,10 @@ radius = 2.0
 height = 1.327
 radius = 4.804
 
-[node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "left_player_shoulder", "right_player_shoulder", "left_hand_remote", "right_hand_remote", "step_push_timer", "step_fall_timer", "movement_mode_controller")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_lxnfa"]
+radius = 5.0
+
+[node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "left_player_shoulder", "right_player_shoulder", "left_hand_remote", "right_hand_remote", "step_push_timer", "step_fall_timer", "movement_mode_controller") groups=["player_allied"]]
 collision_layer = 16
 collision_mask = 16
 mass = 100.0
@@ -155,7 +159,6 @@ headlook_controller = NodePath("../../../HeadlookController")
 [node name="Skate" parent="TorsoDolly/MechbodyController/MovementModeController" index="3" node_paths=PackedStringArray("headlook_controller", "flight_module_yaw", "mechbody", "rotator", "floor_normal_reference_node", "floor_detector")]
 downforce = 400
 breakaway_distance = 10.0
-lean_skate_mult = 0.1
 headlook_controller = NodePath("../../../HeadlookController")
 flight_module_yaw = NodePath("../../../FlightModuleTail")
 mechbody = NodePath("../../../..")
@@ -212,9 +215,8 @@ lead_manager = NodePath("TargetLeadManager")
 current_weapon = NodePath("../../../../RightHand/BasicGun")
 shoot_ui = NodePath("ShootText")
 
-[node name="LeadComputer" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" index="0" node_paths=PackedStringArray("launching_body", "muzzle_reference")]
+[node name="LeadComputer" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" index="0" node_paths=PackedStringArray("launching_body")]
 launching_body = NodePath("../../../../../..")
-muzzle_reference = NodePath("../../../../../RightHand/BasicGun/muzzle")
 projectile_velocity = 500.0
 
 [node name="ShootText" parent="TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager" instance=ExtResource("9_57rmj")]
@@ -283,6 +285,7 @@ player_yoke = NodePath("../Cockpit/Handles/YokeGrabbableRight")
 arm = NodePath("../ArmBaseRight")
 
 [node name="Cockpit" parent="TorsoDolly" instance=ExtResource("6_te8af")]
+visible = false
 
 [node name="HandStick" parent="TorsoDolly/Cockpit/Handles" index="0" node_paths=PackedStringArray("mechbody")]
 mechbody = NodePath("../../../..")
@@ -413,7 +416,7 @@ other_hand = NodePath("../RightHand")
 hands = 0
 
 [node name="MechHandToolManager" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../beamfx2"), NodePath("../BasicGun"), NodePath("../Shield")]
+tools = [NodePath("../beamfx2"), null, NodePath("../Shield")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableLeft")
 hand = NodePath("..")
 
@@ -423,12 +426,6 @@ thrust = 400
 
 [node name="beamfx2" parent="TorsoDolly/LeftHand" instance=ExtResource("31_2uffh")]
 transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41998, 3.439e-14, -2.41998, 1.77304, 9.53674e-07, -1.05558, -0.471303)
-
-[node name="BasicGun" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("18_5uqvi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.724767, -1.26876)
-visible = false
-recoil = 250
-launching_rigidbody = NodePath("../../..")
 
 [node name="Shield" parent="TorsoDolly/LeftHand" instance=ExtResource("19_rcdnm")]
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
@@ -443,19 +440,9 @@ arm_targeter = NodePath("../ArmTargeterRight")
 other_hand = NodePath("../LeftHand")
 
 [node name="MechHandToolManager" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../beamfx"), null, NodePath("../BasicGun")]
+tools = [NodePath("../beamfx"), NodePath("../BasicGun"), null]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 hand = NodePath("..")
-
-[node name="BasicGun" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141178, -1.57548)
-visible = false
-recoil = 250
-launching_rigidbody = NodePath("../../..")
-mechbody = NodePath("../../..")
-
-[node name="stupidgun" parent="TorsoDolly/RightHand/BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
-launching_rigidbody = NodePath("../../../..")
 
 [node name="beamfx" parent="TorsoDolly/RightHand" instance=ExtResource("31_2uffh")]
 transform = Transform3D(3, 0, 0, 0, 1.73272, 2.44902, 0, -2.44902, 1.73272, 0, 0.366668, -2.3511)
@@ -466,6 +453,10 @@ mechbody = NodePath("../../..")
 
 [node name="ProjectilePathUI" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("lead_computer") instance=ExtResource("9_y8a4w")]
 lead_computer = NodePath("../../HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager/LeadComputer")
+
+[node name="BasicGun" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("launching_rigidbody", "mechbody") instance=ExtResource("18_5uqvi")]
+launching_rigidbody = NodePath("../../..")
+mechbody = NodePath("../../..")
 
 [node name="FlightModule" parent="TorsoDolly" node_paths=PackedStringArray("mechbody") instance=ExtResource("21_wkj61")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0422812, 0.942789, -1.45214)
@@ -549,6 +540,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.647565, 0)
 shape = SubResource("CylinderShape3D_8onw4")
 disabled = true
 
+[node name="TargetableArea" parent="." node_paths=PackedStringArray("body") instance=ExtResource("45_tkifo")]
+body = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetableArea"]
+shape = SubResource("SphereShape3D_lxnfa")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="dropped" from="TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
@@ -575,6 +572,4 @@ disabled = true
 [editable path="TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
 [editable path="TorsoDolly/Cockpit/TutorialScreenManager/BACKBUTTON"]
 [editable path="TorsoDolly/Cockpit/TutorialScreenManager/FORBUTTON"]
-[editable path="TorsoDolly/RightHand/BasicGun"]
-[editable path="TorsoDolly/RightHand/BasicGun/stupidgun"]
 [editable path="TorsoDolly/HeadTurret"]

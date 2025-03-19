@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c2p1lav7k6rqp" path="res://mechbody_systems/dynamic_tools/mech_grabbable.tscn" id="1_nke3x"]
 [ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="2_2v2ke"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="3_a0k6r"]
-[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="3_dap2c"]
+[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://mechbody/cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="3_dap2c"]
 [ext_resource type="PackedScene" uid="uid://by5fmiiev5pam" path="res://effects/muzzle_flash_continuous.tscn" id="4_7q46c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8o0xn"]
@@ -77,17 +77,13 @@ mesh = SubResource("BoxMesh_qp0sv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.41922, 0)
 mesh = SubResource("BoxMesh_qp0sv")
 
-[node name="BasicGun" parent="." index="6" node_paths=PackedStringArray("muzzle_flash") instance=ExtResource("3_a0k6r")]
+[node name="BasicGun" parent="." index="6" node_paths=PackedStringArray("launching_rigidbody", "muzzle_flash") instance=ExtResource("3_a0k6r")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.63578, -0.266535)
-recoil = 50
+launching_rigidbody = NodePath("..")
 muzzle_flash = NodePath("MuzzleFlash3")
 
-[node name="stupidgun" parent="BasicGun" index="0"]
-launch_force = 500.0
-cycle_time = 0.05
-
-[node name="Label3D" parent="BasicGun/stupidgun" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="GunBase" parent="BasicGun" index="0" node_paths=PackedStringArray("launching_rigidbody")]
+launching_rigidbody = NodePath("../..")
 
 [node name="muzzle" parent="BasicGun" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.334919, -7.27503)
@@ -106,4 +102,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.60422, 0)
 shape = SubResource("CapsuleShape3D_f8ity")
 
 [editable path="BasicGun"]
-[editable path="BasicGun/stupidgun"]

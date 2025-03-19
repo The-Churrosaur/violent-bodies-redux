@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://u81nmvc7jpd"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/sensor_detection/sensor_evaluator.gd" id="1_y2j2w"]
+
+[node name="SensorEvaluator" type="Node3D"]
+script = ExtResource("1_y2j2w")

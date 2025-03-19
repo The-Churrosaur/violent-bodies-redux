@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp6d6l14j8723"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/target_prioritizer.gd" id="1_spxs0"]
+
+[node name="TargetPrioritizer" type="Node"]
+script = ExtResource("1_spxs0")

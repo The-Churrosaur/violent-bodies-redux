@@ -1,0 +1,179 @@
+[gd_scene load_steps=16 format=3 uid="uid://c3jd3ogxpot6g"]
+
+[ext_resource type="PackedScene" uid="uid://dkw40t30g5351" path="res://player/my_xr_grabbable_cockpit.tscn" id="1_dr1ke"]
+[ext_resource type="Script" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_head_button.gd" id="2_2o44u"]
+[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://mechbody/cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="3_7es7p"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="4_e45en"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3askc"]
+size = Vector3(0.05, 0.02, 0.02)
+
+[sub_resource type="Animation" id="Animation_kpgw7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fj28c"]
+resource_name = "click"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 0.75), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v66fe"]
+resource_name = "press"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 0.75)]
+}
+
+[sub_resource type="Animation" id="Animation_bah0d"]
+resource_name = "release"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 0.75), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j35se"]
+_data = {
+"RESET": SubResource("Animation_kpgw7"),
+"click": SubResource("Animation_fj28c"),
+"press": SubResource("Animation_v66fe"),
+"release": SubResource("Animation_bah0d")
+}
+
+[sub_resource type="Animation" id="Animation_3vgth"]
+resource_name = "click"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 0.75), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mhfcr"]
+resource_name = "press"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 0.75)]
+}
+
+[sub_resource type="Animation" id="Animation_tp1cx"]
+resource_name = "release"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 0.75), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w0tu5"]
+_data = {
+"click": SubResource("Animation_3vgth"),
+"press": SubResource("Animation_mhfcr"),
+"release": SubResource("Animation_tp1cx")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bepg5"]
+margin = 0.005
+size = Vector3(0.05, 0.02, 0.02)
+
+[node name="Headbutton" node_paths=PackedStringArray("animation_player", "label") instance=ExtResource("1_dr1ke")]
+script = ExtResource("2_2o44u")
+controller_action = "trigger_click"
+animation_player = NodePath("MeshInstance3D/AnimationPlayer")
+label = NodePath("MeshInstance3D/Label3D")
+get_controller_input_while_hovered = true
+
+[node name="InfoLabel" type="Label3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0341216, 0)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+font = ExtResource("4_e45en")
+font_size = 100
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("BoxMesh_3askc")
+surface_material_override/0 = ExtResource("3_7es7p")
+
+[node name="Label3D" type="Label3D" parent="MeshInstance3D" index="0"]
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "TOGGLE HEAD LOOK"
+font = ExtResource("4_e45en")
+font_size = 100
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D" index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_j35se"),
+"vhud_button": SubResource("AnimationLibrary_w0tu5")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+shape = SubResource("BoxShape3D_bepg5")
+
+[connection signal="button_clicked" from="." to="." method="_on_button_clicked"]
+[connection signal="controller_input_pressed" from="." to="." method="_on_controller_input_pressed"]
+[connection signal="controller_input_released" from="." to="." method="_on_controller_input_released"]

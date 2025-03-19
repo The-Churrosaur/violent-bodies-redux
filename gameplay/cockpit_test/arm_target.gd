@@ -21,4 +21,3 @@ func _physics_process(delta):
 	var target = target_node.global_transform
 	global_transform = global_transform.interpolate_with(target, lerp_amount * delta)
 	#$Label3D.text = "target"
-

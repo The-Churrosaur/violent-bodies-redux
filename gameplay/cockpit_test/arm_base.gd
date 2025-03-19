@@ -13,12 +13,12 @@ extends Node3D
 @export var target_lerp = 5
 @export var shoulder_lerp = 5
 
-@export_category("References")
+@export_subgroup("References")
 @export var shoulder_node : Node3D = shoulder
 @export var hand_reference : Node3D
 @export var wrist_reference : Node3D
 
-@export_category("ugh")
+@export_subgroup("ugh")
 @export var uarm_ref : Node3D
 @export var farm_ref : Node3D
 @export var hand_ref : Node3D
@@ -41,6 +41,8 @@ func _physics_process(delta):
 		ik_target.global_transform = ik_target.global_transform.interpolate_with(target_node.global_transform, target_lerp * delta)
 	else:
 		ik_target.global_transform = target_node.global_transform
+	
+	
 	
 	# lerp shoulder
 	

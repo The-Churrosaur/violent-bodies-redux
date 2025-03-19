@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://mechbody_systems/dynamic_tools/mech_grabbable_chopsticks.gd" id="2_kes3v"]
 [ext_resource type="PackedScene" uid="uid://dn13cscigbirg" path="res://gameplay/mechtools/MechChopsticksTool.tscn" id="2_mguhp"]
 [ext_resource type="PackedScene" uid="uid://1ydfqigvejyw" path="res://mechbody_systems/tool_grabbing/mech_grab_point.tscn" id="3_55qlt"]
-[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="4_6088k"]
+[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://mechbody/cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="4_6088k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d57kk"]
 size = Vector3(0.1, 0.1, 5)

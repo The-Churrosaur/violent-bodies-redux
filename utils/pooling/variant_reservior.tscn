@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://utils/pooling/variant_reservior.gd" id="1_01mij"]
 
-[node name="VariantReservior" type="Node"]
+[node name="VariantReservior" type="Node3D"]
 script = ExtResource("1_01mij")
-spawn_copies = false
+num_copies = 20
+pop_active_nodes = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1

@@ -63,13 +63,17 @@ rings = 8
 script = ExtResource("1_15opk")
 
 [node name="SmokePuff" type="GPUParticles3D" parent="."]
+emitting = false
 amount = 20
+one_shot = true
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_vaijr")
 draw_pass_1 = SubResource("SphereMesh_f7qch")
 
 [node name="Shockwave" type="GPUParticles3D" parent="."]
+emitting = false
 amount = 10
+one_shot = true
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_q7tua")
 draw_pass_1 = SubResource("SphereMesh_d5osq")

@@ -21,7 +21,7 @@ extends RigidBody3D
 ## what type of hand joint should be used to connect the second hand
 @export var two_handed_joint_id = "default"
 
-@export_category("Tool")
+@export_subgroup("Tool")
 @export var is_tool = false
 @export var tool : MechTool
 

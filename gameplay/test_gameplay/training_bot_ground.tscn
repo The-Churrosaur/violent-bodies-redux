@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://materials/smoke_cloud_material.tres" id="5_cho7r"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="6_cp1qy"]
 [ext_resource type="PackedScene" uid="uid://bisjoacj4bgel" path="res://gameplay/mechtools/enemystupidgun.tscn" id="7_qb8t7"]
-[ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/test_gameplay/health_module.tscn" id="8_4s8e3"]
+[ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/damage/health_module.tscn" id="8_4s8e3"]
 [ext_resource type="PackedScene" uid="uid://c8k6oppug00w8" path="res://gameplay/test_gameplay/damage_fx.tscn" id="9_qygb4"]
 [ext_resource type="AudioStream" uid="uid://b0hek6a22ax66" path="res://assets/audio/269064__mickboere__jet-loop-01.wav" id="10_bqxs0"]
 [ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="10_i2lny"]

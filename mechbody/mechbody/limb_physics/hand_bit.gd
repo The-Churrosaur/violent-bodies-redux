@@ -9,10 +9,10 @@ extends Node3D
 @export var anchor : RigidBody3D
 @export var other_hand : HandBit
 
-@export_category("Hand")
+@export_subgroup("Hand")
 @export var hands : UtilityGlobals.hands
 
-@export_category("Two Handed Joints")
+@export_subgroup("Two Handed Joints")
 @export var current_joint : MechTwoHandedJoint
 @export var joints : Array[MechTwoHandedJoint]
 
@@ -35,13 +35,15 @@ func _ready():
 		joints_dict[joint.id] = joint
 
 func _physics_process(delta):
-	
+		
 	if hands == UtilityGlobals.hands.RIGHT: 
 		target = mechbody.right_arm_targeter
 	else: 
 		target = mechbody.left_arm_targeter 
+		
 	
 	anchor.global_transform = target.arm_target.global_transform
+		
 	#hand.global_rotation = target.arm_target.global_rotation
 	
 	target.arm.target_node = hand

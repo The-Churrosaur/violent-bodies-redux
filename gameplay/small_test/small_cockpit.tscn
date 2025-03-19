@@ -2,12 +2,12 @@
 
 [ext_resource type="ArrayMesh" uid="uid://d33xgs6swlxjo" path="res://assets/cockpit/cockpit.obj" id="1_7ntkh"]
 [ext_resource type="PackedScene" uid="uid://c6mitjbba156w" path="res://gameplay/cockpit_test/handles_ik.tscn" id="2_j08u6"]
-[ext_resource type="PackedScene" uid="uid://cfm5v38inyif1" path="res://cockpit/cockpit_console/controls/input_manager_yoke.tscn" id="3_kyy0s"]
+[ext_resource type="PackedScene" uid="uid://cfm5v38inyif1" path="res://mechbody/cockpit/cockpit_console/controls/input_manager_yoke.tscn" id="3_kyy0s"]
 [ext_resource type="Script" path="res://gameplay/cockpit_test/clavicle_mover.gd" id="4_lfc6j"]
 [ext_resource type="PackedScene" uid="uid://b5b5yftl46vrj" path="res://gameplay/cockpit_test/handle_target.tscn" id="5_t3g7i"]
 [ext_resource type="PackedScene" uid="uid://doptv24orlqm0" path="res://gameplay/cockpit_test/mech_hand.tscn" id="7_ubp0q"]
 [ext_resource type="PackedScene" uid="uid://bak1wwgkoec2" path="res://gameplay/mechtools/sword_tool.tscn" id="8_tmu4k"]
-[ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/mechtools/stupidgun.tscn" id="9_14gx0"]
+[ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/combat/stupid/stupidgun.tscn" id="9_14gx0"]
 [ext_resource type="PackedScene" uid="uid://dcxoxrwq0io2g" path="res://gameplay/small_test/small_arm.tscn" id="10_0aldf"]
 [ext_resource type="PackedScene" uid="uid://canlurq7heofm" path="res://gameplay/mechtools/laserstupidgun.tscn" id="10_wl284"]
 

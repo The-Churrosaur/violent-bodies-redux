@@ -28,7 +28,7 @@ signal target_lost(body : PhysicsBody3D, sensor : ShipSensor)
 @export var tuning_display : Label3D
 
 
-@export_category("Sensor Options")
+@export_subgroup("Sensor Options")
 
 
 ## sensor will attempt to track and acquire multiple targets
@@ -38,7 +38,7 @@ signal target_lost(body : PhysicsBody3D, sensor : ShipSensor)
 @export var seeking = true
 
 
-@export_category("Sensor Parameters")
+@export_subgroup("Sensor Parameters")
 
 
 ## detector strength 

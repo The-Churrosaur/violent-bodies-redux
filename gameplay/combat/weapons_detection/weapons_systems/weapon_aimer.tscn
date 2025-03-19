@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://3jyu1cqal2pb"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/weapon_aimer.gd" id="1_smoao"]
+
+[node name="WeaponAimer" type="Node3D"]
+script = ExtResource("1_smoao")

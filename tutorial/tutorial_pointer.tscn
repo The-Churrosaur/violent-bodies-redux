@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b4ikjacppc76a"]
 
 [ext_resource type="Script" path="res://tutorial/tutorial_pointer.gd" id="1_hfutl"]
-[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="2_s3v4l"]
+[ext_resource type="Material" uid="uid://n1tfoa734agl" path="res://mechbody/cockpit/cockpit_console/virtual/holo_shader_mat.tres" id="2_s3v4l"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_5xanh"]
 material = ExtResource("2_s3v4l")

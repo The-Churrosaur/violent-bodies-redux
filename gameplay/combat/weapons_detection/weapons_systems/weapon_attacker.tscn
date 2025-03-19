@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjbltdil5r5uw"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/weapon_attacker.gd" id="1_k4bo2"]
+
+[node name="WeaponAttacker" type="Node3D"]
+script = ExtResource("1_k4bo2")

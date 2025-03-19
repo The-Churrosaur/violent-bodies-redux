@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7qe4eplver8y"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/fire_control/fire_control_manager.gd" id="1_7yabh"]
+
+[node name="FireControlManager" type="Node"]
+script = ExtResource("1_7yabh")

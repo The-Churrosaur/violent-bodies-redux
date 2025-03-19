@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://boq146xyfcaf1"]
 
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="1_j3i52"]
-[ext_resource type="PackedScene" uid="uid://bwl2yfcx18l5h" path="res://gameplay/mechtools/stupidlaser.tscn" id="2_ox37j"]
+[ext_resource type="PackedScene" uid="uid://bwl2yfcx18l5h" path="res://gameplay/combat/stupid/stupidlaser.tscn" id="2_ox37j"]
 
 [node name="BasicGun" node_paths=PackedStringArray("gun") instance=ExtResource("1_j3i52")]
 gun = NodePath("laser2")

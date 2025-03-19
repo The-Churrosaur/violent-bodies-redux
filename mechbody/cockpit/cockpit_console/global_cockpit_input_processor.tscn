@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci72t7qulxnt6"]
+
+[ext_resource type="Script" path="res://mechbody/cockpit/cockpit_console/global_cockpit_input_processor.gd" id="1_t3pof"]
+
+[node name="GlobalCockpitInputProcessor" type="Node3D"]
+script = ExtResource("1_t3pof")

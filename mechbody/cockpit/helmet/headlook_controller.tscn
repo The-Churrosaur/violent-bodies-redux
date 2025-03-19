@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmi72ycp1fhnh"]
+
+[ext_resource type="Script" path="res://mechbody/cockpit/helmet/headlook_controller.gd" id="1_d0spx"]
+
+[node name="HeadlookController" type="Node3D"]
+script = ExtResource("1_d0spx")
+lean_assist = false
+
+[node name="HeadVelocityTracker" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.05
+autostart = true
+
+[connection signal="timeout" from="HeadVelocityTracker" to="." method="_on_head_velocity_tracker_timeout"]

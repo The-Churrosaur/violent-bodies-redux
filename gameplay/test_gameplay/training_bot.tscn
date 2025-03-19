@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c38fl22da0jew"]
+[gd_scene load_steps=16 format=3 uid="uid://c38fl22da0jew"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/training_bot.gd" id="1_qefqv"]
 [ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_7u7ub"]
@@ -6,11 +6,12 @@
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_j6s1e"]
 [ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://materials/smoke_cloud_material.tres" id="4_w4uku"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="6_f3m75"]
-[ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/test_gameplay/health_module.tscn" id="8_27lgs"]
-[ext_resource type="PackedScene" uid="uid://bisjoacj4bgel" path="res://gameplay/mechtools/enemystupidgun.tscn" id="8_62xk6"]
+[ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/damage/health_module.tscn" id="8_27lgs"]
 [ext_resource type="PackedScene" uid="uid://c8k6oppug00w8" path="res://gameplay/test_gameplay/damage_fx.tscn" id="9_s1n2a"]
 [ext_resource type="AudioStream" uid="uid://b0hek6a22ax66" path="res://assets/audio/269064__mickboere__jet-loop-01.wav" id="10_0joy1"]
 [ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="11_6hi4e"]
+[ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="11_oegaf"]
+[ext_resource type="PackedScene" uid="uid://md8gwthvvbr0" path="res://gameplay/combat/weapons_detection/weapons/bullet_pool_shooter.tscn" id="12_wsde8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
 radius = 3.0
@@ -35,7 +36,7 @@ can_sleep = false
 script = ExtResource("1_qefqv")
 impulse = 1000.0
 slerp_speed = 10
-gun = NodePath("enemygun")
+gun = NodePath("")
 
 [node name="explosionFX" parent="." instance=ExtResource("2_7u7ub")]
 boom_delay = 0.0
@@ -81,10 +82,6 @@ transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 
 mechbody = NodePath("..")
 enabled = true
 
-[node name="enemygun" parent="." node_paths=PackedStringArray("launching_rigidbody") instance=ExtResource("8_62xk6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.64543)
-launching_rigidbody = NodePath("..")
-
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 8.67582, -3.72842)
 visible = false
@@ -106,8 +103,18 @@ doppler_tracking = 2
 
 [node name="LeadComputer" parent="." node_paths=PackedStringArray("launching_body", "muzzle_reference") instance=ExtResource("11_6hi4e")]
 launching_body = NodePath("..")
-muzzle_reference = NodePath("../enemygun")
+muzzle_reference = NodePath("")
 projectile_velocity = 500.0
+
+[node name="GunBase" parent="." node_paths=PackedStringArray("shooter", "launching_rigidbody") instance=ExtResource("11_oegaf")]
+shooter = NodePath("Shooter")
+launching_rigidbody = NodePath("..")
+
+[node name="Shooter" parent="GunBase" node_paths=PackedStringArray("muzzle") instance=ExtResource("12_wsde8")]
+muzzle = NodePath("Muzzle")
+
+[node name="Muzzle" type="Marker3D" parent="GunBase/Shooter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.61358)
 
 [connection signal="explosion_ended" from="explosionFX" to="." method="_on_explosion_fx_explosion_ended"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

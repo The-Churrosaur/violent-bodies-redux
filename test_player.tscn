@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bx1xdisoqo1f6" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_tac_glove_low.tscn" id="5_tncjn"]
 [ext_resource type="PackedScene" uid="uid://bgaiy7hiyncpy" path="res://controller_body.tscn" id="6_iait1"]
 [ext_resource type="PackedScene" uid="uid://chumpejwiub7f" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_tac_glove_low.tscn" id="6_nr3qn"]
-[ext_resource type="PackedScene" uid="uid://curgmm77p4ql3" path="res://cockpit/cockpit_console/virtual/vhud_button_tap.tscn" id="7_01gtd"]
+[ext_resource type="PackedScene" uid="uid://curgmm77p4ql3" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_button_tap.tscn" id="7_01gtd"]
 [ext_resource type="Script" path="res://Label3D.gd" id="8_2vewp"]
 [ext_resource type="PackedScene" uid="uid://doksrptytk60j" path="res://assets/cockpit/controller_mockup.tscn" id="8_348w2"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="9_nimxn"]

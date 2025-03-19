@@ -8,10 +8,10 @@ size = Vector3(0.1, 0.15, 0.2)
 
 [node name="MechbodyController" instance=ExtResource("1_nv4em")]
 script = ExtResource("2_r8ium")
-active = false
 tranlation_mult = 0.5
 rotation_mult = 0.5
 flight_thrust_mult = 0.6
+active = false
 
 [node name="ArmCenter" type="Node3D" parent="." index="0"]
 visible = false

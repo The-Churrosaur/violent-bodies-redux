@@ -8,6 +8,10 @@ extends MovementModeState
 
 
 func _physics_process(delta):
+	
+	if is_active_state:
+		body.front_input += 1
+	
 	pass
 
 func enter_state():
@@ -15,8 +19,9 @@ func enter_state():
 	flight_module_pitch.enabled = true
 	flight_module_yaw.enabled = true
 	#headlook_controller.use_flight_values = true
-	body.yaw_mult = 0.4
-	body.pitch_mult = 0.4
+	#body.yaw_mult = 0.7
+	#body.pitch_mult = 0.7
+
 
 func exit_state():
 	super()

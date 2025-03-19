@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bryga5x6s85wi"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_aimer_ball_turret.gd" id="1_g351j"]
+
+[node name="WeaponAimerBallTurret" type="Node3D"]
+script = ExtResource("1_g351j")
+
+[node name="rotation_target" type="Node3D" parent="."]

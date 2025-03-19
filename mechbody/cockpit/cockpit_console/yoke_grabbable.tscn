@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwgffr50u1d7o"]
+
+[ext_resource type="PackedScene" uid="uid://37qanjrxrmlx" path="res://my_xr_tools/my_xr_grabbable_pickup.tscn" id="1_p671w"]
+[ext_resource type="Script" path="res://mechbody/cockpit/cockpit_console/yoke_grabbable.gd" id="2_5bksf"]
+[ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="3_if6fc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_38slx"]
+margin = 0.005
+radius = 0.1
+height = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bfab0"]
+radius = 0.01
+height = 0.04
+
+[node name="YokeGrabbable" node_paths=PackedStringArray("hold_reference") instance=ExtResource("1_p671w")]
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.0
+freeze = true
+script = ExtResource("2_5bksf")
+rest_lerp = 1.0
+hold_reference = NodePath("dolly/GrabPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.101943)
+shape = SubResource("CapsuleShape3D_38slx")
+
+[node name="dolly" type="Node3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.095754)
+
+[node name="GrabPoint" type="Marker3D" parent="dolly" index="0"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="dolly" index="1"]
+mesh = SubResource("CapsuleMesh_bfab0")
+skeleton = NodePath("../..")
+
+[node name="VelocityLabel" type="Label3D" parent="dolly" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128244, 0)
+pixel_size = 0.0002
+modulate = Color(0, 1, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "(GRAB ME)"
+font = ExtResource("3_if6fc")
+font_size = 100

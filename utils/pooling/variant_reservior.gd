@@ -3,15 +3,15 @@
 ## amortizes spawning costs.
 ## jk is also a pool now.
 ## WARNING no error checking for overdrawing pool.
-## optional contract - variant being spawned has enable(), disable() methods
 
 class_name VariantReservoir
 extends Node
 
 @export var pool = true # else reservoir
 @export var prefab : PackedScene
-@export var num_copies = 100
+@export var num_copies = 5
 @export var spawn_copies = true
+@export var pop_active_nodes = false # will not return new nodes if pool is at capacity
 @onready var timer = $Timer
 
 var count = 0
@@ -26,7 +26,6 @@ func _ready():
 	tail = node
 	count = 1
 	timer.start()
-	
 
 
 func _on_timer_timeout():
@@ -42,14 +41,24 @@ func push(node = null):
 	count += 1
 
 
+func push_new(variant):
+	var node = _new_node(variant)
+	push(node)
+
+
 func pop():
 	
 	if count <= 1: push()
 	
-	#print("popping variant out of: ", count)
-	
 	var node = head
+	
+	# do nothing if pool is at capacity
+	if node.active and !pop_active_nodes: 
+		print("POOL EMPTY: ", self)
+		return
+	
 	head = node.next
+	node.active = true
 	
 	count -= 1
 	
@@ -57,16 +66,12 @@ func pop():
 		push(node)
 		index = node.index
 	
-	node.data.enable()
 	return node.data
 
 
-func _new_node():
+func _new_node(data = null):
 	var node = ListNode.new()
-	var copy = prefab.instantiate()
-	node.data = copy
+	if !data: data = prefab.instantiate()
+	node.data = data
 	node.index = count
-	if spawn_copies: 
-		if copy.has_method("disable"): copy.disable()
-		add_child(copy)
 	return node

@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://mechbody_systems/movement_modes/movement_mode_state_skate.gd" id="6_22ybm"]
 [ext_resource type="Script" path="res://mechbody_systems/movement_modes/movement_mode_state_hover.gd" id="7_3mum4"]
 [ext_resource type="Script" path="res://mechbody_systems/movement_modes/movement_mode_state_jumping.gd" id="7_lcjyi"]
-[ext_resource type="Script" path="res://mechbody_systems/GravityLooker.gd" id="8_dyn2h"]
+[ext_resource type="Script" path="res://mechbody_systems/gravity_looker.gd" id="8_dyn2h"]
 
 [node name="MovementModeController" type="Node3D"]
 script = ExtResource("1_7mlxl")
@@ -28,6 +28,7 @@ mode_id = "orbit"
 script = ExtResource("6_22ybm")
 downforce = 20
 breakaway_distance = 4.0
+lean_skate_mult = 0.1
 mode_id = "skate"
 
 [node name="Jumping" parent="." instance=ExtResource("2_svlyu")]

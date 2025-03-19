@@ -11,4 +11,5 @@ func play_fx():
 	timer.start()
 
 func _on_timer_timeout():
-	queue_free()
+	pass
+	#queue_free()

@@ -40,6 +40,9 @@ var pitch_assist_input = 0
 var yaw_assist_input = 0
 var roll_assist_input = 0
 
+var throttle = 0
+var throttle_speed = 0.5
+
 
 
 # CALLBACKS ========================================================================================
@@ -69,10 +72,14 @@ func _physics_process(delta):
 	# STICK MOVEMENT
 	
 	body.front_input += secondary.y * tranlation_mult
+	
+	#throttle += secondary.y * throttle_speed * delta
+	#body.front_input = throttle
+	
 	body.strafe_input += secondary.x * tranlation_mult
 	
 	if movement_mode_controller.get_current_state_id() == "flight":
-		body.front_input += secondary.y * flight_thrust_mult
+		body.front_input *= flight_thrust_mult
 	
 	if movement_mode_controller.get_current_state_id() != "skate":
 		body.climb_input += primary.y * tranlation_mult

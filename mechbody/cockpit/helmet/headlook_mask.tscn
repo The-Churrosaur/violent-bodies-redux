@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://csi3y137kmq17"]
+
+[ext_resource type="Script" path="res://mechbody/cockpit/helmet/headlook_mask.gd" id="1_u0m4k"]
+
+[node name="HeadlookMask" type="Node3D"]
+script = ExtResource("1_u0m4k")

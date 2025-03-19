@@ -18,7 +18,7 @@ signal button_released()
 @export var button_grabbable : MyXRGrabbable
 @export var lerp_weight = 0.5
 
-@export_category("limits")
+@export_subgroup("limits")
 @export var max_y = 0.0
 @export var min_y = -0.1
 @export var press_distance = -0.08

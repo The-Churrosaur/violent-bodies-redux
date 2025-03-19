@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0shih875e1vq"]
+
+[ext_resource type="PackedScene" uid="uid://cjbltdil5r5uw" path="res://gameplay/combat/weapons_detection/weapons_systems/weapon_attacker.tscn" id="1_a8m3r"]
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase.gd" id="2_ft8rx"]
+
+[node name="WeaponAttacker" instance=ExtResource("1_a8m3r")]
+script = ExtResource("2_ft8rx")

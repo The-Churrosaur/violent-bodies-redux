@@ -23,6 +23,10 @@ XRPlayerGlobals="*res://globals/xr_player_globals.gd"
 LevelGlobals="*res://globals/level_globals.tscn"
 UtilityGlobals="*res://globals/utility_globals.gd"
 
+[debug]
+
+settings/stdout/verbose_stdout=true
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
@@ -31,14 +35,22 @@ enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 
 import/fbx/enabled=false
 
+[global_group]
+
+player_allied="for enemy detection"
+
 [layer_names]
 
 3d_physics/layer_2="xr_grabbable"
 
+[network]
+
+limits/debugger/max_chars_per_second=999999
+
 [physics]
 
 3d/physics_engine="JoltPhysics3D"
-3d/default_gravity=4.0
+3d/default_gravity=0.0
 jolt_3d/collisions/areas_detect_static_bodies=true
 jolt_3d/limits/max_linear_velocity=1000.0
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://duu1j4emi4xo2"]
 
 [ext_resource type="Script" path="res://mechbody_systems/head_turret/ship_sensor.gd" id="1_01nla"]
-[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="2_f88bd"]
+[ext_resource type="Material" uid="uid://dhd30qyhyu7ae" path="res://mechbody/cockpit/cockpit_console/virtual/holo_shader_distance_red_mat.tres" id="2_f88bd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a6l64"]
 radius = 5.0

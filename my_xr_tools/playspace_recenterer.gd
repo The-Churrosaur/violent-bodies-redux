@@ -18,6 +18,9 @@ func _on_input_down(action, controller):
 
 func recenter(reference = default_head_reference):
 	
+	XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
+	return
+	
 	if !XRPlayerGlobals.is_nodes_set: return
 	
 	var headset = XRPlayerGlobals.headset

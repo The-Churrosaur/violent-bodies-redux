@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://canlurq7heofm"]
 
-[ext_resource type="Script" path="res://gameplay/mechtools/laserstupidgun.gd" id="1_ctfpx"]
+[ext_resource type="Script" path="res://gameplay/combat/stupid/laserstupidgun.gd" id="1_ctfpx"]
 [ext_resource type="PackedScene" uid="uid://cacfluixmbnmb" path="res://gameplay/mechtools/laser.tscn" id="2_p4dkn"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_wxgb2"]

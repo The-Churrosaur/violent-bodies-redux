@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://tutorial/tutorial_screen_manager.gd" id="1_b2g3c"]
 [ext_resource type="PackedScene" uid="uid://b4ikjacppc76a" path="res://tutorial/tutorial_pointer.tscn" id="2_y7q6w"]
 [ext_resource type="PackedScene" uid="uid://ce2fwymx42fgx" path="res://tutorial/tutorial_screen.tscn" id="3_kahl5"]
-[ext_resource type="PackedScene" uid="uid://curgmm77p4ql3" path="res://cockpit/cockpit_console/virtual/vhud_button_tap.tscn" id="4_by11s"]
+[ext_resource type="PackedScene" uid="uid://curgmm77p4ql3" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_button_tap.tscn" id="4_by11s"]
 [ext_resource type="FontFile" uid="uid://cnyb68a32apyf" path="res://assets/fonts/B612_Mono/B612Mono-Regular.ttf" id="5_3763w"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_glbhi"]

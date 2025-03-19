@@ -7,4 +7,4 @@ extends Level
 
 func toggle_spawners():
 	bot_spawner.enabled = !bot_spawner.enabled
-	bot_spawner_2.enabled = !bot_spawner_2.enabled
+	#bot_spawner_2.enabled = !bot_spawner_2.enabled

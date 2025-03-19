@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bisjoacj4bgel"]
 
-[ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/mechtools/stupidgun.tscn" id="1_6a1sf"]
+[ext_resource type="PackedScene" uid="uid://c7dfxmp5k4sa3" path="res://gameplay/combat/stupid/stupidgun.tscn" id="1_6a1sf"]
 
 [node name="enemygun" node_paths=PackedStringArray("muzzle") instance=ExtResource("1_6a1sf")]
 muzzle = NodePath("Muzzle")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://hisljecdw00o"]
+
+[ext_resource type="Script" path="res://gameplay/damage/slicing/caps/mesh_slicer_capper.gd" id="1_1ym2p"]
+
+[node name="Capper" type="Node3D"]
+script = ExtResource("1_1ym2p")

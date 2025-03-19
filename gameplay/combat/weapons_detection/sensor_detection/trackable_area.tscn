@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://btndc5a47j8yx"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/sensor_detection/trackable_area.gd" id="1_0qulp"]
+
+[node name="TargetableArea" type="Area3D"]
+monitoring = false
+script = ExtResource("1_0qulp")

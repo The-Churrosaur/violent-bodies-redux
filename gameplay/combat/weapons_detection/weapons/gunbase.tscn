@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://crm8horlgc4d6"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons/gunbase.gd" id="1_p1j17"]
+[ext_resource type="PackedScene" uid="uid://dd1cbw2sxf88w" path="res://utils/pooling/variant_reservior.tscn" id="2_7u6yt"]
+[ext_resource type="PackedScene" uid="uid://c7cpskccrqvn6" path="res://gameplay/combat/stupid/smartbullet.tscn" id="3_3ofur"]
+
+[node name="GunBase" type="Node3D"]
+script = ExtResource("1_p1j17")
+
+[node name="CycleTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="VariantReservior" parent="." instance=ExtResource("2_7u6yt")]
+prefab = ExtResource("3_3ofur")
+
+[node name="Label3D" type="Label3D" parent="."]
+text = "asdfad"
+
+[connection signal="timeout" from="CycleTimer" to="." method="_on_cycle_timer_timeout"]

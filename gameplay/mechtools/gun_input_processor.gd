@@ -1,6 +1,6 @@
 extends XRInputProcessor
 
-@export var gun : StupidGun
+@export var gun : gun_framework
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
