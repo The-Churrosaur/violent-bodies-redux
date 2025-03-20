@@ -4,17 +4,56 @@ extends Node3D
 
 @export var cap_material : Material
 @export var centroid_calc = false
+@export var epsilon = 0.0001
 
 
 func cap(intersections : Dictionary, plane : Plane,
 		 upper_mesh : MeshInstance3D, lower_mesh : MeshInstance3D):
 	
 	_flat_cap(intersections, plane, upper_mesh, lower_mesh)
+	#_ring_caps(intersections, plane, upper_mesh, lower_mesh)
 
 
 
 func _flat_cap(intersections : Dictionary, plane : Plane, 
 			   upper_mesh_instance : MeshInstance3D, lower_mesh_instance : MeshInstance3D):
+	
+	# arraymesh builders
+	
+	var upper_mesh = upper_mesh_instance.mesh
+	var lower_mesh = lower_mesh_instance.mesh
+	
+	var upper_cap_builder = SurfaceArrayBuilder.new()
+	var lower_cap_builder = SurfaceArrayBuilder.new()
+	
+	
+	# build faces
+	
+	_populate_flat_cap_vertices(intersections, upper_cap_builder, -plane.normal)
+	_populate_flat_cap_vertices(intersections, lower_cap_builder, plane.normal)
+	
+	
+	# check for no verts (tiny cut)
+	
+	if upper_cap_builder.is_empty() or lower_cap_builder.is_empty(): return	
+	
+	
+	# build new geo onto existing arraymeshes (new surface)
+	
+	upper_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_cap_builder.build())
+	lower_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_cap_builder.build())
+	
+	
+	# apply material to mesh
+	
+	_set_mesh_material(upper_mesh)
+	_set_mesh_material(lower_mesh)
+
+
+# traverse edges to find rings, fill each ring as a flat cap
+# still will not work with concave rings
+func _ring_caps(intersections : Dictionary, plane : Plane, 
+				upper_mesh_instance : MeshInstance3D, lower_mesh_instance : MeshInstance3D):
 	
 	
 	# arraymesh builders
@@ -25,6 +64,91 @@ func _flat_cap(intersections : Dictionary, plane : Plane,
 	var upper_cap_builder = SurfaceArrayBuilder.new()
 	var lower_cap_builder = SurfaceArrayBuilder.new()
 	
+	
+	# ring time
+	
+	# create working copy of intersections
+	
+	var unmatched_intersections = intersections.duplicate()
+	
+	#print("PRINTING ALL UNMATCHED INTERSECTIONS: ")
+	#for i in unmatched_intersections.values(): print(i[0], i[1])
+	
+	# while unmatched intersections still has values, find rings
+	
+	while !unmatched_intersections.is_empty():
+		
+		#print(unmatched_intersections.size()," unmatched intersections still exist, building ring...")
+		
+		# ring dict mirrors intersection dict
+		
+		var ring = {}
+		
+		# get first value
+		
+		var pair = unmatched_intersections.keys()[0]
+		
+		# while pair exists, add to ring, remove from unmatched, and find next pair
+		
+		while pair != null:
+			
+			#print("ring value found, adding: ", pair)
+			
+			ring[pair] = unmatched_intersections[pair]
+			unmatched_intersections.erase(pair)
+			pair = _find_next_ring_pair(ring[pair], unmatched_intersections)
+		
+		#print("no additional pair found, building ring: ")
+		
+		# build ring
+		
+		_populate_flat_cap_vertices(ring, upper_cap_builder, -plane.normal)
+		_populate_flat_cap_vertices(ring, lower_cap_builder, plane.normal)
+	
+	
+	# build new geo onto existing arraymeshes (new surface)
+	
+	upper_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_cap_builder.build())
+	lower_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_cap_builder.build())
+	
+	
+	# apply material to mesh
+	
+	_set_mesh_material(upper_mesh)
+	_set_mesh_material(lower_mesh)
+
+
+# finds another edge that touches this edge (pair) or null
+func _find_next_ring_pair(pair : Array, search_intersections: Dictionary):
+	
+	var a = pair[0]
+	var b = pair[1]
+	
+	# searches dict for any pair that also contains a or b
+	# order doesn't matter since we're removing items (prevents looping)
+	
+	for i in search_intersections.keys():
+		var i_a = search_intersections[i][0]
+		var i_b = search_intersections[i][1]
+		
+		
+		if (Utils.compare_vectors(a, i_a) or Utils.compare_vectors(a, i_b) or
+			Utils.compare_vectors(b, i_a) or Utils.compare_vectors(b, i_b)):
+			
+			#print("next value found: ")
+			#print("old: ", pair[0], pair[1])
+			#print("new: ", search_intersections[i][0], search_intersections[i][1])
+			
+			return i
+	
+	# given dict does not contain next pair
+	
+	return null
+
+
+
+# the vert pushing
+func _populate_flat_cap_vertices(intersections : Dictionary, builder : SurfaceArrayBuilder, normal : Vector3):
 	
 	# get average of intersections and average UV
 	
@@ -69,68 +193,20 @@ func _flat_cap(intersections : Dictionary, plane : Plane,
 		var vac_uv = pair[3]
 		
 		
-		# create upper triangles
+		# create triangles
 		
-		# if new face normal is opposite desired normal, flip it
-		# hacky - there is probably an analytical solution 
-		
-		var cross = (vab - intersection_com).cross(vac  - intersection_com)
-		
-		var upper_normal = -plane.normal
-		if cross.dot(upper_normal) >= 0: 
-			upper_cap_builder.add_vert_manual(intersection_com, cap_uv, upper_normal)
-			upper_cap_builder.add_vert_manual(vac, vac_uv, upper_normal)
-			upper_cap_builder.add_vert_manual(vab, vab_uv, upper_normal)
-		else:
-			upper_cap_builder.add_vert_manual(intersection_com, cap_uv, upper_normal)
-			upper_cap_builder.add_vert_manual(vab, vab_uv, upper_normal)
-			upper_cap_builder.add_vert_manual(vac, vac_uv, upper_normal)
-		
-		
-		# create lower triangles
-		
-		var lower_normal = plane.normal
-		if cross.dot(lower_normal) >= 0:
-			lower_cap_builder.add_vert_manual(intersection_com, cap_uv, lower_normal)
-			lower_cap_builder.add_vert_manual(vac, vac_uv, lower_normal)
-			lower_cap_builder.add_vert_manual(vab, vab_uv, lower_normal)
-		else:
-			lower_cap_builder.add_vert_manual(intersection_com, cap_uv, lower_normal)
-			lower_cap_builder.add_vert_manual(vab, vab_uv, lower_normal)
-			lower_cap_builder.add_vert_manual(vac, vac_uv, lower_normal)
-	
-	
-	# check for no verts (tiny cut)
-	
-	#if upper_cap_builder.is_empty() or lower_cap_builder.is_empty(): return
-	#if upper_cap_builder.verts.size() <= 1 or lower_cap_builder.verts.size() <= 1: return
-	
-	
-	# if multiple surfaces, appends/replaces last one 
-	# (don't add like a million surfaces over multiple slices)
-	
-	#print("NUMBER OF SURFACES: ", upper_mesh.get_surface_count())
-	#var upper_surface_idx = upper_mesh.get_surface_count() - 1
-	#if upper_surface_idx > 0: 
-		#print("REMOVING SURFACE: ", upper_surface_idx)
-		#upper_cap_builder.append_surface(upper_mesh, upper_surface_idx)
-		#upper_mesh.surface_remove(upper_surface_idx)
-	 #
-	#if lower_mesh.get_surface_count() > 1: 
-		#lower_cap_builder.append_surface(lower_mesh, lower_mesh.get_surface_count() - 1)
-		#lower_mesh.surface_remove(lower_mesh.get_surface_count() - 1)
-	
-	
-	# build new geo onto existing arraymeshes (new surface)
-	
-	upper_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_cap_builder.build())
-	lower_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_cap_builder.build())
-	
-	
-	# apply material to new surface
-	
-	for i in range(upper_mesh.get_surface_count()):
-		upper_mesh.surface_set_material(i, cap_material)
-	
-	for i in range(lower_mesh.get_surface_count()):
-		lower_mesh.surface_set_material(i, cap_material)
+		# build both sides of normals (elegant kludge for some being wrong + more) 
+
+		builder.add_vert_manual(intersection_com, cap_uv, normal)
+		builder.add_vert_manual(vac, vac_uv, normal)
+		builder.add_vert_manual(vab, vab_uv, normal)
+
+		builder.add_vert_manual(intersection_com, cap_uv, normal)
+		builder.add_vert_manual(vab, vab_uv, normal)
+		builder.add_vert_manual(vac, vac_uv, normal)
+
+
+# applies material to all mesh surfaces
+func _set_mesh_material(mesh : Mesh, material = cap_material):
+	for i in range(mesh.get_surface_count()):
+		mesh.surface_set_material(i, material)

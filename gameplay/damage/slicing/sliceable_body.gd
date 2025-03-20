@@ -5,7 +5,7 @@ extends RigidBody3D
 
 @export_group("Parameters")
 
-@export var create_collision_on_slice = false
+@export var create_collision_on_slice = true
 @export var collision_convex_hulls = 3
 @export var physics_push = 100
 @export var physics_torque = 0.2
@@ -24,21 +24,50 @@ var iteration = 0
 
 func _ready() -> void:
 	
-	await get_tree().create_timer(0.5).timeout
 	
-	var random_vec = Vector3(randf(), randf(), randf())
+	#while true:
+		#await get_tree().create_timer(5.0).timeout
+		#
+		#var random_vec = Vector3(randf(), randf(), randf())
+		##random_vec = Vector3(0.234875893, 1, -1)
+		#
+		##if iteration < 7:
+		#slice(random_vec, random_vec)
+	#
+	#
+	pass
+
+
+
+func slice(slice_normal : Vector3, slice_point : Vector3):
 	
-	if iteration < 7:
-		slice(Plane(random_vec, 2))
-
-
-
-func slice(plane : Plane):
+	print("Start: ", Time.get_ticks_msec())
 	
 	# slice (and check first)
 	
+	# convert plane from global to local
+	
+	var local_plane_normal = global_basis * slice_normal
+	var local_plane_center = to_local(slice_point)
+	$MeshInstance3D.look_at($MeshInstance3D.global_position + local_plane_normal * 5, )
+	$MeshInstance3D.position = local_plane_center
+	var plane = Plane(local_plane_normal, local_plane_center)
+	
+	#await get_tree().create_timer(2.0).timeout
+	
+	
 	var slice = slicer.slice(meshinstance, plane)
 	
+	#var slice = []
+	#slice.resize(4)
+	
+	#var task_id = WorkerThreadPool.add_task(_slice_threaded.bindv([1, meshinstance, plane, slice]))
+	#await get_tree().create_timer(0.5).timeout
+	#print("task completed? ", WorkerThreadPool.is_task_completed(task_id))
+	#WorkerThreadPool.wait_for_task_completion(task_id)
+	
+	
+	#print("slice...: ", slice)
 	if !slice : return
 	
 	var lower_mesh = slice[0]
@@ -101,8 +130,16 @@ func slice(plane : Plane):
 	lower_body.apply_torque_impulse(random_vec * physics_torque)
 	lower_body.apply_torque_impulse(-random_vec * physics_torque)
 	
+	print("FINISH: ", Time.get_ticks_msec())
+	
+	
 	# cleanup
 	queue_free()
+
+
+func _slice_threaded(meshinstance, plane, return_array):
+	print("slice threaded called: ", meshinstance)
+	return_array = slicer.slice(meshinstance, plane)
 
 
 # gets collision shapes from meshinstance3d, adds to body

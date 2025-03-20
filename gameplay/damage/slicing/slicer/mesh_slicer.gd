@@ -15,7 +15,10 @@ var markers = []
 
 
 
+## takes plane in local coordinates
 func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = true):
+	
+	#print("slicin! ", mesh_instance, plane, caps)
 	
 	# arraymeshes
 	
@@ -33,7 +36,7 @@ func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = tr
 	for surface in range(mesh_instance.mesh.get_surface_count()): 
 		
 		# build tris into here
-	
+		
 		var upper_surface_builder = SurfaceArrayBuilder.new()
 		var lower_surface_builder = SurfaceArrayBuilder.new()
 		
@@ -199,15 +202,19 @@ func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = tr
 					lower_surface_builder.add_vert_from_mdt(mdt, c)
 		
 		
-		# check to see if the plane missed entirely
+		# populate arraymesh with this surface (if surface has verts to add)
 		
-		if upper_surface_builder.is_empty() or lower_surface_builder.is_empty(): return null
-		
-		# populate arraymesh with this surface
-		
-		arraymesh_upper.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_surface_builder.build())
-		arraymesh_lower.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_surface_builder.build())
+		if !upper_surface_builder.is_empty(): 
+			arraymesh_upper.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, upper_surface_builder.build())
+		if !lower_surface_builder.is_empty(): 
+			arraymesh_lower.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, lower_surface_builder.build())
 	
+	
+	# check if any surfaces got filled
+	
+	if arraymesh_lower.get_surface_count() <= 0:
+		print("arrymesh has no surfaces, returning: ")
+		return null
 	
 	# create mesh instances
 	

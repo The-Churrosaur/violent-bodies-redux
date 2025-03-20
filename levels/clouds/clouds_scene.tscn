@@ -62,10 +62,10 @@ project_children = [NodePath("GrabbableGun")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.424, 10.2539, 0)
 
 [node name="GrabbableGun" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, -17.7271, 0)
 
 [node name="GrabbableGun2" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, -17.7271, 0)
 
 [node name="StaticBody3D" parent="Base" instance=ExtResource("12_j0rc6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -382.301, -21.38)
@@ -75,7 +75,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -377.662, -14.2594)
 enabled = false
 
 [node name="GrabbableGun2" parent="Base" instance=ExtResource("3_jru3v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -385.115, -12.7265)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -402.842, -12.7265)
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
 

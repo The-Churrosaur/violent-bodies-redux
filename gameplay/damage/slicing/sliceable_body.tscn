@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkk665ryyy0y7"]
+[gd_scene load_steps=9 format=3 uid="uid://bkk665ryyy0y7"]
 
 [ext_resource type="Script" path="res://gameplay/damage/slicing/sliceable_body.gd" id="1_jwr8o"]
 [ext_resource type="Script" path="res://gameplay/damage/slicing/slicer/mesh_slicer.gd" id="2_xfxll"]
@@ -8,6 +8,15 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5pn2"]
 albedo_color = Color(1, 0.247059, 0.0901961, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_it02r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mb62"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7wa2a"]
+material = SubResource("StandardMaterial3D_4mb62")
+size = Vector3(10, 10, 0.1)
 
 [node name="SliceableBody" type="RigidBody3D" node_paths=PackedStringArray("slicer", "capper")]
 script = ExtResource("1_jwr8o")
@@ -20,3 +29,11 @@ cap_material = SubResource("StandardMaterial3D_beheh")
 
 [node name="Capper" parent="." instance=ExtResource("3_kw2jh")]
 cap_material = SubResource("StandardMaterial3D_p5pn2")
+
+[node name="center" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_it02r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_7wa2a")
