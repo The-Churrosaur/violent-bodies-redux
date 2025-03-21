@@ -4,14 +4,13 @@ extends Node3D
 
 @export var cap_material : Material
 @export var centroid_calc = false
-@export var epsilon = 0.0001
 
 
 func cap(intersections : Dictionary, plane : Plane,
 		 upper_mesh : MeshInstance3D, lower_mesh : MeshInstance3D):
 	
-	_flat_cap(intersections, plane, upper_mesh, lower_mesh)
-	#_ring_caps(intersections, plane, upper_mesh, lower_mesh)
+	#_flat_cap(intersections, plane, upper_mesh, lower_mesh)
+	_ring_caps(intersections, plane, upper_mesh, lower_mesh)
 
 
 

@@ -19,9 +19,9 @@ var on_cooldown = false
 
 func _on_body_entered(body: Node3D) -> void:
 	
-	print("slicer entered area")
-	
-	if on_cooldown: return
+	if on_cooldown: 
+		print("slicer on cooldown")
+		return
 	
 	if body is SliceableBody:
 		

@@ -5,10 +5,10 @@ extends RigidBody3D
 
 @export_group("Parameters")
 
-@export var create_collision_on_slice = true
-@export var collision_convex_hulls = 3
-@export var physics_push = 100
-@export var physics_torque = 0.2
+@export var create_collision_on_slice = false
+#@export var collision_convex_hulls = 1
+@export var physics_push = 10
+@export var physics_torque = 0.01
 @export var recursive_sliceable = true
 @export var recursive_packed : PackedScene = preload("res://gameplay/damage/slicing/sliceable_body.tscn")
 
@@ -26,28 +26,33 @@ func _ready() -> void:
 	
 	
 	#while true:
-		#await get_tree().create_timer(5.0).timeout
-		#
-		#var random_vec = Vector3(randf(), randf(), randf())
-		##random_vec = Vector3(0.234875893, 1, -1)
-		#
-		##if iteration < 7:
-		#slice(random_vec, random_vec)
-	#
-	#
+		
+	await get_tree().create_timer(1.0).timeout
+	#await get_tree().get_frame()
+	
+	randomize()
+	var random_vec = Vector3(randf(), randf(), randf())
+	#random_vec = Vector3(0.234875893, 1, -1)
+	
+	if iteration < 1:
+		slice(random_vec, global_position)
+	
+	
 	pass
 
 
 
 func slice(slice_normal : Vector3, slice_point : Vector3):
 	
-	print("Start: ", Time.get_ticks_msec())
+	var start_time = Time.get_ticks_msec()
+	print("Start: ", start_time)
+	print("vertices: ", meshinstance.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX].size())
 	
 	# slice (and check first)
 	
 	# convert plane from global to local
 	
-	var local_plane_normal = global_basis * slice_normal
+	var local_plane_normal = global_basis.inverse() * slice_normal
 	var local_plane_center = to_local(slice_point)
 	$MeshInstance3D.look_at($MeshInstance3D.global_position + local_plane_normal * 5, )
 	$MeshInstance3D.position = local_plane_center
@@ -130,7 +135,7 @@ func slice(slice_normal : Vector3, slice_point : Vector3):
 	lower_body.apply_torque_impulse(random_vec * physics_torque)
 	lower_body.apply_torque_impulse(-random_vec * physics_torque)
 	
-	print("FINISH: ", Time.get_ticks_msec())
+	print("FINISH: ", Time.get_ticks_msec() - start_time)
 	
 	
 	# cleanup
@@ -145,10 +150,12 @@ func _slice_threaded(meshinstance, plane, return_array):
 # gets collision shapes from meshinstance3d, adds to body
 func _set_collision_shapes(meshinstance : MeshInstance3D, body : RigidBody3D):
 	
-	var decomp_settings = MeshConvexDecompositionSettings.new()
-	decomp_settings.max_convex_hulls = collision_convex_hulls
+	#var decomp_settings = MeshConvexDecompositionSettings.new()
+	#decomp_settings.max_convex_hulls = collision_convex_hulls
+	#
+	#meshinstance.create_multiple_convex_collisions(decomp_settings)
 	
-	meshinstance.create_multiple_convex_collisions(decomp_settings)
+	meshinstance.create_trimesh_collision()
 	
 	var staticbody = meshinstance.get_child(0)
 	var shapes = staticbody.get_children()

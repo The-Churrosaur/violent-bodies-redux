@@ -1,10 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=23 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/clouds/clouds_scene.gd" id="1_fneys"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
 [ext_resource type="PackedScene" uid="uid://notg23vl4d5l" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_gun.tscn" id="3_gyprs"]
 [ext_resource type="PackedScene" uid="uid://cbi836x5vwgeo" path="res://utils/remote_node_projector.tscn" id="3_j6thb"]
-[ext_resource type="PackedScene" uid="uid://dfqvdp77a4ugs" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_laser.tscn" id="3_jru3v"]
 [ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="3_xdm3k"]
 [ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="4_0shpt"]
@@ -48,8 +47,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399994, 0, 0)
 [node name="MechHandToolManager" parent="MechRigidContainer/Mechbody/TorsoDolly/LeftHand" index="3" node_paths=PackedStringArray("tools")]
 tools = [NodePath("../beamfx2"), null, NodePath("../Shield")]
 
+[node name="beamfx2" parent="MechRigidContainer/Mechbody/TorsoDolly/LeftHand" index="5"]
+transform = Transform3D(3, 0, 0, 0, 0.776456, 2.89777, 0, -2.89777, 0.776456, 9.53674e-07, -1.05558, -0.471303)
+
 [node name="MechHandToolManager" parent="MechRigidContainer/Mechbody/TorsoDolly/RightHand" index="3" node_paths=PackedStringArray("tools")]
 tools = [NodePath("../beamfx"), null, NodePath("../BasicGun")]
+
+[node name="beamfx" parent="MechRigidContainer/Mechbody/TorsoDolly/RightHand" index="4"]
+transform = Transform3D(3, 0, 0, 0, 0.776458, 2.89778, 0, -2.89778, 0.776458, 0, 0.366638, -2.3511)
 
 [node name="Base" type="Node3D" parent="."]
 
@@ -62,20 +67,17 @@ project_children = [NodePath("GrabbableGun")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.424, 10.2539, 0)
 
 [node name="GrabbableGun" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, -17.7271, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, -17.7271, 30.7921)
 
 [node name="GrabbableGun2" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, -17.7271, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, -17.7271, 30.7921)
 
-[node name="StaticBody3D" parent="Base" instance=ExtResource("12_j0rc6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -382.301, -21.38)
+[node name="sliceable" parent="Base" instance=ExtResource("12_j0rc6")]
+transform = Transform3D(1, 0, 0, 0, -0.11778, 0.99304, 0, -0.99304, -0.11778, 183.218, -381.988, -23.2383)
 
 [node name="TurretEnemy" parent="Base" instance=ExtResource("7_l8xye")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -377.662, -14.2594)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -377.662, 45.0815)
 enabled = false
-
-[node name="GrabbableGun2" parent="Base" instance=ExtResource("3_jru3v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.215, -402.842, -12.7265)
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
 
@@ -102,8 +104,6 @@ collision_mask = 9
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Base/Cruiser2/StaticBody3D"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.24138, -0.00151437, 0)
 shape = SubResource("CapsuleShape3D_nfpfe")
-
-[node name="Cruiser3" parent="Base" instance=ExtResource("12_j0rc6")]
 
 [node name="Cruiser4" type="MeshInstance3D" parent="Base" groups=["SensorDetect"]]
 transform = Transform3D(37.3364, -6.24781, -12.9563, 6.47425, 39.4823, -0.382201, 12.8447, -1.73981, 37.8537, -374.522, -230.039, 703.847)
@@ -134,6 +134,7 @@ enabled = true
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 165.284, -363.017, -10.3958)
+visible = false
 collision_layer = 41
 collision_mask = 41
 
@@ -145,6 +146,7 @@ mesh = SubResource("CapsuleMesh_8beeg")
 
 [node name="RigidBody3D2" type="RigidBody3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 168.216, -363.017, -10.3958)
+visible = false
 collision_layer = 41
 collision_mask = 41
 
@@ -156,6 +158,7 @@ mesh = SubResource("CapsuleMesh_8beeg")
 
 [node name="RigidBody3D3" type="RigidBody3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.103, -363.017, -10.3958)
+visible = false
 collision_layer = 41
 collision_mask = 41
 
@@ -166,7 +169,7 @@ shape = SubResource("CapsuleShape3D_1bk1f")
 mesh = SubResource("CapsuleMesh_8beeg")
 
 [node name="RigidBody3D4" type="RigidBody3D" parent="Base"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.103, -385.724, -10.3958)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.719, -385.724, -10.3958)
 collision_layer = 41
 collision_mask = 41
 
@@ -193,6 +196,9 @@ player_target = NodePath("../MechRigidContainer/Mechbody")
 
 [node name="PlayspaceRecenterer" parent="." node_paths=PackedStringArray("default_head_reference") instance=ExtResource("11_agqa7")]
 default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Cockpit/PlayerBodyReferences/HeadsetReference")
+
+[connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
+[connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
 
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]

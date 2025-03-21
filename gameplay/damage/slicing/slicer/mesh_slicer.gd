@@ -45,6 +45,14 @@ func slice(mesh_instance : MeshInstance3D, plane : Plane = self.plane, caps = tr
 		var mdt = _create_mdt(mesh_instance.mesh, surface)
 		
 		
+		#var surface_array = mesh_instance.mesh.surface_get_arrays(surface)
+		#var verts = surface_array[Mesh.ARRAY_VERTEX]
+		#var uvs = surface_array[Mesh.ARRAY_TEX_UV]
+		#var normals = surface_array[Mesh.ARRAY_NORMAL]
+		#
+		#var num_verts = verts.size()
+		
+		
 		# the actual tri pushing
 		
 		# iterate through tris

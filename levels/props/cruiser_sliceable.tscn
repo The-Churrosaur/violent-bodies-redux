@@ -15,10 +15,10 @@ noise = SubResource("FastNoiseLite_xswrg")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8oaf6"]
 albedo_texture = SubResource("NoiseTexture2D_my4ku")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_l2mmw"]
-radius = 8.0
-height = 20.0
-radial_segments = 8
+[sub_resource type="TorusMesh" id="TorusMesh_e7gfv"]
+inner_radius = 5.0
+outer_radius = 6.0
+ring_segments = 128
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ihcxr"]
 points = PackedVector3Array(7.70312, 0.244704, 4.2657, 4.65012, -0.224988, 1.91811, 4.65012, 0.244704, 1.91811, 7.23333, 0.244704, 4.73571, 7.70312, -0.224988, 4.73571, 5.58969, 0.00985783, 2.15284, 7.23333, -0.224988, 4.73571, 4.65012, -0.224988, 2.15284, 7.70312, -0.224988, 4.50043, 5.58969, 0.244704, 2.15284, 5.1199, -0.224988, 1.91811, 4.65012, 0.244704, 2.15284, 7.70312, 0.00985783, 4.2657, 7.70312, 0.244704, 4.73571)
@@ -75,14 +75,13 @@ points = PackedVector3Array(4.64936, -0.929618, 0.978174, 3.94503, -1.16453, -0.
 points = PackedVector3Array(1.5974, 1.88863, 0.508482, 3.94494, 1.18409, -0.665748, 3.94494, 1.41893, -0.665748, 5.3541, 1.18409, 0.508482, 5.3541, 2.12347, -0.195872, 1.12798, 1.18409, -0.430695, 1.12798, 2.12347, -0.195872, 1.12798, 1.18409, 0.273429, 5.3541, 1.18409, -0.430695, 5.3541, 2.12347, 0.0387207, 1.12798, 1.88863, -0.430695, 1.12798, 2.12347, 0.273429, 1.12798, 1.41893, 0.508482, 5.3541, 1.41893, 0.508482, 0.892582, 1.88863, 0.273429, 5.5895, 1.18409, -0.195872, 4.64929, 1.41893, -0.665748, 0.892582, 1.41893, -0.195872, 5.5895, 1.41893, 0.273429, 3.00656, 1.18409, 0.508482, 5.3541, 1.65378, -0.430695, 0.892582, 1.88863, -0.195872, 0.892582, 1.41893, 0.273429, 1.12798, 1.88863, 0.508482)
 
 [node name="SliceableBody" node_paths=PackedStringArray("meshinstance") instance=ExtResource("1_wmfow")]
-physics_push = 20
 meshinstance = NodePath("Cruiser3")
 
 [node name="Capper" parent="." index="1"]
 cap_material = SubResource("StandardMaterial3D_8oaf6")
 
 [node name="Cruiser3" type="MeshInstance3D" parent="." index="2" groups=["SensorDetect"]]
-mesh = SubResource("CapsuleMesh_l2mmw")
+mesh = SubResource("TorusMesh_e7gfv")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("3_2ryjh")
 
@@ -139,6 +138,3 @@ shape = SubResource("ConvexPolygonShape3D_0vwkj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="20"]
 shape = SubResource("ConvexPolygonShape3D_5s402")
-
-[node name="MeshInstance3D" parent="." index="22"]
-visible = true

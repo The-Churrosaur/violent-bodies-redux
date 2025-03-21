@@ -196,6 +196,7 @@ mechbody = NodePath("../../..")
 
 [node name="HeadlookController" parent="TorsoDolly" node_paths=PackedStringArray("body", "body_controller", "hand_stick", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
+visible = false
 body = NodePath("../..")
 body_controller = NodePath("../MechbodyController")
 hand_stick = NodePath("../Cockpit/Handles/HandStick")
