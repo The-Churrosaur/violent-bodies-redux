@@ -27,15 +27,18 @@ func _ready() -> void:
 	
 	#while true:
 		
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(0.1).timeout
 	#await get_tree().get_frame()
 	
-	randomize()
-	var random_vec = Vector3(randf(), randf(), randf())
+	var rng = RandomNumberGenerator.new()
+	
+	rng.randomize()
+	var random_vec
+	random_vec = Vector3(rng.randf_range(-1, 1), rng.randf_range(-1, 1), rng.randf_range(-1, 1))
 	#random_vec = Vector3(0.234875893, 1, -1)
 	
-	if iteration < 1:
-		slice(random_vec, global_position)
+	if iteration < 4:
+		slice(random_vec, global_position )
 	
 	
 	pass

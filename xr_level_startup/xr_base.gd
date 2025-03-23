@@ -4,6 +4,7 @@ signal focus_lost
 signal focus_gained
 signal pose_recentered
 
+@export var enabled = true
 @export var maximum_refresh_rate : int = 90
 
 var xr_interface : OpenXRInterface
@@ -11,6 +12,9 @@ var xr_is_focussed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	if !enabled: return
+	
 	xr_interface = XRServer.find_interface("OpenXR")
 	if xr_interface and xr_interface.is_initialized():
 		print("OpenXR instantiated successfully.")

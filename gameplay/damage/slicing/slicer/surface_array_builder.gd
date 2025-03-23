@@ -39,6 +39,8 @@ func add_vert_manual(vertex : Vector3, uv : Vector2, normal : Vector3):
 	verts.append(vertex)
 	uvs.append(uv)
 	normals.append(normal)
+	
+	#print("vert appended: ", self, " has verts ", verts.size())
 
 
 ## add all verts / uv / normals from an existing arraymesh surface
@@ -60,6 +62,9 @@ func is_empty() -> bool:
 
 
 func build() -> Array: 
+	
+	print("SURFACE ARRAY BUILDER BUILDING: ", verts.size())
+	
 	var surface_array = []
 	surface_array.resize(Mesh.ARRAY_MAX)
 	
