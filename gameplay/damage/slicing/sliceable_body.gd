@@ -34,10 +34,10 @@ func _ready() -> void:
 	
 	rng.randomize()
 	var random_vec
-	random_vec = Vector3(rng.randf_range(-1, 1), rng.randf_range(-1, 1), rng.randf_range(-1, 1))
+	random_vec = Vector3(rng.randf_range(-1, 1), rng.randf_range(-1, 1), rng.randf_range(0, 1)).normalized()
 	#random_vec = Vector3(0.234875893, 1, -1)
 	
-	if iteration < 4:
+	if iteration < 2:
 		slice(random_vec, global_position )
 	
 	

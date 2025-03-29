@@ -201,9 +201,6 @@ player_target = NodePath("../MechRigidContainer/Mechbody")
 [node name="PlayspaceRecenterer" parent="." node_paths=PackedStringArray("default_head_reference") instance=ExtResource("11_agqa7")]
 default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Cockpit/PlayerBodyReferences/HeadsetReference")
 
-[connection signal="dropped" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_dropped"]
-[connection signal="grabbed" from="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/YokeGrabbableLeft" to="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController" method="_on_yoke_grabbable_left_grabbed"]
-
 [editable path="MechRigidContainer"]
 [editable path="MechRigidContainer/Mechbody"]
 [editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController"]
