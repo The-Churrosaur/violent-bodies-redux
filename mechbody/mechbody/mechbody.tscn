@@ -1,7 +1,10 @@
-[gd_scene load_steps=57 format=3 uid="uid://dsh7i4eks64gc"]
+[gd_scene load_steps=62 format=3 uid="uid://dsh7i4eks64gc"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/mechbody.gd" id="1_m8lij"]
+[ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/damage/health_module.tscn" id="2_1ido7"]
 [ext_resource type="PackedScene" uid="uid://dvg5e6hisacwi" path="res://mechbody_controller.tscn" id="2_u33eb"]
+[ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="2_w043i"]
+[ext_resource type="PackedScene" uid="uid://bksp6nx7tvjl1" path="res://gameplay/test_gameplay/self_damage.tscn" id="3_0o3ey"]
 [ext_resource type="PackedScene" uid="uid://dmi72ycp1fhnh" path="res://mechbody/cockpit/helmet/headlook_controller.tscn" id="3_flh8s"]
 [ext_resource type="PackedScene" uid="uid://c2sijngkb66vc" path="res://mechbody_systems/movement_modes/movement_mode_controller.tscn" id="3_hvm2a"]
 [ext_resource type="PackedScene" uid="uid://bj8xdrcrm0gr7" path="res://mechbody/cockpit/helmet/headset_local.tscn" id="4_08ba4"]
@@ -10,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://csi3y137kmq17" path="res://mechbody/cockpit/helmet/headlook_mask.tscn" id="4_usege"]
 [ext_resource type="PackedScene" uid="uid://dpalp6m12ya6d" path="res://mechbody/cockpit/helmet/head_pointer.tscn" id="5_axe8k"]
 [ext_resource type="PackedScene" uid="uid://bfy62cmsx6bx5" path="res://mechbody_systems/mech_booster.tscn" id="5_pl81u"]
+[ext_resource type="PackedScene" uid="uid://ihnbyu5wb4aj" path="res://gameplay/test_gameplay/soul_counter.tscn" id="6_5dlnt"]
 [ext_resource type="PackedScene" uid="uid://1t2q4b1xyydv" path="res://tutorial/vhud_button_test.tscn" id="6_rm64o"]
 [ext_resource type="PackedScene" uid="uid://11c031wphmm0" path="res://gameplay/cockpit_test/cockpit.tscn" id="6_te8af"]
 [ext_resource type="PackedScene" uid="uid://clxk15o7wcj52" path="res://mechbody_systems/head_turret/head_sensor_manager.tscn" id="6_yw0ob"]
@@ -40,7 +44,7 @@
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="24_4gwjq"]
 [ext_resource type="PackedScene" uid="uid://cnsnlbln6h62j" path="res://mechbody_systems/tool_grabbing/grabber_tool.tscn" id="24_ia80r"]
 [ext_resource type="PackedScene" uid="uid://ksayj6looa0t" path="res://mechbody_systems/head_turret/head_turret.tscn" id="27_jujma"]
-[ext_resource type="PackedScene" uid="uid://bak1wwgkoec2" path="res://gameplay/mechtools/sword_tool.tscn" id="31_2uffh"]
+[ext_resource type="PackedScene" uid="uid://bak1wwgkoec2" path="res://gameplay/mechtools/sword/sword_tool.tscn" id="31_2uffh"]
 [ext_resource type="PackedScene" uid="uid://duu1j4emi4xo2" path="res://mechbody_systems/head_turret/ship_sensor.tscn" id="32_21wed"]
 [ext_resource type="Script" path="res://mechbody/cockpit/cockpit_console/movement_mode_panel.gd" id="34_ei38e"]
 [ext_resource type="PackedScene" uid="uid://bktunb3uxfbek" path="res://mechbody_systems/floor_detector.tscn" id="36_lq8jm"]
@@ -49,6 +53,9 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pfxel"]
 friction = 0.0
 absorbent = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jb414"]
+radius = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhtti"]
 albedo_color = Color(1, 1, 0.0784314, 1)
@@ -113,6 +120,21 @@ step_fall_timer = NodePath("TorsoDolly/Step/StepFallTimer")
 movement_mode_controller = NodePath("TorsoDolly/MechbodyController/MovementModeController")
 
 [node name="TorsoDolly" type="Node3D" parent="."]
+
+[node name="Health" type="Node3D" parent="TorsoDolly"]
+
+[node name="Hurtbox" parent="TorsoDolly/Health" node_paths=PackedStringArray("health") instance=ExtResource("2_w043i")]
+health = NodePath("../HealthModule")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TorsoDolly/Health/Hurtbox"]
+shape = SubResource("SphereShape3D_jb414")
+
+[node name="HealthModule" parent="TorsoDolly/Health" instance=ExtResource("2_1ido7")]
+health = 999999
+
+[node name="SelfDamage" parent="TorsoDolly/Health" node_paths=PackedStringArray("health") instance=ExtResource("3_0o3ey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12791, -0.873259)
+health = NodePath("../HealthModule")
 
 [node name="MechbodyController" parent="TorsoDolly" node_paths=PackedStringArray("body", "pull_thruster", "arm_aimer_hand_remote", "mech_booster", "torso_dolly", "hand_manager_left", "hand_manager_right", "headlook_controller", "movement_mode_controller") instance=ExtResource("2_u33eb")]
 body = NodePath("../..")
@@ -194,9 +216,11 @@ d_tune = 0.6
 [node name="MechBooster" parent="TorsoDolly/MechbodyController" node_paths=PackedStringArray("mechbody") instance=ExtResource("5_pl81u")]
 mechbody = NodePath("../../..")
 
+[node name="SoulCounter" parent="TorsoDolly" instance=ExtResource("6_5dlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04821, -0.356041)
+
 [node name="HeadlookController" parent="TorsoDolly" node_paths=PackedStringArray("body", "body_controller", "hand_stick", "headset_local", "cockpit_headset_reference", "cockpit_inputs", "mech_booster") instance=ExtResource("3_flh8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28942, 0)
-visible = false
 body = NodePath("../..")
 body_controller = NodePath("../MechbodyController")
 hand_stick = NodePath("../Cockpit/Handles/HandStick")
@@ -286,7 +310,6 @@ player_yoke = NodePath("../Cockpit/Handles/YokeGrabbableRight")
 arm = NodePath("../ArmBaseRight")
 
 [node name="Cockpit" parent="TorsoDolly" instance=ExtResource("6_te8af")]
-visible = false
 
 [node name="HandStick" parent="TorsoDolly/Cockpit/Handles" index="0" node_paths=PackedStringArray("mechbody")]
 mechbody = NodePath("../../../..")
@@ -417,7 +440,7 @@ other_hand = NodePath("../RightHand")
 hands = 0
 
 [node name="MechHandToolManager" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../beamfx2"), null, NodePath("../Shield")]
+tools = [NodePath("../beamfx2"), NodePath("../Shield")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableLeft")
 hand = NodePath("..")
 
@@ -425,28 +448,31 @@ hand = NodePath("..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
 thrust = 400
 
-[node name="beamfx2" parent="TorsoDolly/LeftHand" instance=ExtResource("31_2uffh")]
+[node name="beamfx2" parent="TorsoDolly/LeftHand" node_paths=PackedStringArray("soul_counter") instance=ExtResource("31_2uffh")]
 transform = Transform3D(3, 4.26326e-14, 3.81165e-20, -2.51965e-14, 1.77304, 2.41998, 3.439e-14, -2.41998, 1.77304, 9.53674e-07, -1.05558, -0.471303)
+soul_counter = NodePath("../../SoulCounter")
 
 [node name="Shield" parent="TorsoDolly/LeftHand" instance=ExtResource("19_rcdnm")]
 transform = Transform3D(1.38021, -0.587376, -2.5675e-08, 0, -6.55671e-08, 1.5, -0.587376, -1.38021, -6.03311e-08, 0, 0, -0.701411)
 tool_name = "SHIELD"
 
-[node name="RightHand" parent="TorsoDolly" node_paths=PackedStringArray("mechbody", "tool_manager", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
+[node name="RightHand" parent="TorsoDolly" node_paths=PackedStringArray("mechbody", "tool_manager", "current_tool", "arm", "arm_targeter", "other_hand") instance=ExtResource("15_gnibp")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, 1.527, -3.587)
 mechbody = NodePath("../..")
 tool_manager = NodePath("MechHandToolManager")
+current_tool = NodePath("BasicGun")
 arm = NodePath("../ArmBaseRight")
 arm_targeter = NodePath("../ArmTargeterRight")
 other_hand = NodePath("../LeftHand")
 
 [node name="MechHandToolManager" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("tools", "input_grabbable", "hand") instance=ExtResource("16_bccqt")]
-tools = [NodePath("../beamfx"), NodePath("../BasicGun"), null]
+tools = [NodePath("../BasicGun")]
 input_grabbable = NodePath("../../Cockpit/Handles/YokeGrabbableRight")
 hand = NodePath("..")
 
-[node name="beamfx" parent="TorsoDolly/RightHand" instance=ExtResource("31_2uffh")]
+[node name="beamfx" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("soul_counter") instance=ExtResource("31_2uffh")]
 transform = Transform3D(3, 0, 0, 0, 1.73272, 2.44902, 0, -2.44902, 1.73272, 0, 0.366668, -2.3511)
+soul_counter = NodePath("../../SoulCounter")
 
 [node name="GrabberTool" parent="TorsoDolly/RightHand" node_paths=PackedStringArray("mechbody") instance=ExtResource("24_ia80r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)

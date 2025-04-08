@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg1mk5ligmeea"]
+
+[ext_resource type="Script" path="res://npc/npc_controller.gd" id="1_7qbmy"]
+
+[node name="NpcController" type="Node3D"]
+script = ExtResource("1_7qbmy")

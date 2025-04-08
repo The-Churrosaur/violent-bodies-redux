@@ -18,32 +18,32 @@ func _on_input_down(action, controller):
 
 func recenter(reference = default_head_reference):
 	
-	XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
+	XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, false)
 	return
 	
-	if !XRPlayerGlobals.is_nodes_set: return
-	
-	var headset = XRPlayerGlobals.headset
-	var origin = XRPlayerGlobals.origin
-	
-	# sync transform
-	
-	# want transformation headset -> reference
-	# apply htr transformation to origin
-	
-	# htr = headset -> origin -> reference
-	#var htr : Transform3D =  headset.global_transform.affine_inverse() * default_head_reference.global_transform
-	#origin.global_transform = origin.global_transform * htr
-	
-	if origin is TestPlayer: 
-		origin.dolly.global_transform = reference.global_transform
-	
-	var headset_local_transform = headset.transform
-	origin.transform = headset_local_transform.affine_inverse()
-	
-	## TODO does elevating the origin cause any problems?
-	
-	origin.rotation.x = 0
-	origin.rotation.z = 0
-	
-	
+	#if !XRPlayerGlobals.is_nodes_set: return
+	#
+	#var headset = XRPlayerGlobals.headset
+	#var origin = XRPlayerGlobals.origin
+	#
+	## sync transform
+	#
+	## want transformation headset -> reference
+	## apply htr transformation to origin
+	#
+	## htr = headset -> origin -> reference
+	##var htr : Transform3D =  headset.global_transform.affine_inverse() * default_head_reference.global_transform
+	##origin.global_transform = origin.global_transform * htr
+	#
+	#if origin is TestPlayer: 
+		#origin.dolly.global_transform = reference.global_transform
+	#
+	#var headset_local_transform = headset.transform
+	#origin.transform = headset_local_transform.affine_inverse()
+	#
+	### TODO does elevating the origin cause any problems?
+	#
+	#origin.rotation.x = 0
+	#origin.rotation.z = 0
+	#
+	#

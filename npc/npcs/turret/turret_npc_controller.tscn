@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btmle2vjn0n3f"]
+
+[ext_resource type="Script" path="res://npc/npcs/turret/turret_npc_controller.gd" id="1_b3rni"]
+
+[node name="TurretNpcController" type="Node3D"]
+script = ExtResource("1_b3rni")

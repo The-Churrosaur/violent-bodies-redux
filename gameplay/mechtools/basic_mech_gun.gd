@@ -5,6 +5,7 @@ extends MechTool
 signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 
 @export var recoil = 20
+@export var recoil_torque = 0.1
 @export var play_audio = true
 @export var play_muzzle_flash = true
 
@@ -15,7 +16,7 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 
 @export var laser : MeshInstance3D
 @export var blinker : Blinker
-@export var muzzle_flash : Node3D
+@export var muzzle_flash : MyFX
 
 @export var mechbody : MechBody
 
@@ -25,6 +26,11 @@ signal emit_recoil(gun : BasicMechGun, recoil : Vector3)
 func _ready():
 	super()
 	gun.launching_rigidbody = launching_rigidbody
+	gun.firing.connect(_on_stupidgun_firing)
+	
+	await get_tree().create_timer(5).timeout
+	
+	gun.pull_trigger()
 
 
 #func _physics_process(delta):
@@ -45,12 +51,13 @@ func on_controller_input_released(action):
 
 
 func _on_stupidgun_firing():
-	grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
+	#grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
 	emit_recoil.emit(self, global_basis.z * recoil)
 	
 	# recoil
 	var pos = muzzle.global_position - launching_rigidbody.global_position
-	launching_rigidbody.apply_impulse(global_basis.z * recoil, pos)
+	launching_rigidbody.apply_central_impulse(global_basis.z * recoil)
+	launching_rigidbody.apply_impulse(global_basis.z * recoil_torque, pos)
 	
 	#var spawn = audio_spawn.instantiate()
 	#add_child(spawn)

@@ -45,7 +45,9 @@ visible = false
 mesh = SubResource("SphereMesh_8br5m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("PrismMesh_ln78b")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("PrismMesh_ln78b")

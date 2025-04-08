@@ -24,11 +24,11 @@ extends Node3D
 @export var look_rotation = true
 @export var look_pitch = PI/32
 @export var look_yaw = PI/32
-@export var look_mult = 1.0
+@export var look_mult = 2.0
 @export var look_pitch_mult = 3.0
 
 @export var lean_deadzone = 0.1
-@export var lean_roll_mult = 2.0
+@export var lean_roll_mult = 4.0
 @export var lean_input_mult = 1
 @export var lean_pitch_mult = 1.5
 @export var lean_boost_threshold = 0.1

@@ -21,6 +21,7 @@ enum GUN_STATE {CYCLING, BATTERY, OUT_BATTERY}
 
 @export var shooter : Shooter
 @export var launching_rigidbody : RigidBody3D
+@export var muzzle : Marker3D
 
 @export_subgroup("Parameters")
 
@@ -37,15 +38,9 @@ enum GUN_STATE {CYCLING, BATTERY, OUT_BATTERY}
 var current_state : GUN_STATE = GUN_STATE.OUT_BATTERY
 var trigger_down = false
 var is_empty = false ## set me! checked before and after cycling 
-var bullet_parent
 
 
 # CALLBACKS  -------------------------------------------------------------------
-
-
-func  _ready():
-	await get_tree().process_frame
-	bullet_parent = LevelGlobals.level
 
 
 func _on_cycle_timer_timeout():

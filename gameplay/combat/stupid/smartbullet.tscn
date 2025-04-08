@@ -1,28 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7cpskccrqvn6"]
+[gd_scene load_steps=7 format=3 uid="uid://c7cpskccrqvn6"]
 
 [ext_resource type="Script" path="res://gameplay/combat/stupid/smartbullet.gd" id="1_emy2w"]
 [ext_resource type="PackedScene" uid="uid://bl5dvsn5pdw0p" path="res://effects/hitFX.tscn" id="2_r7b3i"]
+[ext_resource type="PackedScene" uid="uid://w47g07iayk1o" path="res://gameplay/damage/damage_area.tscn" id="3_3m1cj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cmcgd"]
 radius = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfkbo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krila"]
 shading_mode = 0
 albedo_color = Color(0, 1, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_e3dnt"]
-material = SubResource("StandardMaterial3D_hfkbo")
+material = SubResource("StandardMaterial3D_krila")
 radius = 0.3
 height = 6.0
 rings = 8
 
-[node name="SmartBullet" type="Area3D" node_paths=PackedStringArray("timer") groups=["laser"]]
+[node name="SmartBullet" type="Area3D" node_paths=PackedStringArray("damage_area") groups=["laser"]]
 collision_layer = 9
 collision_mask = 9
 monitoring = false
 monitorable = false
 script = ExtResource("1_emy2w")
-timer = NodePath("MeshInstance3D/Timer")
+damage_area = NodePath("DamageArea")
 
 [node name="hitFX" parent="." instance=ExtResource("2_r7b3i")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.516486, 0, 1, -2.25763e-08, 0.000318944, 0.00197834, 0.628824)
@@ -35,11 +36,10 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.516486, 0, 1, -2.25763e-08,
 mesh = SubResource("SphereMesh_e3dnt")
 skeleton = NodePath("")
 
-[node name="Timer" type="Timer" parent="MeshInstance3D"]
-autostart = true
+[node name="DamageArea" parent="." instance=ExtResource("3_3m1cj")]
+monitoring = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="finished" from="hitFX" to="." method="_on_hit_fx_finished"]
-[connection signal="timeout" from="MeshInstance3D/Timer" to="." method="_on_timer_timeout"]
 
 [editable path="hitFX"]

@@ -12,6 +12,8 @@ extends Node3D
 signal target_acquired()
 signal target_lost()
 
+@export var aim_point : Marker3D
+
 var target : TargetTrack
 var target_is_acquired = false
 

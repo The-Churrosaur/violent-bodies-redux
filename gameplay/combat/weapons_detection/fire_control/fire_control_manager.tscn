@@ -4,3 +4,8 @@
 
 [node name="FireControlManager" type="Node"]
 script = ExtResource("1_7yabh")
+
+[node name="oodaTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="oodaTimer" to="." method="_on_ooda_timer_timeout"]

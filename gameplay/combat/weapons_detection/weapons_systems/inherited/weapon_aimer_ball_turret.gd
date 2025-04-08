@@ -1,5 +1,5 @@
 
-## temp - does not incorporate lead or physics
+## temp - does not incorporate physics
 extends WeaponAimer
 
 
@@ -22,6 +22,8 @@ func _physics_process(delta: float) -> void:
 	
 	var target_pos = lead_computer.predict(target.trackable_area.body)
 	if !target_pos: target_pos = target.trackable_area.global_position
+	
+	#var target_pos = target.trackable_area.global_position
 	rotation_target.look_at(target_pos)
 	turret_base.global_transform = turret_base.global_transform.interpolate_with(
 									rotation_target.global_transform, lerp_coefficient * delta)

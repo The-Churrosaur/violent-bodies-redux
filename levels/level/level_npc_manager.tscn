@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7xh4xs3xnw5s"]
+
+[ext_resource type="Script" path="res://levels/level/level_npc_manager.gd" id="1_cf5uf"]
+
+[node name="LevelNpcManager" type="Node3D"]
+script = ExtResource("1_cf5uf")

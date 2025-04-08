@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c38fl22da0jew"]
+[gd_scene load_steps=18 format=3 uid="uid://c38fl22da0jew"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/training_bot.gd" id="1_qefqv"]
 [ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_7u7ub"]
@@ -11,7 +11,9 @@
 [ext_resource type="AudioStream" uid="uid://b0hek6a22ax66" path="res://assets/audio/269064__mickboere__jet-loop-01.wav" id="10_0joy1"]
 [ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="11_6hi4e"]
 [ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="11_oegaf"]
-[ext_resource type="PackedScene" uid="uid://md8gwthvvbr0" path="res://gameplay/combat/weapons_detection/weapons/bullet_pool_shooter.tscn" id="12_wsde8"]
+[ext_resource type="PackedScene" uid="uid://bucnla8x27yb0" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.tscn" id="12_k4fmq"]
+[ext_resource type="PackedScene" uid="uid://2cpstgfnw41v" path="res://gameplay/damage/slicing/sliceable_component.tscn" id="13_f5gqh"]
+[ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="14_innue"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
 radius = 3.0
@@ -36,7 +38,8 @@ can_sleep = false
 script = ExtResource("1_qefqv")
 impulse = 1000.0
 slerp_speed = 10
-gun = NodePath("")
+gun = NodePath("GunBase")
+faction = 1
 
 [node name="explosionFX" parent="." instance=ExtResource("2_7u7ub")]
 boom_delay = 0.0
@@ -89,7 +92,6 @@ text = "dasfe"
 font_size = 200
 
 [node name="HealthModule" parent="." instance=ExtResource("8_27lgs")]
-health = 100
 
 [node name="DamageFx" parent="." instance=ExtResource("9_s1n2a")]
 transform = Transform3D(0.000283132, 0.00794356, 0.999968, -0.00163949, 0.999967, -0.00794309, -0.999999, -0.00163718, 0.000296158, 0, 0, 0)
@@ -103,18 +105,29 @@ doppler_tracking = 2
 
 [node name="LeadComputer" parent="." node_paths=PackedStringArray("launching_body", "muzzle_reference") instance=ExtResource("11_6hi4e")]
 launching_body = NodePath("..")
-muzzle_reference = NodePath("")
+muzzle_reference = NodePath("../GunBase/Muzzle")
 projectile_velocity = 500.0
 
-[node name="GunBase" parent="." node_paths=PackedStringArray("shooter", "launching_rigidbody") instance=ExtResource("11_oegaf")]
-shooter = NodePath("Shooter")
+[node name="GunBase" parent="." node_paths=PackedStringArray("shooter", "launching_rigidbody", "muzzle") instance=ExtResource("11_oegaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.52435)
+shooter = NodePath("PoolbulletShooter")
 launching_rigidbody = NodePath("..")
-
-[node name="Shooter" parent="GunBase" node_paths=PackedStringArray("muzzle") instance=ExtResource("12_wsde8")]
 muzzle = NodePath("Muzzle")
 
-[node name="Muzzle" type="Marker3D" parent="GunBase/Shooter"]
+[node name="Muzzle" type="Marker3D" parent="GunBase"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.61358)
+
+[node name="PoolbulletShooter" parent="GunBase" instance=ExtResource("12_k4fmq")]
+
+[node name="SliceableComponent" parent="." node_paths=PackedStringArray("rigidbody", "meshinstance") instance=ExtResource("13_f5gqh")]
+rigidbody = NodePath("..")
+meshinstance = NodePath("../mechmesh")
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("14_innue")]
+health = NodePath("../HealthModule")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("SphereShape3D_2g2oc")
 
 [connection signal="explosion_ended" from="explosionFX" to="." method="_on_explosion_fx_explosion_ended"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

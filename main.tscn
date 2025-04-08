@@ -8,6 +8,5 @@
 script = ExtResource("1_y613h")
 
 [node name="XrBase" parent="." instance=ExtResource("2_pw6pb")]
-enabled = false
 
 [node name="Node3D" parent="." instance=ExtResource("2_kpyl0")]

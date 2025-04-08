@@ -1,0 +1,99 @@
+[gd_scene load_steps=16 format=3 uid="uid://ihnbyu5wb4aj"]
+
+[ext_resource type="Script" path="res://gameplay/test_gameplay/soul_counter.gd" id="1_gs88m"]
+[ext_resource type="PackedScene" uid="uid://cxg4ixvdjss3i" path="res://gameplay/test_gameplay/kill_counter.tscn" id="2_xd2k2"]
+
+[sub_resource type="Curve" id="Curve_5ut2r"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_le6pq"]
+curve = SubResource("Curve_5ut2r")
+
+[sub_resource type="Gradient" id="Gradient_s3a64"]
+offsets = PackedFloat32Array(0, 0.0682731, 0.120482, 0.212851)
+colors = PackedColorArray(0.0294876, 0.266672, 1, 1, 1, 1, 1, 1, 0.171687, 0.40397, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r5amy"]
+gradient = SubResource("Gradient_s3a64")
+
+[sub_resource type="Curve" id="Curve_to8fx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.135135, 1), 0.0, 0.0, 0, 0, Vector2(0.767568, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_j7ap0"]
+curve = SubResource("Curve_to8fx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rh48h"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_curve = SubResource("CurveTexture_le6pq")
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_j7ap0")
+color_ramp = SubResource("GradientTexture1D_r5amy")
+turbulence_enabled = true
+turbulence_noise_strength = 1.02
+turbulence_noise_scale = 1.143
+sub_emitter_mode = 1
+sub_emitter_frequency = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prmic"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_31p6r"]
+material = SubResource("StandardMaterial3D_prmic")
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 4
+
+[sub_resource type="Curve" id="Curve_fowop"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.140541, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_u2a8a"]
+curve = SubResource("Curve_fowop")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_im0a5"]
+initial_velocity_min = 0.1
+initial_velocity_max = 0.1
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_u2a8a")
+turbulence_enabled = true
+turbulence_noise_scale = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_1c5dl"]
+material = SubResource("StandardMaterial3D_prmic")
+radius = 0.025
+height = 0.05
+radial_segments = 8
+rings = 4
+
+[node name="SoulCounter" type="Node3D"]
+script = ExtResource("1_gs88m")
+
+[node name="KillCounter" parent="." instance=ExtResource("2_xd2k2")]
+
+[node name="SoulParticles" type="GPUParticles3D" parent="."]
+amount = 1
+sub_emitter = NodePath("GPUParticles3D")
+lifetime = 5.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_rh48h")
+draw_pass_1 = SubResource("SphereMesh_31p6r")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="SoulParticles"]
+amount = 100
+lifetime = 2.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_im0a5")
+draw_pass_1 = SubResource("SphereMesh_1c5dl")
+
+[connection signal="enemy_killed" from="KillCounter" to="." method="_on_kill_counter_enemy_killed"]

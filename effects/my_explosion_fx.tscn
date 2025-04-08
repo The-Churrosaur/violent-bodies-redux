@@ -1,0 +1,163 @@
+[gd_scene load_steps=24 format=3 uid="uid://c1rmwwn7hjq3i"]
+
+[ext_resource type="PackedScene" uid="uid://c5ighkjq7f42w" path="res://effects/my_particle_fx.tscn" id="1_4xyav"]
+[ext_resource type="Material" uid="uid://d36fshnmb3ppv" path="res://materials/smoke_material.tres" id="2_pgltl"]
+[ext_resource type="PackedScene" uid="uid://d0jdcfqgvui6p" path="res://effects/good_smoke.tscn" id="3_75rv0"]
+[ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_c6doj"]
+[ext_resource type="Material" uid="uid://bdqcqxyxc4rl7" path="res://effects/smoke_flat_material.tres" id="5_kg7e7"]
+[ext_resource type="AudioStream" uid="uid://dl8us1gvx5vl1" path="res://assets/audio/zapsplat_explosion_big_fireball_001_89751.mp3" id="6_jpiix"]
+
+[sub_resource type="Gradient" id="Gradient_4fu8n"]
+offsets = PackedFloat32Array(0.0108108, 0.497297, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.955738, 0.575225, 0.603247, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n4ceg"]
+gradient = SubResource("Gradient_4fu8n")
+
+[sub_resource type="Curve" id="Curve_baqb2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106481, 1), -0.126316, -0.126316, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_e3oxg"]
+curve = SubResource("Curve_baqb2")
+
+[sub_resource type="Curve" id="Curve_fl4dm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7pqg0"]
+curve = SubResource("Curve_fl4dm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uehru"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.8
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_e3oxg")
+color = Color(0.976471, 0.811765, 0.839216, 1)
+color_ramp = SubResource("GradientTexture1D_n4ceg")
+turbulence_enabled = true
+turbulence_noise_strength = 11.16
+turbulence_noise_scale = 5.33
+turbulence_noise_speed_random = 0.57
+turbulence_influence_min = 0.74
+turbulence_influence_max = 0.74
+turbulence_initial_displacement_min = -0.2
+turbulence_initial_displacement_max = 0.2
+turbulence_influence_over_life = SubResource("CurveTexture_7pqg0")
+
+[sub_resource type="SphereMesh" id="SphereMesh_cqt1x"]
+material = ExtResource("2_pgltl")
+radius = 20.0
+height = 40.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g6vd3"]
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -11.84
+tangential_accel_max = 9.21
+scale_min = 0.2
+scale_max = 3.0
+turbulence_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_py20q"]
+material = ExtResource("4_c6doj")
+size = Vector3(2, 2, 2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_joyen"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+damping_min = 1.0
+damping_max = 2.0
+turbulence_enabled = true
+turbulence_noise_scale = 1.0
+sub_emitter_mode = 1
+sub_emitter_frequency = 16.0
+
+[sub_resource type="Gradient" id="Gradient_w1xh8"]
+colors = PackedColorArray(1, 1, 1, 1, 0.937255, 0.807843, 0.980392, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kyoo3"]
+gradient = SubResource("Gradient_w1xh8")
+
+[sub_resource type="Curve" id="Curve_pkypu"]
+_data = [Vector2(0, 0), 0.0, 4.24615, 0, 0, Vector2(0.876812, 1), 0.0516984, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vwhsl"]
+curve = SubResource("Curve_pkypu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tv7os"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_vwhsl")
+color_ramp = SubResource("GradientTexture1D_kyoo3")
+turbulence_enabled = true
+turbulence_noise_strength = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_i1kwb"]
+material = ExtResource("5_kg7e7")
+radial_segments = 8
+rings = 8
+
+[node name="MyFx" node_paths=PackedStringArray("particles") instance=ExtResource("1_4xyav")]
+particles = [NodePath("nova"), NodePath("bubbling"), NodePath("gibs"), NodePath("smoketrail")]
+
+[node name="nova" type="GPUParticles3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0568449, 0)
+emitting = false
+amount = 20
+lifetime = 9.02
+one_shot = true
+explosiveness = 0.55
+randomness = 0.05
+process_material = SubResource("ParticleProcessMaterial_uehru")
+draw_pass_1 = SubResource("SphereMesh_cqt1x")
+
+[node name="bubbling" parent="." index="1" instance=ExtResource("3_75rv0")]
+
+[node name="gibs" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0349503, 0.0563288, 0.0716858)
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 0.82
+transform_align = 2
+trail_lifetime = 6.75
+process_material = SubResource("ParticleProcessMaterial_g6vd3")
+draw_pass_1 = SubResource("BoxMesh_py20q")
+
+[node name="smoketrail" type="GPUParticles3D" parent="." index="3"]
+emitting = false
+amount = 6
+sub_emitter = NodePath("smokebits")
+one_shot = true
+explosiveness = 0.84
+process_material = SubResource("ParticleProcessMaterial_joyen")
+
+[node name="smokebits" type="GPUParticles3D" parent="smoketrail" index="0"]
+emitting = false
+amount = 100
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_tv7os")
+draw_pass_1 = SubResource("SphereMesh_i1kwb")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="4"]
+stream = ExtResource("6_jpiix")
+volume_db = 27.428
+max_db = 6.0
+max_distance = 858.21
+doppler_tracking = 2

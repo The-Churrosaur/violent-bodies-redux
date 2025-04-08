@@ -1,4 +1,4 @@
-extends Node3D
+extends MyFX
 
 @onready var smoke_puff = $SmokePuff
 @onready var shockwave = $Shockwave

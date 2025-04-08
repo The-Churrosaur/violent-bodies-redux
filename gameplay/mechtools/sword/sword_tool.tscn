@@ -1,0 +1,244 @@
+[gd_scene load_steps=25 format=3 uid="uid://bak1wwgkoec2"]
+
+[ext_resource type="Script" path="res://beamfx.gd" id="1_fst30"]
+[ext_resource type="Material" uid="uid://cyp6f6hs8t5rv" path="res://materials/sword_material.tres" id="2_lskif"]
+[ext_resource type="Material" uid="uid://cj7hotheanjxq" path="res://effects/bean_particle_process_material.tres" id="3_xjmqn"]
+[ext_resource type="Script" path="res://gameplay/damage/damage_area.gd" id="4_p0fan"]
+[ext_resource type="PackedScene" uid="uid://bnsu72ee5wksp" path="res://gameplay/damage/slicing/slicer_area.tscn" id="5_cm5hn"]
+[ext_resource type="PackedScene" uid="uid://dq1qe8gd5124u" path="res://gameplay/mechtools/sword/cool_slicer.tscn" id="5_wmpid"]
+[ext_resource type="PackedScene" uid="uid://dg7cg8s4s4t4m" path="res://gameplay/damage/slicing/slicer_area_bigplane.tscn" id="6_ndio7"]
+[ext_resource type="PackedScene" uid="uid://w47g07iayk1o" path="res://gameplay/damage/damage_area.tscn" id="6_njitk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktnmc"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_3yuae"]
+material = SubResource("StandardMaterial3D_ktnmc")
+radius = 0.02
+height = 0.8
+radial_segments = 6
+rings = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_um86i"]
+emission_shape = 3
+emission_box_extents = Vector3(0.1, 2, 0.1)
+direction = Vector3(0, 1, 0)
+spread = 57.13
+initial_velocity_min = 1.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_min = 0.5
+scale_max = 2.0
+turbulence_enabled = true
+turbulence_noise_scale = 3.49
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kayer"]
+albedo_color = Color(0.913725, 0.792157, 0.937255, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 6.84
+
+[sub_resource type="SphereMesh" id="SphereMesh_6mowl"]
+material = SubResource("StandardMaterial3D_kayer")
+radius = 0.01
+height = 0.02
+radial_segments = 4
+rings = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_41j2q"]
+radius = 0.1
+height = 10.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_j23q4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d8kxg"]
+size = Vector3(2000, 2000, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fh7dc"]
+size = Vector3(1000, 1000, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cg1pu"]
+size = Vector3(1000, 1000, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfemn"]
+transparency = 1
+depth_draw_mode = 2
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_xq2ch"]
+material = SubResource("StandardMaterial3D_qfemn")
+size = Vector3(4000, 4000, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_biljn"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_jub8j"]
+material = SubResource("StandardMaterial3D_biljn")
+size = Vector3(1, 2000, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_esupu"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_d8aai"]
+material = SubResource("StandardMaterial3D_esupu")
+size = Vector3(100, 2000, 1)
+
+[node name="sword" type="Node3D" node_paths=PackedStringArray("particles", "tip", "slicer", "cool_slicer")]
+script = ExtResource("1_fst30")
+particles = [NodePath("MeshInstance3D/GPUParticles3D"), NodePath("MeshInstance3D/GPUParticles3D2")]
+tip = NodePath("SlicerArea/tip")
+slicer = NodePath("SlicerArea")
+cool_slicer = NodePath("CoolSlicer")
+tool_name = "BEAM"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_lskif")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31455, 0)
+amount = 100
+lifetime = 0.25
+visibility_aabb = AABB(-4, -3.18469, -4, 8, 8, 8)
+local_coords = true
+process_material = ExtResource("3_xjmqn")
+draw_pass_1 = SubResource("SphereMesh_3yuae")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00837994, 2.71952, -0.0131158)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_um86i")
+draw_pass_1 = SubResource("SphereMesh_6mowl")
+
+[node name="Label3D" type="Label3D" parent="."]
+visible = false
+
+[node name="DamageArea" type="Area3D" parent="." groups=["laser"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.77433, 0)
+visible = false
+script = ExtResource("4_p0fan")
+damage = 100
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+shape = SubResource("CapsuleShape3D_41j2q")
+
+[node name="CollisionBody" type="RigidBody3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionBody"]
+shape = SubResource("CapsuleShape3D_41j2q")
+
+[node name="RecoilPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.39898, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RecoilPoint"]
+mesh = SubResource("BoxMesh_j23q4")
+
+[node name="CoolSlicer" parent="." node_paths=PackedStringArray("sword", "slicer", "mesh", "mesh_sides", "tip", "base") instance=ExtResource("5_wmpid")]
+sword = NodePath("..")
+slicer = NodePath("../SlicerArea")
+mesh = NodePath("../SlicerArea/SliceVisualMesh")
+mesh_sides = NodePath("../SlicerArea/SliceVisualMesh/sides")
+tip = NodePath("../SlicerArea/tip")
+base = NodePath("../SlicerArea/base")
+
+[node name="SlicerAreaBigplane" parent="." instance=ExtResource("6_ndio7")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SlicerAreaBigplane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179958, 0.0401201, -0.00478745)
+shape = SubResource("BoxShape3D_d8kxg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerAreaBigplane"]
+visible = false
+mesh = SubResource("BoxMesh_fh7dc")
+
+[node name="DamageAreaBigplane" parent="SlicerAreaBigplane" instance=ExtResource("6_njitk")]
+monitoring = false
+monitorable = false
+damage = 10
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SlicerAreaBigplane/DamageAreaBigplane"]
+shape = SubResource("BoxShape3D_cg1pu")
+
+[node name="SlicerArea" parent="." node_paths=PackedStringArray("cool_slicer", "base", "tip", "sword") instance=ExtResource("5_cm5hn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82547, 0)
+collision_layer = 4
+collision_mask = 4
+cool_slicer = NodePath("../CoolSlicer")
+base = NodePath("base")
+tip = NodePath("tip")
+sword = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SlicerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 250, 0)
+shape = SubResource("CapsuleShape3D_41j2q")
+
+[node name="tip" type="Marker3D" parent="SlicerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.54242, 0)
+
+[node name="base" type="Marker3D" parent="SlicerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.77205, 0)
+
+[node name="SliceVisualMesh" type="MeshInstance3D" parent="SlicerArea"]
+visible = false
+
+[node name="sides" type="Node3D" parent="SlicerArea/SliceVisualMesh"]
+visible = false
+
+[node name="neg" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/sides"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+mesh = SubResource("BoxMesh_xq2ch")
+skeleton = NodePath("../..")
+
+[node name="pos" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/sides"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+mesh = SubResource("BoxMesh_xq2ch")
+skeleton = NodePath("../../..")
+
+[node name="SliceVisualMesh" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0)
+mesh = SubResource("BoxMesh_jub8j")
+
+[node name="SliceVisualMesh4" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500, 0, 0)
+mesh = SubResource("BoxMesh_jub8j")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="SliceVisualMesh4" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/SliceVisualMesh4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500, 0, 18.3012)
+mesh = SubResource("BoxMesh_jub8j")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="SliceVisualMesh4" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/SliceVisualMesh4/SliceVisualMesh4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500.589, 3.43167, 21.5593)
+mesh = SubResource("BoxMesh_jub8j")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500, 0, 0)
+mesh = SubResource("BoxMesh_d8aai")
+skeleton = NodePath("../MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.056, 0, 9.06614)
+mesh = SubResource("BoxMesh_d8aai")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.056, 0, -15.7654)
+mesh = SubResource("BoxMesh_d8aai")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/MeshInstance3D/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.056, 0, -0.952736)
+mesh = SubResource("BoxMesh_d8aai")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/MeshInstance3D/MeshInstance3D/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2036.02, 0, -0.952736)
+mesh = SubResource("BoxMesh_d8aai")
+
+[connection signal="area_entered" from="DamageArea" to="." method="_on_area_3d_area_entered"]

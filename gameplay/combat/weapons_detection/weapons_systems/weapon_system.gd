@@ -25,6 +25,18 @@ func _ready() -> void:
 	state = WS_STATE.IDLE
 
 
+func _physics_process(delta: float) -> void:
+	
+	match state:
+		WS_STATE.IDLE:
+			pass
+		WS_STATE.TRACKING:
+			pass
+		WS_STATE.ENGAGING:
+			if weapon_aimer.target_is_acquired: 
+			pass
+
+
 func _on_aimer_target_acquired():
 	weapon_attacker.weapon_aimed()
 
@@ -33,41 +45,52 @@ func _on_aimer_target_lost():
 	weapon_attacker.weapon_lost_aim()
 
 
-## -- called by ai manager / state machine
+## -- called by fcm
 
 
-## tell aimer to aim at target, ready weapon
-func ready_aim():
-	if !target: no_target.emit(); return
+func track_target(new_target : TargetTrack):
+	target = new_target
 	weapon_aimer.acquire_target(target)
-	weapon_attacker.ready_weapon()
-	state = WS_STATE.TRACKING
 
 
-## track if not tracking, engage
-func engage():
-	if !target: no_target.emit(); return
-	if state == WS_STATE.IDLE: ready_aim()
+func engage_target(new_target : TargetTrack):
+	target = new_target
+	weapon_aimer.acquire_target(target)
 	weapon_attacker.engage()
-	state = WS_STATE.ENGAGING
 
 
-## return to tracking
-func hold_fire():
-	if state != WS_STATE.ENGAGING: return
-	weapon_attacker.cease_fire()
-	state = WS_STATE.TRACKING
-
-
-## return to idle
-func cease_fire():
-	if state != WS_STATE.ENGAGING: return
-	weapon_aimer.cease_fire()
-	weapon_attacker.cease_fire()
-	state = WS_STATE.IDLE
-
-
-## -- called by fire control manager 
+### tell aimer to aim at target, ready weapon
+#func set_tracking():
+	#if !target: no_target.emit(); return
+	#
+	#if state == WS_STATE.IDLE:
+		#weapon_aimer.acquire_target(target)
+		#weapon_attacker.ready_weapon()
+	#
+	#if state == WS_STATE.ENGAGING:
+		#weapon_attacker.cease_fire()
+	#
+	#state = WS_STATE.TRACKING
+#
+#
+### track if not tracking, engage
+#func set_engaging():
+	#if !target: no_target.emit(); return
+	#
+	#if state == WS_STATE.IDLE: 
+		#set_tracking()
+	#
+	#weapon_attacker.engage()
+	#state = WS_STATE.ENGAGING
+#
+#
+### return to idle
+#func set_idle():
+	#if state == WS_STATE.ENGAGING: 
+		#weapon_aimer.cease_fire()
+		#weapon_attacker.cease_fire()
+	#
+	#state = WS_STATE.IDLE
 
 
 ## ask prioritizer to choose a target from a list of targets

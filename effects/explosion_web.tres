@@ -87,7 +87,7 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_toon, specular_toon
 
 
 // Varyings
-varying float particle_lifetime;
+varying float var_particle_lifetime;
 
 uniform sampler2D NoiseTexture;
 uniform sampler2D tex_frg_5;
@@ -130,7 +130,7 @@ void vertex() {
 
 
 // VaryingSetter:7
-	particle_lifetime = n_out6p2;
+	var_particle_lifetime = n_out6p2;
 
 
 }

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6s483834v703"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons/smartbullet_shooter.gd" id="1_aswgx"]
+[ext_resource type="PackedScene" uid="uid://c7cpskccrqvn6" path="res://gameplay/combat/stupid/smartbullet.tscn" id="2_3eyox"]
+
+[node name="SmartbulletShooter" type="Node3D"]
+script = ExtResource("1_aswgx")
+bullet_scene = ExtResource("2_3eyox")

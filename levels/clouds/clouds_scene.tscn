@@ -1,26 +1,20 @@
-[gd_scene load_steps=23 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=21 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/clouds/clouds_scene.gd" id="1_fneys"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
+[ext_resource type="PackedScene" uid="uid://b7xh4xs3xnw5s" path="res://levels/level/level_npc_manager.tscn" id="2_nhtre"]
+[ext_resource type="PackedScene" uid="uid://c6i07ptlrlywv" path="res://utils/pooling/variant_pool.tscn" id="3_71v84"]
 [ext_resource type="PackedScene" uid="uid://notg23vl4d5l" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_gun.tscn" id="3_gyprs"]
 [ext_resource type="PackedScene" uid="uid://cbi836x5vwgeo" path="res://utils/remote_node_projector.tscn" id="3_j6thb"]
 [ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
-[ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="3_xdm3k"]
-[ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="4_0shpt"]
-[ext_resource type="Script" path="res://spinner.gd" id="5_fgcw4"]
-[ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="6_mf4gk"]
-[ext_resource type="PackedScene" uid="uid://bgks2vibbp02y" path="res://npc/turret_enemy.tscn" id="7_l8xye"]
+[ext_resource type="PackedScene" uid="uid://civy0ur1ttmlm" path="res://gameplay/combat/stupid/poolbullet.tscn" id="4_o3udm"]
+[ext_resource type="PackedScene" uid="uid://bgks2vibbp02y" path="res://npc/npcs/turret/turret_enemy.tscn" id="7_l8xye"]
 [ext_resource type="PackedScene" uid="uid://bdhc7mn7fx7jt" path="res://gameplay/test_gameplay/bot_spawner.tscn" id="9_voekk"]
 [ext_resource type="PackedScene" uid="uid://7ws1vu7utnp6" path="res://my_xr_tools/playspace_recenterer.tscn" id="11_agqa7"]
 [ext_resource type="PackedScene" uid="uid://bwg23bgh03qe6" path="res://levels/clouds/cloudsmesh.tscn" id="11_yyhlv"]
 [ext_resource type="PackedScene" uid="uid://cchgruq25tsm" path="res://levels/clouds/sky_dome.tscn" id="12_d33gl"]
-[ext_resource type="PackedScene" uid="uid://bsat3wi2pmp18" path="res://levels/props/cruiser_sliceable.tscn" id="12_j0rc6"]
 [ext_resource type="PackedScene" uid="uid://cdgfmtvu50t1c" path="res://gameplay/test_gameplay/training_bot_ground.tscn" id="14_ddrce"]
 [ext_resource type="Script" path="res://gameplay/damage/damage_area.gd" id="16_7cmqt"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nfpfe"]
-radius = 1.43949
-height = 10.3948
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bk1f"]
 
@@ -32,30 +26,28 @@ size = Vector3(5, 5, 5)
 [sub_resource type="BoxMesh" id="BoxMesh_spnvm"]
 size = Vector3(5, 5, 5)
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bj6t"]
+transparency = 2
+alpha_scissor_threshold = 1.0
+alpha_antialiasing_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("player_body", "bullet_pool", "npc_manager")]
 script = ExtResource("1_fneys")
+player_body = NodePath("MechRigidContainer/Mechbody")
+bullet_pool = NodePath("Level/VariantPool")
+npc_manager = NodePath("Level/LevelNpcManager")
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="LevelNpcManager" parent="Level" node_paths=PackedStringArray("level") instance=ExtResource("2_nhtre")]
+level = NodePath("../..")
+
+[node name="VariantPool" parent="Level" instance=ExtResource("3_71v84")]
+packed_scene = ExtResource("4_o3udm")
 
 [node name="MechRigidContainer" parent="." instance=ExtResource("2_c218m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
-visible = false
-
-[node name="Skate" parent="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController" index="3"]
-downforce = 200
-
-[node name="Stick" parent="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/HandStick" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399994, 0, 0)
-
-[node name="MechHandToolManager" parent="MechRigidContainer/Mechbody/TorsoDolly/LeftHand" index="3" node_paths=PackedStringArray("tools")]
-tools = [NodePath("../beamfx2"), null, NodePath("../Shield")]
-
-[node name="beamfx2" parent="MechRigidContainer/Mechbody/TorsoDolly/LeftHand" index="5"]
-transform = Transform3D(3, 0, 0, 0, 0.776456, 2.89777, 0, -2.89777, 0.776456, 9.53674e-07, -1.05558, -0.471303)
-
-[node name="MechHandToolManager" parent="MechRigidContainer/Mechbody/TorsoDolly/RightHand" index="3" node_paths=PackedStringArray("tools")]
-tools = [NodePath("../beamfx"), null, NodePath("../BasicGun")]
-
-[node name="beamfx" parent="MechRigidContainer/Mechbody/TorsoDolly/RightHand" index="4"]
-transform = Transform3D(3, 0, 0, 0, 0.776458, 2.89778, 0, -2.89778, 0.776458, 0, 0.366638, -2.3511)
 
 [node name="CollisionShape3D" parent="MechRigidContainer/HandBitLeft/Hand" index="1"]
 visible = false
@@ -76,12 +68,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, -17.7271, 30.7921)
 [node name="GrabbableGun2" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, -17.7271, 30.7921)
 
-[node name="sliceable" parent="Base" instance=ExtResource("12_j0rc6")]
-transform = Transform3D(1, 0, 0, 0, -0.989382, 0.145341, 0, -0.145341, -0.989382, 183.218, -381.988, -23.2383)
-
 [node name="TurretEnemy" parent="Base" instance=ExtResource("7_l8xye")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.146, -377.662, 45.0815)
-enabled = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.016, -380.972, -20.9185)
 
 [node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
 
@@ -91,44 +79,10 @@ light_energy = 2.663
 light_indirect_energy = 2.247
 light_volumetric_fog_energy = 0.377
 
-[node name="Cruiser2" type="MeshInstance3D" parent="Base" groups=["SensorDetect"]]
-transform = Transform3D(-6.40465, 0, 39.4955, 0, 40.0114, 0, -39.4955, 0, -6.40465, -1634.32, 222.346, -671.572)
-mesh = ExtResource("3_xdm3k")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_0shpt")
-script = ExtResource("5_fgcw4")
-
-[node name="explosionFX" parent="Base/Cruiser2" instance=ExtResource("6_mf4gk")]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Base/Cruiser2" groups=["SensorDetect"]]
-transform = Transform3D(1, 0, 4.47035e-08, 0, 1, 0, -4.47035e-08, 0, 1, 0.0135689, 0, -0.0103493)
-collision_layer = 9
-collision_mask = 9
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/Cruiser2/StaticBody3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.24138, -0.00151437, 0)
-shape = SubResource("CapsuleShape3D_nfpfe")
-
-[node name="Cruiser4" type="MeshInstance3D" parent="Base" groups=["SensorDetect"]]
-transform = Transform3D(37.3364, -6.24781, -12.9563, 6.47425, 39.4823, -0.382201, 12.8447, -1.73981, 37.8537, -374.522, -230.039, 703.847)
-mesh = ExtResource("3_xdm3k")
-skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_0shpt")
-
-[node name="explosionFX" parent="Base/Cruiser4" instance=ExtResource("6_mf4gk")]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Base/Cruiser4" groups=["SensorDetect"]]
-transform = Transform3D(1, 4.28408e-08, 0, -1.39698e-08, 1, -3.72529e-09, -5.96046e-08, 0, 1, -0.0153184, 0.00244188, -0.00710106)
-collision_layer = 9
-collision_mask = 9
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/Cruiser4/StaticBody3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.24138, -0.00151437, 0)
-shape = SubResource("CapsuleShape3D_nfpfe")
-
 [node name="BotSpawner" parent="Base" node_paths=PackedStringArray("bot_target") instance=ExtResource("9_voekk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7019, -25.8647, -403.568)
 bot_target = NodePath("../../MechRigidContainer/Mechbody")
+enabled = true
 
 [node name="BotSpawner2" parent="Base" node_paths=PackedStringArray("bot_target") instance=ExtResource("9_voekk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7019, -362.837, -403.568)
@@ -190,38 +144,25 @@ script = ExtResource("16_7cmqt")
 shape = SubResource("BoxShape3D_h1v16")
 
 [node name="Cloudsmesh" parent="." instance=ExtResource("11_yyhlv")]
-visible = false
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
 
 [node name="Currents" parent="Cloudsmesh" index="0"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 6.03321, -264.274, 9.14228)
+surface_material_override/1 = SubResource("StandardMaterial3D_5bj6t")
+surface_material_override/2 = SubResource("StandardMaterial3D_5bj6t")
+surface_material_override/3 = SubResource("StandardMaterial3D_5bj6t")
+surface_material_override/4 = SubResource("StandardMaterial3D_5bj6t")
+surface_material_override/5 = SubResource("StandardMaterial3D_5bj6t")
+surface_material_override/6 = SubResource("StandardMaterial3D_5bj6t")
 
 [node name="SkyDome" parent="." node_paths=PackedStringArray("player_target") instance=ExtResource("12_d33gl")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3, -3, -3)
 player_target = NodePath("../MechRigidContainer/Mechbody")
 
 [node name="PlayspaceRecenterer" parent="." node_paths=PackedStringArray("default_head_reference") instance=ExtResource("11_agqa7")]
 default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Cockpit/PlayerBodyReferences/HeadsetReference")
 
 [editable path="MechRigidContainer"]
-[editable path="MechRigidContainer/Mechbody"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MovementModeController"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MechRotator"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/MechbodyController/MechRotator/LimbRotator"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/HeadlookController/HeadsetLocal/HeadSensorManager/TargetLeadManager"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/Handles/HandStick"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen1"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen2"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen3"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen4"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen5"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen6"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/screens/TutorialScreen7"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/BACKBUTTON"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/Cockpit/TutorialScreenManager/FORBUTTON"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/RightHand/BasicGun"]
-[editable path="MechRigidContainer/Mechbody/TorsoDolly/HeadTurret"]
 [editable path="MechRigidContainer/seatparent/dolly/XROrigin3D"]
 [editable path="MechRigidContainer/HandBitLeft"]
 [editable path="MechRigidContainer/HandBitLeft/Hand/LimbRotator"]

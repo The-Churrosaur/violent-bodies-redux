@@ -12,11 +12,12 @@ var current_index = 0
 
 
 func _ready():
+	print("toolmanager tools: ", tools)
 	set_tool(0)
 
 
 func set_tool(index):
-	print("toolmanager setting tool: ", index)
+	print("toolmanager setting tool: ", tools[index])
 	var tool = tools[index]
 	_set_tool(tool)
 	current_index = index

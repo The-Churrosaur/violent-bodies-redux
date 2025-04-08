@@ -1,6 +1,6 @@
 
 class_name TrainingBot
-extends RigidBody3D
+extends NPCBody
 
 
 @export var impulse = 500.0
@@ -26,7 +26,11 @@ var destroyed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	super()
 	r.seed = name.hash()
+	
+	#await get_tree().create_timer(5).timeout
+	#die()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,6 +39,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	
+	player = LevelGlobals.level.player_body
 	
 	if player == null : return
 	
@@ -70,18 +75,18 @@ func _on_timer_timeout():
 
 
 func _on_shooter_timer_timeout():
-	gun.pull_trigger()
-	apply_impulse(-transform.basis.z * impulse * 2)
-	shoot_timer.start(1 + r.randf())
-	
-	await get_tree().create_timer(0.3).timeout
-	gun.release_trigger()
+	#gun.pull_trigger()
+	#apply_impulse(-transform.basis.z * impulse * 2)
+	#shoot_timer.start(1 + r.randf())
+	#
+	#await get_tree().create_timer(0.3).timeout
+	#gun.release_trigger()
 	pass
 	
 
 
 func _on_area_3d_area_entered(area):
-	print("trainingbot detected area")
+	#print("trainingbot detected area")
 	$Label3D.text = str(area)
 	if area.is_in_group("laser"): 
 		$Label3D.text = "hit by laser"
@@ -91,7 +96,6 @@ func _on_area_3d_area_entered(area):
 			_damage()
 		
 func _damage(amount = 10):
-	health.change_health(-amount)
 	$DamageFx.play()
 
 func explode():
@@ -107,6 +111,9 @@ func explode():
 	$explosionFX.start_explosion_sequence()
 	player.destroyed_enemy(self)
 	
+	#var vec = Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)).normalized()
+	#$SliceableComponent.slice(vec, global_position)
+	
 	if (player.global_position - global_position).length_squared() < 400:
 		Engine.time_scale = 0.2
 		await get_tree().create_timer(0.1).timeout
@@ -115,7 +122,7 @@ func explode():
 
 func _on_explosion_fx_explosion_ended():
 	mechmesh.visible = false
-	queue_free()
+	die()
 
 
 func _on_health_module_health_zero():

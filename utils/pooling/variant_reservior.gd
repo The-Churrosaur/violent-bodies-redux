@@ -9,7 +9,8 @@ extends Node
 
 @export var pool = true # else reservoir
 @export var prefab : PackedScene
-@export var num_copies = 5
+@export var num_copies = 0
+
 @export var spawn_copies = true
 @export var pop_active_nodes = false # will not return new nodes if pool is at capacity
 @onready var timer = $Timer

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5ighkjq7f42w"]
+
+[ext_resource type="PackedScene" uid="uid://dn2ql4q77okrg" path="res://effects/my_fx.tscn" id="1_208oq"]
+[ext_resource type="Script" path="res://effects/my_particle_fx.gd" id="2_8wbtb"]
+
+[node name="MyFx" node_paths=PackedStringArray("particles") instance=ExtResource("1_208oq")]
+script = ExtResource("2_8wbtb")
+particles = []

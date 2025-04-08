@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkk665ryyy0y7"]
+[gd_scene load_steps=11 format=3 uid="uid://bkk665ryyy0y7"]
 
 [ext_resource type="Script" path="res://gameplay/damage/slicing/sliceable_body.gd" id="1_jwr8o"]
 [ext_resource type="Script" path="res://gameplay/damage/slicing/slicer/mesh_slicer.gd" id="2_xfxll"]
 [ext_resource type="PackedScene" uid="uid://hisljecdw00o" path="res://gameplay/damage/slicing/caps/mesh_slicer_capper.tscn" id="3_kw2jh"]
+[ext_resource type="PackedScene" uid="uid://b0p8qo803lw7a" path="res://effects/split_fx.tscn" id="4_msph0"]
+[ext_resource type="PackedScene" uid="uid://c1rmwwn7hjq3i" path="res://effects/my_explosion_fx.tscn" id="5_n2eu2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_beheh"]
 
@@ -18,10 +20,14 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_4mb62")
 size = Vector3(10, 10, 0.1)
 
-[node name="SliceableBody" type="RigidBody3D" node_paths=PackedStringArray("slicer", "capper")]
+[node name="SliceableBody" type="RigidBody3D" node_paths=PackedStringArray("slicer", "capper", "fx")]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_jwr8o")
+shatter_on_slice = false
 slicer = NodePath("Slicer")
 capper = NodePath("Capper")
+fx = NodePath("SplitFx")
 
 [node name="Slicer" type="Node3D" parent="."]
 script = ExtResource("2_xfxll")
@@ -37,3 +43,8 @@ mesh = SubResource("BoxMesh_it02r")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("BoxMesh_7wa2a")
+
+[node name="SplitFx" parent="." node_paths=PackedStringArray("recursive_fx") instance=ExtResource("4_msph0")]
+recursive_fx = [NodePath("MyFx")]
+
+[node name="MyFx" parent="SplitFx" instance=ExtResource("5_n2eu2")]

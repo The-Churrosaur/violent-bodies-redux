@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg7cg8s4s4t4m"]
+
+[ext_resource type="Script" path="res://gameplay/damage/slicing/slicer_area_bigplane.gd" id="1_k6gtm"]
+
+[node name="SlicerAreaBigplane" type="Area3D"]
+script = ExtResource("1_k6gtm")

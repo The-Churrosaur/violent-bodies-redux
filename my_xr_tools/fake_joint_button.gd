@@ -61,10 +61,10 @@ func _physics_process(delta):
 
 
 func _on_area_body_entered(body):
-	print("BUTTON ENTERED")
+	#print("BUTTON ENTERED")
 	pushing_body = body
 	body_displacement = body.global_position - button_anim.global_position
-	print(body_displacement)
+	#print(body_displacement)
 
 
 func _on_area_body_exited(body):

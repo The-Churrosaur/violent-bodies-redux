@@ -5,7 +5,10 @@ extends RigidBody3D
 
 @export_group("Parameters")
 
-@export var create_collision_on_slice = false
+@export var iteration_limit = 4
+@export var spawn_cooldown = 0.5 ## cannot be sliced until n seconds
+@export var shatter_on_slice = true
+@export var create_collision_on_slice = true
 #@export var collision_convex_hulls = 1
 @export var physics_push = 10
 @export var physics_torque = 0.01
@@ -17,28 +20,37 @@ extends RigidBody3D
 @export var meshinstance : MeshInstance3D
 @export var slicer : MyMeshSlicer
 @export var capper : MeshSlicerCapper
+@export var fx : MyFX
 
 
 var iteration = 0
+var sliceable = true
 
 
 func _ready() -> void:
 	
+	#sliceable = false
+	#await get_tree().create_timer(0.5).timeout
+	#sliceable = true
 	
-	#while true:
+	
+	if iteration <= 0: return
+	
+	
+	if shatter_on_slice:
 		
-	await get_tree().create_timer(0.1).timeout
-	#await get_tree().get_frame()
-	
-	var rng = RandomNumberGenerator.new()
-	
-	rng.randomize()
-	var random_vec
-	random_vec = Vector3(rng.randf_range(-1, 1), rng.randf_range(-1, 1), rng.randf_range(0, 1)).normalized()
-	#random_vec = Vector3(0.234875893, 1, -1)
-	
-	if iteration < 2:
-		slice(random_vec, global_position )
+		await get_tree().create_timer(0.1).timeout
+		#await get_tree().get_frame()
+		
+		var rng = RandomNumberGenerator.new()
+		
+		rng.randomize()
+		var random_vec
+		random_vec = Vector3(rng.randf_range(-1, 1), rng.randf_range(-1, 1), rng.randf_range(0, 1)).normalized()
+		#random_vec = Vector3(0.234875893, 1, -1)
+		
+		if iteration < 3:
+			slice(random_vec, global_position )
 	
 	
 	pass
@@ -46,6 +58,9 @@ func _ready() -> void:
 
 
 func slice(slice_normal : Vector3, slice_point : Vector3):
+	
+	if !sliceable: return
+	if iteration > iteration_limit: return
 	
 	var start_time = Time.get_ticks_msec()
 	print("Start: ", start_time)
@@ -57,6 +72,10 @@ func slice(slice_normal : Vector3, slice_point : Vector3):
 	
 	var local_plane_normal = global_basis.inverse() * slice_normal
 	var local_plane_center = to_local(slice_point)
+	
+	# assumes mesh uniformly scaled
+	local_plane_center *= (1 / meshinstance.scale.x)
+	
 	$MeshInstance3D.look_at($MeshInstance3D.global_position + local_plane_normal * 5, )
 	$MeshInstance3D.position = local_plane_center
 	var plane = Plane(local_plane_normal, local_plane_center)
@@ -103,6 +122,18 @@ func slice(slice_normal : Vector3, slice_point : Vector3):
 	upper_body.global_transform = global_transform
 	lower_body.global_transform = global_transform
 	
+	upper_body.linear_velocity = linear_velocity
+	lower_body.linear_velocity = linear_velocity
+	
+	# add children to bodies
+	
+	for child in get_children():
+		if !child is MeshInstance3D:
+			if plane.distance_to(child.global_position) < 0:
+				child.reparent(lower_body)
+			else:
+				child.reparent(upper_body)
+	
 	
 	# add sliced bits to bodies
 	
@@ -112,6 +143,11 @@ func slice(slice_normal : Vector3, slice_point : Vector3):
 	if lower_body is SliceableBody: lower_body.meshinstance = lower_mesh
 	if upper_body is SliceableBody: upper_body.meshinstance = upper_mesh
 	
+	#upper_mesh.global_transform = meshinstance.global_transform
+	#lower_mesh.global_transform = meshinstance.global_transform
+	
+	upper_mesh.scale = meshinstance.scale
+	lower_mesh.scale = meshinstance.scale
 	
 	# cap
 	
@@ -124,6 +160,14 @@ func slice(slice_normal : Vector3, slice_point : Vector3):
 		_set_collision_shapes(lower_mesh, lower_body)
 		_set_collision_shapes(upper_mesh, upper_body)
 	
+	
+	# fx
+	
+	fx.reparent(lower_body)
+	fx.global_position = global_position + local_plane_center
+	fx.look_at(fx.global_position + slice_normal)
+	fx.scale *= 2
+	fx.play_fx()
 	
 	# physics push
 	

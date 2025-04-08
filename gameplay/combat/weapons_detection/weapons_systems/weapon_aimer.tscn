@@ -2,5 +2,8 @@
 
 [ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/weapon_aimer.gd" id="1_smoao"]
 
-[node name="WeaponAimer" type="Node3D"]
+[node name="WeaponAimer" type="Node3D" node_paths=PackedStringArray("aim_point")]
 script = ExtResource("1_smoao")
+aim_point = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="."]

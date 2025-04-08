@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bucnla8x27yb0"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.gd" id="1_am72t"]
+
+[node name="PoolbulletShooter" type="Node3D"]
+script = ExtResource("1_am72t")

@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://gameplay/damage/damage_area.gd" id="1_j8vrn"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_m2j2d"]
+radius = 1.0
 
 [node name="DamageArea" type="Area3D" groups=["laser"]]
 script = ExtResource("1_j8vrn")

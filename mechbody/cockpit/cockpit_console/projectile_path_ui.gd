@@ -7,7 +7,7 @@ extends Node3D
 @export var projectile_pip : PackedScene
 @export var lead_computer : LeadComputer
 
-@onready var line_drawer_3d : LineDrawer3D = %LineDrawer3d
+#@onready var line_drawer_3d : LineDrawer3D = %LineDrawer3d
 
 var points_array : Array[Vector3] = [segments]
 var pips = []

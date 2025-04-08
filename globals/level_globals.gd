@@ -1,7 +1,7 @@
 extends Node
 
 
-enum FACTIONS {PLAYER_ALLIED, ENEMY}
+enum FACTIONS {PLAYER_ALLIED, ENEMY, NEUTRAL}
 
 
 ## current level root

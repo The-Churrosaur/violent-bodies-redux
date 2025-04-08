@@ -78,6 +78,15 @@ var is_two_hand_grabbing = false
 var local_velocity : Vector3
 
 
+func _ready() -> void:
+	
+	# TODO
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	LevelGlobals.level.player_body = self
+
+
 func _physics_process(delta):
 	
 	#print("mechbody forces: ")
@@ -223,6 +232,9 @@ func get_headset_rot():
 
 
 func destroyed_enemy(enemy):
+	
+	print("ENEMY DESTROYED: ", enemy)
+	
 	# global controller shake
 	if player:
 		XRPlayerGlobals.lhand.trigger_haptic_pulse("haptic", 5, 1.0, 0.2, 0)

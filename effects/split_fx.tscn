@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0p8qo803lw7a"]
+
+[ext_resource type="Script" path="res://effects/my_particle_fx.gd" id="1_val6h"]
+
+[sub_resource type="Gradient" id="Gradient_3i04a"]
+offsets = PackedFloat32Array(0, 0.343949, 0.961783)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.533333, 0, 1, 0.332881, 0.332881, 0.332881, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vqdsx"]
+gradient = SubResource("Gradient_3i04a")
+
+[sub_resource type="Curve" id="Curve_j8hsf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mf8wd"]
+curve = SubResource("Curve_j8hsf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uog8v"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+spread = 180.0
+flatness = 0.962
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -10.0
+linear_accel_max = -2.23517e-06
+scale_curve = SubResource("CurveTexture_mf8wd")
+color_ramp = SubResource("GradientTexture1D_vqdsx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_855w4"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_6hf7p"]
+material = SubResource("StandardMaterial3D_855w4")
+height = 5.0
+radial_segments = 8
+rings = 4
+
+[node name="SplitFx" type="Node3D" node_paths=PackedStringArray("particles")]
+script = ExtResource("1_val6h")
+particles = [NodePath("GPUParticles3D")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+emitting = false
+amount = 40
+one_shot = true
+explosiveness = 1.0
+transform_align = 2
+process_material = SubResource("ParticleProcessMaterial_uog8v")
+draw_pass_1 = SubResource("SphereMesh_6hf7p")

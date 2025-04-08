@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://2cpstgfnw41v"]
+
+[ext_resource type="Script" path="res://gameplay/damage/slicing/sliceable_component.gd" id="1_qyaac"]
+[ext_resource type="Script" path="res://gameplay/damage/slicing/slicer/mesh_slicer.gd" id="2_mnite"]
+[ext_resource type="PackedScene" uid="uid://hisljecdw00o" path="res://gameplay/damage/slicing/caps/mesh_slicer_capper.tscn" id="3_jrp7o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tx5rd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ysvq2"]
+albedo_color = Color(1, 0.247059, 0.0901961, 1)
+
+[node name="SliceableComponent" type="Node3D" node_paths=PackedStringArray("slicer", "capper")]
+script = ExtResource("1_qyaac")
+slicer = NodePath("Slicer")
+capper = NodePath("Capper")
+
+[node name="Slicer" type="Node3D" parent="." node_paths=PackedStringArray("capper")]
+script = ExtResource("2_mnite")
+cap_material = SubResource("StandardMaterial3D_tx5rd")
+capper = NodePath("../Capper")
+
+[node name="Capper" parent="." instance=ExtResource("3_jrp7o")]
+cap_material = SubResource("StandardMaterial3D_ysvq2")

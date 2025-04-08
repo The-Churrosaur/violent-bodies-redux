@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://bksp6nx7tvjl1"]
+
+[ext_resource type="Script" path="res://gameplay/test_gameplay/self_damage.gd" id="1_qra1a"]
+
+[sub_resource type="Gradient" id="Gradient_yhnt1"]
+offsets = PackedFloat32Array(0.0240964, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.385493, 0.385492, 0.385492, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlw11"]
+gradient = SubResource("Gradient_yhnt1")
+
+[sub_resource type="Curve" id="Curve_b2q1i"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0758123, 1), 0.0, 0.0, 0, 0, Vector2(0.68231, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_nvus5"]
+curve = SubResource("Curve_b2q1i")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_prnke"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_nvus5")
+color_ramp = SubResource("GradientTexture1D_mlw11")
+turbulence_noise_strength = 0.37
+turbulence_noise_scale = 1.722
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q6vap"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_rlmsr"]
+material = SubResource("StandardMaterial3D_q6vap")
+radial_segments = 8
+rings = 4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0e6nu"]
+emission_shape = 1
+emission_sphere_radius = 3.0
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbkie"]
+shading_mode = 0
+albedo_color = Color(0.151276, 0.151276, 0.151276, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_kov3f"]
+material = SubResource("StandardMaterial3D_mbkie")
+radial_segments = 8
+rings = 4
+
+[node name="SelfDamage" type="Node3D"]
+visible = false
+script = ExtResource("1_qra1a")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_prnke")
+draw_pass_1 = SubResource("SphereMesh_rlmsr")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_0e6nu")
+draw_pass_1 = SubResource("SphereMesh_kov3f")

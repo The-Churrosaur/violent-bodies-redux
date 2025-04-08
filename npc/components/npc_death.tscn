@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4nagkjsstvji"]
+
+[ext_resource type="Script" path="res://npc/components/npc_death.gd" id="1_xgc2a"]
+
+[node name="Death" type="Node3D"]
+script = ExtResource("1_xgc2a")
