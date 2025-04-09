@@ -2,7 +2,7 @@ class_name PoolBullet
 extends Node3D
 
 @export var bullet_velocity = 500
-@export var lifetime = 1.0
+@export var lifetime = 2.0
 
 @onready var mesh_instance_3d = $MeshInstance3D
 @onready var damage_area: DamageArea = $DamageArea
@@ -13,6 +13,7 @@ var disabled = false
 
 
 func _ready() -> void:
+	await get_tree()
 	disable()
 
 
@@ -20,7 +21,7 @@ func enable():
 	disabled = false
 	#if !get_parent(): LevelGlobals.level.add_child(self)
 	mesh_instance_3d.visible = true
-	$DamageArea.monitorable = true
+	damage_area.set_deferred("monitorable", true)
 	
 	current_lifetime = 0
 	$hitFX.emitting = false
@@ -28,7 +29,7 @@ func enable():
 
 func disable():
 	disabled = true
-	$DamageArea.monitorable = false
+	damage_area.set_deferred("monitorable", false)
 	$MeshInstance3D.visible = false
 	#get_parent().remove_child(self)
 

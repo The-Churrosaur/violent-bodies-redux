@@ -37,4 +37,3 @@ func register_child_npcs(node = level):
 
 func on_npc_died(npc):
 	pass
-	

@@ -25,7 +25,7 @@ extends Node3D
 @export var look_pitch = PI/32
 @export var look_yaw = PI/32
 @export var look_mult = 2.0
-@export var look_pitch_mult = 3.0
+@export var look_pitch_mult = 5.0
 
 @export var lean_deadzone = 0.1
 @export var lean_roll_mult = 4.0

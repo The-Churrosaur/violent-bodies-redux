@@ -10,7 +10,7 @@ extends MovementModeState
 func _physics_process(delta):
 	
 	if is_active_state:
-		body.front_input += 1
+		body.front_input += 0.5
 	
 	pass
 

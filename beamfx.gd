@@ -63,6 +63,8 @@ func _physics_process(delta: float) -> void:
 		
 		if velocity_integrator > 20: 
 			
+			#cool_slicer.cool_slice()
+			
 			if soul_counter.kills >= 2: 
 				soul_counter.use_souls(2)
 				cool_slicer.cool_slice()

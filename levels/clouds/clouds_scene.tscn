@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=22 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/clouds/clouds_scene.gd" id="1_fneys"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="PackedScene" uid="uid://civy0ur1ttmlm" path="res://gameplay/combat/stupid/poolbullet.tscn" id="4_o3udm"]
 [ext_resource type="PackedScene" uid="uid://bgks2vibbp02y" path="res://npc/npcs/turret/turret_enemy.tscn" id="7_l8xye"]
+[ext_resource type="PackedScene" uid="uid://bsat3wi2pmp18" path="res://levels/props/cruiser_sliceable.tscn" id="9_jljoq"]
 [ext_resource type="PackedScene" uid="uid://bdhc7mn7fx7jt" path="res://gameplay/test_gameplay/bot_spawner.tscn" id="9_voekk"]
 [ext_resource type="PackedScene" uid="uid://7ws1vu7utnp6" path="res://my_xr_tools/playspace_recenterer.tscn" id="11_agqa7"]
 [ext_resource type="PackedScene" uid="uid://bwg23bgh03qe6" path="res://levels/clouds/cloudsmesh.tscn" id="11_yyhlv"]
@@ -67,6 +68,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, -17.7271, 30.7921)
 
 [node name="GrabbableGun2" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, -17.7271, 30.7921)
+
+[node name="SliceableBody" parent="Base" instance=ExtResource("9_jljoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.016, -380.972, -1592.27)
 
 [node name="TurretEnemy" parent="Base" instance=ExtResource("7_l8xye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.016, -380.972, -20.9185)

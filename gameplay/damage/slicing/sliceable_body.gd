@@ -129,7 +129,7 @@ func slice(slice_normal : Vector3, slice_point : Vector3):
 	
 	for child in get_children():
 		if !child is MeshInstance3D:
-			if plane.distance_to(child.global_position) < 0:
+			if plane.distance_to(child.position) < 0:
 				child.reparent(lower_body)
 			else:
 				child.reparent(upper_body)

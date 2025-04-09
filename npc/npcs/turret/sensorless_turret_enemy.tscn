@@ -1,0 +1,102 @@
+[gd_scene load_steps=19 format=3 uid="uid://d3iem4oxksps0"]
+
+[ext_resource type="Script" path="res://npc/npcs/turret/sensorless_turret_enemy.gd" id="1_1s3v4"]
+[ext_resource type="PackedScene" uid="uid://btmle2vjn0n3f" path="res://npc/npcs/turret/turret_npc_controller.tscn" id="2_e8705"]
+[ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="3_x2xt7"]
+[ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/damage/health_module.tscn" id="4_7x1qc"]
+[ext_resource type="PackedScene" uid="uid://7qe4eplver8y" path="res://gameplay/combat/weapons_detection/fire_control/fire_control_manager.tscn" id="5_beasv"]
+[ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="6_aoxqc"]
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/weapon_system.gd" id="9_1e1hs"]
+[ext_resource type="PackedScene" uid="uid://bp6d6l14j8723" path="res://gameplay/combat/weapons_detection/weapons_systems/target_prioritizer.tscn" id="10_fnmay"]
+[ext_resource type="PackedScene" uid="uid://bryga5x6s85wi" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_aimer_ball_turret.tscn" id="11_2brkh"]
+[ext_resource type="PackedScene" uid="uid://d0shih875e1vq" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase.tscn" id="12_1xir8"]
+[ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="13_3x51m"]
+[ext_resource type="PackedScene" uid="uid://bucnla8x27yb0" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.tscn" id="14_uadkc"]
+[ext_resource type="PackedScene" uid="uid://d4nagkjsstvji" path="res://npc/components/npc_death.tscn" id="15_fchti"]
+[ext_resource type="PackedScene" uid="uid://c1rmwwn7hjq3i" path="res://effects/my_explosion_fx.tscn" id="16_jpgrt"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ocm7t"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wkpgc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_7imrn"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_kguf4"]
+size = Vector3(0.5, 0.5, 3)
+
+[node name="TurretEnemy" type="RigidBody3D"]
+freeze = true
+script = ExtResource("1_1s3v4")
+
+[node name="TurretNpcController" parent="." node_paths=PackedStringArray("weapon_system_turret", "fire_control_manager", "health", "death", "body") instance=ExtResource("2_e8705")]
+visible = false
+enabled = false
+weapon_system_turret = NodePath("../Weapon/WeaponSystemTurret")
+fire_control_manager = NodePath("../Weapon/FireControlManager")
+health = NodePath("../Health/HealthModule")
+death = NodePath("../Death")
+body = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ocm7t")
+
+[node name="Health" type="Node3D" parent="."]
+
+[node name="Hurtbox" parent="Health" node_paths=PackedStringArray("health") instance=ExtResource("3_x2xt7")]
+health = NodePath("../HealthModule")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Health/Hurtbox"]
+shape = SubResource("CapsuleShape3D_wkpgc")
+
+[node name="HealthModule" parent="Health" instance=ExtResource("4_7x1qc")]
+
+[node name="Weapon" type="Node3D" parent="."]
+
+[node name="FireControlManager" parent="Weapon" node_paths=PackedStringArray("sensors", "weapons_systems") instance=ExtResource("5_beasv")]
+sensors = [null]
+weapons_systems = [NodePath("../WeaponSystemTurret")]
+
+[node name="LeadComputer" parent="Weapon" node_paths=PackedStringArray("launching_body", "muzzle_reference") instance=ExtResource("6_aoxqc")]
+launching_body = NodePath("../..")
+muzzle_reference = NodePath("../../TurretBase/GunBase/Muzzle")
+projectile_velocity = 500.0
+
+[node name="WeaponSystemTurret" type="Node3D" parent="Weapon" node_paths=PackedStringArray("weapon_aimer", "weapon_attacker", "target_prioritizer")]
+script = ExtResource("9_1e1hs")
+weapon_aimer = NodePath("WeaponAimerBallTurret")
+weapon_attacker = NodePath("WeaponAttacker")
+target_prioritizer = NodePath("TargetPrioritizer")
+
+[node name="TargetPrioritizer" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("ws") instance=ExtResource("10_fnmay")]
+ws = NodePath("..")
+
+[node name="WeaponAimerBallTurret" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("turret_base", "lead_computer") instance=ExtResource("11_2brkh")]
+turret_base = NodePath("../../../TurretBase")
+lead_computer = NodePath("../../LeadComputer")
+
+[node name="WeaponAttacker" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("gunbase") instance=ExtResource("12_1xir8")]
+gunbase = NodePath("../../../TurretBase/GunBase")
+
+[node name="TurretBase" type="Node3D" parent="."]
+
+[node name="GunBase" parent="TurretBase" node_paths=PackedStringArray("shooter", "launching_rigidbody", "muzzle") instance=ExtResource("13_3x51m")]
+shooter = NodePath("PoolbulletShooter")
+launching_rigidbody = NodePath("../..")
+muzzle = NodePath("Muzzle")
+cycle_time = 2.0
+
+[node name="Muzzle" type="Marker3D" parent="TurretBase/GunBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.47069)
+
+[node name="PoolbulletShooter" parent="TurretBase/GunBase" instance=ExtResource("14_uadkc")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase"]
+mesh = SubResource("SphereMesh_7imrn")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TurretBase"]
+mesh = SubResource("PrismMesh_kguf4")
+
+[node name="Death" parent="." node_paths=PackedStringArray("death_fx") instance=ExtResource("15_fchti")]
+death_fx = NodePath("MyFx")
+
+[node name="MyFx" parent="Death" instance=ExtResource("16_jpgrt")]

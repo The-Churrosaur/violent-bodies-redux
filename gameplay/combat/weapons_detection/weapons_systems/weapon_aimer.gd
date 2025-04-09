@@ -18,8 +18,8 @@ var target : TargetTrack
 var target_is_acquired = false
 
 
-func acquire_target(target):
+func aim_target(target):
 	self.target = target
 
-func cease_fire():
+func stop_aiming():
 	target = null

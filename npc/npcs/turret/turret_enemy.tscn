@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bv4k0w1hrn5fn" path="res://gameplay/combat/weapons_detection/sensor_detection/sensor.tscn" id="9_ehw2f"]
 [ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="10_24laa"]
 [ext_resource type="PackedScene" uid="uid://u81nmvc7jpd" path="res://gameplay/combat/weapons_detection/sensor_detection/sensor_evaluator.tscn" id="10_1213e"]
-[ext_resource type="PackedScene" uid="uid://b8c81ie4m5313" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase_timer.tscn" id="10_eehwf"]
+[ext_resource type="PackedScene" uid="uid://d0shih875e1vq" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase.tscn" id="12_pm864"]
 [ext_resource type="PackedScene" uid="uid://d4nagkjsstvji" path="res://npc/components/npc_death.tscn" id="15_c3at8"]
 [ext_resource type="PackedScene" uid="uid://bucnla8x27yb0" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.tscn" id="15_yywte"]
 [ext_resource type="PackedScene" uid="uid://c1rmwwn7hjq3i" path="res://effects/my_explosion_fx.tscn" id="16_e0ypm"]
@@ -36,7 +36,6 @@ controller = NodePath("TurretNpcController")
 faction = 1
 
 [node name="TurretNpcController" parent="." node_paths=PackedStringArray("weapon_system_turret", "fire_control_manager", "health", "death", "body") instance=ExtResource("2_v0cfw")]
-visible = false
 weapon_system_turret = NodePath("../Weapon/WeaponSystemTurret")
 fire_control_manager = NodePath("../Weapon/FireControlManager")
 health = NodePath("../Health/HealthModule")
@@ -79,7 +78,7 @@ shape = SubResource("SphereShape3D_v6st0")
 [node name="WeaponSystemTurret" type="Node3D" parent="Weapon" node_paths=PackedStringArray("weapon_aimer", "weapon_attacker", "target_prioritizer")]
 script = ExtResource("6_lryg1")
 weapon_aimer = NodePath("WeaponAimerBallTurret")
-weapon_attacker = NodePath("WeaponAttackerGunbaseTimer")
+weapon_attacker = NodePath("WeaponAttacker")
 target_prioritizer = NodePath("TargetPrioritizer")
 
 [node name="TargetPrioritizer" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("ws") instance=ExtResource("8_ls3uk")]
@@ -88,9 +87,8 @@ ws = NodePath("..")
 [node name="WeaponAimerBallTurret" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("turret_base", "lead_computer") instance=ExtResource("8_av2a4")]
 turret_base = NodePath("../../../TurretBase")
 lead_computer = NodePath("../../LeadComputer")
-lerp_coefficient = 8.0
 
-[node name="WeaponAttackerGunbaseTimer" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("gunbase") instance=ExtResource("10_eehwf")]
+[node name="WeaponAttacker" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("gunbase") instance=ExtResource("12_pm864")]
 gunbase = NodePath("../../../TurretBase/GunBase")
 
 [node name="TurretBase" type="Node3D" parent="."]
@@ -99,9 +97,10 @@ gunbase = NodePath("../../../TurretBase/GunBase")
 shooter = NodePath("PoolbulletShooter")
 launching_rigidbody = NodePath("../..")
 muzzle = NodePath("Muzzle")
+cycle_time = 0.2
 
 [node name="Muzzle" type="Marker3D" parent="TurretBase/GunBase"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.986652)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.98665)
 
 [node name="PoolbulletShooter" parent="TurretBase/GunBase" instance=ExtResource("15_yywte")]
 

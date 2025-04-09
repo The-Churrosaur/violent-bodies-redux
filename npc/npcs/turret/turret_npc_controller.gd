@@ -3,7 +3,7 @@ class_name TurretNPCController
 extends NPCController
 
 
-@export var enabled = false
+@export var enabled = true
 
 @export_subgroup("components")
 @export var weapon_system_turret: WeaponSystem 
@@ -16,14 +16,17 @@ extends NPCController
 func _ready() -> void:
 	
 	health.health_zero.connect(_on_health_module_health_zero)
-	
-	while true:
-	
-		await get_tree().create_timer(5).timeout
 		
-		if enabled:
+	await get_tree().create_timer(1).timeout
+	
+	if enabled:
 		
-			fire_control_manager.set_engagement_at_will()
+	
+		fire_control_manager.set_engagement_free()
+		print("telling wa to attack")
+		
+		#$"../Weapon/WeaponSystemTurret/WeaponAttacker".attack()
+		
 
 
 func _on_health_module_health_zero():
@@ -33,8 +36,11 @@ func _on_health_module_health_zero():
 
 func _start_dying():
 	death.die()
-	weapon_system_turret.cease_fire()
 	
 	await death.done_dying
+	
+	fire_control_manager.set_engagement_hold()
+	
+	print("done awaiting death anim")
 	
 	body.die()

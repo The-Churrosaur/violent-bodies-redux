@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bak1wwgkoec2"]
+[gd_scene load_steps=26 format=3 uid="uid://bak1wwgkoec2"]
 
 [ext_resource type="Script" path="res://beamfx.gd" id="1_fst30"]
 [ext_resource type="Material" uid="uid://cyp6f6hs8t5rv" path="res://materials/sword_material.tres" id="2_lskif"]
@@ -61,6 +61,9 @@ size = Vector3(1000, 1000, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cg1pu"]
 size = Vector3(1000, 1000, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c7sco"]
+size = Vector3(1000, 1000, 25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfemn"]
 transparency = 1
@@ -165,6 +168,10 @@ damage = 10
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="SlicerAreaBigplane/DamageAreaBigplane"]
 shape = SubResource("BoxShape3D_cg1pu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerAreaBigplane/DamageAreaBigplane"]
+visible = false
+mesh = SubResource("BoxMesh_c7sco")
 
 [node name="SlicerArea" parent="." node_paths=PackedStringArray("cool_slicer", "base", "tip", "sword") instance=ExtResource("5_cm5hn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82547, 0)

@@ -5,15 +5,15 @@ extends WeaponAimer
 
 @export var turret_base : Node3D
 @export var lead_computer : LeadComputer
-@export var lerp_coefficient = 4.0
+@export var lerp_coefficient = 8.0
 @onready var rotation_target: Node3D = $rotation_target
 
 
-func acquire_target(target):
+func aim_target(target):
 	super(target)
 
 
-func cease_fire():
+func stop_aiming():
 	super()
 
 
@@ -28,12 +28,15 @@ func _physics_process(delta: float) -> void:
 	turret_base.global_transform = turret_base.global_transform.interpolate_with(
 									rotation_target.global_transform, lerp_coefficient * delta)
 	
-	#if turret_base.global_transform.is_equal_approx(rotation_target.global_transform):
-		#if !target_is_acquired:
-			#target_is_acquired = true
-			#target_acquired.emit()
-	#
-	#else:
-		#if target_is_acquired:
-			#target_is_acquired = false
-			#target_lost.emit()
+	var angle = turret_base.global_basis.z.angle_to(rotation_target.global_basis.z)
+	
+	if angle < 0.01:
+		if !target_is_acquired:
+			target_is_acquired = true
+			print("TARGET ACQUIRED", angle)
+			target_acquired.emit()
+	else:
+		if target_is_acquired:
+			target_is_acquired = false
+			print("TARGET LOST", angle)
+			target_lost.emit()

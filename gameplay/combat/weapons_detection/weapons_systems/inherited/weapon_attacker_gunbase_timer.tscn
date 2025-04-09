@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8c81ie4m5313"]
-
-[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase_timer.gd" id="1_swfk6"]
-
-[node name="WeaponAttackerGunbaseTimer" type="Node3D"]
-script = ExtResource("1_swfk6")

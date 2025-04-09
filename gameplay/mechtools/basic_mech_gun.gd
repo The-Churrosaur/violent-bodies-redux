@@ -28,9 +28,9 @@ func _ready():
 	gun.launching_rigidbody = launching_rigidbody
 	gun.firing.connect(_on_stupidgun_firing)
 	
-	await get_tree().create_timer(5).timeout
-	
-	gun.pull_trigger()
+	#await get_tree().create_timer(5).timeout
+	#
+	#gun.pull_trigger()
 
 
 #func _physics_process(delta):
@@ -51,7 +51,7 @@ func on_controller_input_released(action):
 
 
 func _on_stupidgun_firing():
-	#grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
+	grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.4, 0.2, 0)
 	emit_recoil.emit(self, global_basis.z * recoil)
 	
 	# recoil

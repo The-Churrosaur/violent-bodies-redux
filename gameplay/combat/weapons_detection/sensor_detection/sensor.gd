@@ -40,7 +40,7 @@ func _on_area_exited(area: Area3D) -> void:
 
 
 func update_tracks():
-	pass
+	sensor_evaluator.update_tracks(tracks)
 
 func get_tracks(): 
 	return tracks.values()

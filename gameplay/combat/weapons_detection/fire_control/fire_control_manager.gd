@@ -1,7 +1,8 @@
 
 ## intermediary between controller, sensors, and multiple ws:
 ## sends tracks to ws.
-## gives encapsulated engagement orders to ws
+## gives encapsulated engagement orders to ws.
+## updates ws on a timer loop
 
 ## TODO multiple target distribution 
 ## - query turrets for los 
@@ -11,7 +12,7 @@ class_name FireControlManager
 extends Node
 
 
-enum ENGAGEMENT_STATE {AT_WILL, COMMAND, HOLD}
+enum ENGAGEMENT_STATE {FREE, COMMAND, HOLD}
 
 
 @export_subgroup("Components")
@@ -21,27 +22,18 @@ enum ENGAGEMENT_STATE {AT_WILL, COMMAND, HOLD}
 @onready var ooda_timer: Timer = $oodaTimer
 
 var engagement_state := ENGAGEMENT_STATE.HOLD
+var tracks : Array[TargetTrack] = []
 
-
-## TODO TODO
 
 func _on_ooda_timer_timeout() -> void:
-	distribute_targets()
-	
-	match engagement_state:
-		
-		ENGAGEMENT_STATE.AT_WILL:
-			for weapon in weapons_systems:
-				weapon.set_engaging()
-		
-		ENGAGEMENT_STATE.COMMAND:
-			for weapon in weapons_systems:
-				weapon.set_tracking()
-		
+	update_fcm()
 
 
-func set_engagement_at_will():
-	engagement_state = ENGAGEMENT_STATE.AT_WILL
+# -- state setters
+
+
+func set_engagement_free():
+	engagement_state = ENGAGEMENT_STATE.FREE
 
 
 func set_engagement_command():
@@ -52,14 +44,35 @@ func set_engagement_hold():
 	engagement_state = ENGAGEMENT_STATE.HOLD
 
 
-func distribute_targets():
+# -- fire control
+
+
+func update_fcm():
+	get_targets()
+	update_ws()
+
+
+func get_targets():
+	tracks = []
+	for sensor in sensors: 
+		tracks.append_array(sensor.get_tracks())
+
+
+func update_ws():
 	
-	## accumulate tracks from all sensors
+	# TODO
+	if tracks.is_empty(): return
+	var target = tracks[0]
 	
-	var tracks : Array[TargetTrack] = []
-	for sensor in sensors: tracks.append_array(sensor.get_tracks())
+	match engagement_state:
 		
-	## assign accumulated tracks
-	
-	for weapon in weapons_systems:
-		weapon.assign_target_list(tracks)
+		ENGAGEMENT_STATE.FREE:
+			for weapon in weapons_systems:
+				weapon.engage_target(target)
+		
+		ENGAGEMENT_STATE.COMMAND:
+			pass
+		
+		ENGAGEMENT_STATE.HOLD:
+			for weapon in weapons_systems:
+				weapon.disengage()

@@ -38,11 +38,14 @@ func cool_slice():
 	slicer_area_bigplane.look_at(slicer_area_bigplane.global_position + slice_normal)
 	slicer_area_bigplane.check_slice(slice_normal)
 	
+	damage_area_bigplane.look_at(damage_area_bigplane.global_position + slice_normal)
+	damage_area_bigplane.reparent(LevelGlobals.level)
+	damage_area_bigplane.global_position = base.global_position
+	
 	print("DAMAGING OVERLAPPING AREAS")
 	damage_area_bigplane.monitoring = true
 	damage_area_bigplane.monitorable = true
 	damage_area_bigplane.damage_overlapping_areas()
-	
 	
 	mesh.look_at(mesh.global_position + slice_normal)
 	mesh.reparent(LevelGlobals.level)
