@@ -46,8 +46,10 @@ shooter = NodePath("PoolbulletShooter")
 muzzle = NodePath("../muzzle")
 
 [node name="PoolbulletShooter" parent="GunBase" index="3" instance=ExtResource("4_txd3r")]
+burst = 1
 
 [node name="SmartbulletShooter" parent="GunBase" index="4" instance=ExtResource("5_qrgxh")]
+burst = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0.334919, -3.35338)

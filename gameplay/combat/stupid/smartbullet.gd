@@ -4,7 +4,7 @@ extends Area3D
 @export var bullet_velocity = 500
 @export var damage = 10
 @export var damage_area : DamageArea
-@export var lifetime = 1.0
+@export var lifetime = 2.0
 
 @onready var mesh_instance_3d = $MeshInstance3D
 

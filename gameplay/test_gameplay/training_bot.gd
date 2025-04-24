@@ -31,6 +31,8 @@ func _ready():
 	
 	#await get_tree().create_timer(5).timeout
 	#die()
+	
+	$GunBase.pull_trigger()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -65,38 +67,12 @@ func _physics_process(delta):
 	
 
 
-func _on_timer_timeout():
-	#apply_impulse(Vector3(r.randf(), r.randf(), r.randf()) * impulse)
-	#jitter_timer.start(1 + r.randf())
-	#var impact = lead_computer.predict(player)
-	#$looker.look_at(impact)
-	pass
-	
+
 
 
 func _on_shooter_timer_timeout():
-	#gun.pull_trigger()
-	#apply_impulse(-transform.basis.z * impulse * 2)
-	#shoot_timer.start(1 + r.randf())
-	#
-	#await get_tree().create_timer(0.3).timeout
-	#gun.release_trigger()
-	pass
-	
+	gun.trigger()
 
-
-func _on_area_3d_area_entered(area):
-	#print("trainingbot detected area")
-	$Label3D.text = str(area)
-	if area.is_in_group("laser"): 
-		$Label3D.text = "hit by laser"
-		if area.get("damage") : 
-			_damage(area.damage)
-		else:
-			_damage()
-		
-func _damage(amount = 10):
-	$DamageFx.play()
 
 func explode():
 	if destroyed: return
@@ -127,3 +103,7 @@ func _on_explosion_fx_explosion_ended():
 
 func _on_health_module_health_zero():
 	explode()
+
+
+func _on_health_module_health_changed(amount: Variant) -> void:
+	$DamageFx.play()

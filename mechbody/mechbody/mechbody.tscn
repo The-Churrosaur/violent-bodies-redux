@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dsh7i4eks64gc"]
+[gd_scene load_steps=61 format=3 uid="uid://dsh7i4eks64gc"]
 
 [ext_resource type="Script" path="res://mechbody/mechbody/mechbody.gd" id="1_m8lij"]
 [ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/damage/health_module.tscn" id="2_1ido7"]
@@ -34,7 +34,6 @@
 [ext_resource type="PackedScene" uid="uid://dfsksqu0ew2gv" path="res://mechbody_systems/pull_thruster.tscn" id="17_qxjyk"]
 [ext_resource type="PackedScene" uid="uid://d22hjj56tl3jg" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_hover_button.tscn" id="18_0vn8x"]
 [ext_resource type="PackedScene" uid="uid://b6po2ax5njo4o" path="res://gameplay/mechtools/basic_mech_gun.tscn" id="18_5uqvi"]
-[ext_resource type="PackedScene" uid="uid://c0y2fw8ptlqec" path="res://mechbody/cockpit/cockpit_console/joint_button_test.tscn" id="18_s2jok"]
 [ext_resource type="PackedScene" uid="uid://cnlpm1f8k8x7h" path="res://gameplay/mechtools/shield.tscn" id="19_rcdnm"]
 [ext_resource type="PackedScene" uid="uid://i585ochs4pe7" path="res://mechbody/cockpit/cockpit_console/virtual/vhud_button_gross_aim.tscn" id="20_pdgfg"]
 [ext_resource type="PackedScene" uid="uid://ct1mqoq7ffeph" path="res://mechbody/cockpit/cockpit_console/controls/flight_module_panel.tscn" id="21_1vnex"]
@@ -94,7 +93,7 @@ radius = 4.804
 [sub_resource type="SphereShape3D" id="SphereShape3D_lxnfa"]
 radius = 5.0
 
-[node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "left_player_shoulder", "right_player_shoulder", "left_hand_remote", "right_hand_remote", "step_push_timer", "step_fall_timer", "movement_mode_controller") groups=["player_allied"]]
+[node name="Mechbody" type="RigidBody3D" node_paths=PackedStringArray("cockpit", "left_arm_targeter", "right_arm_targeter", "left_player_shoulder", "right_player_shoulder", "left_hand_remote", "right_hand_remote", "step_push_timer", "step_fall_timer", "movement_mode_controller")]
 collision_layer = 16
 collision_mask = 16
 mass = 100.0
@@ -348,9 +347,6 @@ outline_modulate = Color(0, 0, 0, 0)
 text = "(CLICK ME)"
 font = ExtResource("7_on0n2")
 font_size = 25
-
-[node name="JointButtonTest" parent="TorsoDolly/Cockpit/VHUDButtonGrabbable3" instance=ExtResource("18_s2jok")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.200377, 0, 0.1076)
 
 [node name="VhudNavball" parent="TorsoDolly/Cockpit" node_paths=PackedStringArray("body") instance=ExtResource("8_0paey")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09447, -0.472227)

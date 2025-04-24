@@ -8,7 +8,6 @@ extends RigidBody3D
 signal death
 
 @export var controller : NPCController
-@export var faction : LevelGlobals.FACTIONS
 
 
 func _ready() -> void:

@@ -4,16 +4,17 @@
 ## evaluates track strength etc. on evaluate_tracks()
 
 class_name Sensor
-extends Area3D
+extends Node3D
 
 
 @export_subgroup("Components")
 
-@export var sensor_evaluator : SensorEvaluator
 
 @export_subgroup("Parameters")
 
-@export var detect_faction : LevelGlobals.FACTIONS
+@export var radius = 1000
+@export var track_faction : LevelGlobals.FACTIONS
+
 
 @onready var sensor_timer: Timer = $SensorTimer
 
@@ -27,20 +28,25 @@ func _on_sensor_timer_timeout() -> void:
 	update_tracks()
 
 
-func _on_area_entered(area: Area3D) -> void:
-	if _valid_area(area) and !tracks.has(area): _create_track(area)
-
-
-func _on_area_exited(area: Area3D) -> void:
-	if _valid_area(area) and tracks.has(area): tracks.erase(area) 
-
-
 #endregion
 #region public
 
 
 func update_tracks():
-	sensor_evaluator.update_tracks(tracks)
+	
+	# default behavior - gets all enemies within radius
+	
+	var trackable_manager := LevelGlobals.level.trackable_manager
+	var faction_trackables = trackable_manager.get_faction_trackables(track_faction)
+	
+	for trackable : TrackableArea in faction_trackables: 
+		var distance = (trackable.body.global_position - global_position).length_squared()
+		if distance < radius ** 2:
+			var new_track = _create_track(trackable)
+	
+	print("SENSOR TRACKS UPDATED: ", tracks)
+
+
 
 func get_tracks(): 
 	return tracks.values()
@@ -49,9 +55,6 @@ func get_tracks():
 #endregion
 #region private
 
-
-func _valid_area(area : Area3D) -> bool:
-	return area is TrackableArea and area.faction == detect_faction
 
 func _create_track(trackable_area : TrackableArea):
 	var track = TargetTrack.new()

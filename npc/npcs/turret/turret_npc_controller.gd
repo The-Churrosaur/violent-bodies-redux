@@ -23,7 +23,6 @@ func _ready() -> void:
 		
 	
 		fire_control_manager.set_engagement_free()
-		print("telling wa to attack")
 		
 		#$"../Weapon/WeaponSystemTurret/WeaponAttacker".attack()
 		

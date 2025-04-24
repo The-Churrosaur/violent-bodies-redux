@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d3iem4oxksps0"]
+[gd_scene load_steps=20 format=3 uid="uid://d3iem4oxksps0"]
 
 [ext_resource type="Script" path="res://npc/npcs/turret/sensorless_turret_enemy.gd" id="1_1s3v4"]
 [ext_resource type="PackedScene" uid="uid://btmle2vjn0n3f" path="res://npc/npcs/turret/turret_npc_controller.tscn" id="2_e8705"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bryga5x6s85wi" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_aimer_ball_turret.tscn" id="11_2brkh"]
 [ext_resource type="PackedScene" uid="uid://d0shih875e1vq" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase.tscn" id="12_1xir8"]
 [ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="13_3x51m"]
+[ext_resource type="PackedScene" uid="uid://c6s483834v703" path="res://gameplay/combat/weapons_detection/weapons/smartbullet_shooter.tscn" id="13_18wcg"]
 [ext_resource type="PackedScene" uid="uid://bucnla8x27yb0" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.tscn" id="14_uadkc"]
 [ext_resource type="PackedScene" uid="uid://d4nagkjsstvji" path="res://npc/components/npc_death.tscn" id="15_fchti"]
 [ext_resource type="PackedScene" uid="uid://c1rmwwn7hjq3i" path="res://effects/my_explosion_fx.tscn" id="16_jpgrt"]
@@ -24,13 +25,13 @@
 [sub_resource type="PrismMesh" id="PrismMesh_kguf4"]
 size = Vector3(0.5, 0.5, 3)
 
-[node name="TurretEnemy" type="RigidBody3D"]
+[node name="TurretEnemy" type="RigidBody3D" node_paths=PackedStringArray("controller")]
 freeze = true
 script = ExtResource("1_1s3v4")
+controller = NodePath("TurretNpcController")
 
 [node name="TurretNpcController" parent="." node_paths=PackedStringArray("weapon_system_turret", "fire_control_manager", "health", "death", "body") instance=ExtResource("2_e8705")]
 visible = false
-enabled = false
 weapon_system_turret = NodePath("../Weapon/WeaponSystemTurret")
 fire_control_manager = NodePath("../Weapon/FireControlManager")
 health = NodePath("../Health/HealthModule")
@@ -80,15 +81,17 @@ gunbase = NodePath("../../../TurretBase/GunBase")
 [node name="TurretBase" type="Node3D" parent="."]
 
 [node name="GunBase" parent="TurretBase" node_paths=PackedStringArray("shooter", "launching_rigidbody", "muzzle") instance=ExtResource("13_3x51m")]
-shooter = NodePath("PoolbulletShooter")
+shooter = NodePath("SmartbulletShooter")
 launching_rigidbody = NodePath("../..")
 muzzle = NodePath("Muzzle")
-cycle_time = 2.0
+cycle_time = 3.0
 
 [node name="Muzzle" type="Marker3D" parent="TurretBase/GunBase"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.47069)
 
 [node name="PoolbulletShooter" parent="TurretBase/GunBase" instance=ExtResource("14_uadkc")]
+
+[node name="SmartbulletShooter" parent="TurretBase/GunBase" instance=ExtResource("13_18wcg")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase"]
 mesh = SubResource("SphereMesh_7imrn")

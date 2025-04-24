@@ -2,11 +2,10 @@
 
 [ext_resource type="Script" path="res://gameplay/combat/weapons_detection/sensor_detection/sensor.gd" id="1_67810"]
 
-[node name="Sensor" type="Area3D"]
+[node name="Sensor" type="Node3D"]
 script = ExtResource("1_67810")
 
 [node name="SensorTimer" type="Timer" parent="."]
+autostart = true
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="timeout" from="SensorTimer" to="." method="_on_sensor_timer_timeout"]

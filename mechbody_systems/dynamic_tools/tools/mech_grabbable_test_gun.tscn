@@ -79,7 +79,6 @@ mesh = SubResource("BoxMesh_qp0sv")
 
 [node name="BasicGun" parent="." index="6" node_paths=PackedStringArray("launching_rigidbody", "muzzle_flash") instance=ExtResource("3_a0k6r")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.63578, -0.266535)
-recoil_torque = 0.1
 launching_rigidbody = NodePath("..")
 muzzle_flash = NodePath("MuzzleFlash3")
 

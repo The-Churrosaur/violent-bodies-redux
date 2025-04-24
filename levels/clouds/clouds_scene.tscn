@@ -1,31 +1,17 @@
-[gd_scene load_steps=22 format=3 uid="uid://leth8d62j1n1"]
+[gd_scene load_steps=14 format=3 uid="uid://leth8d62j1n1"]
 
 [ext_resource type="Script" path="res://levels/clouds/clouds_scene.gd" id="1_fneys"]
 [ext_resource type="PackedScene" uid="uid://bwtsyqg37x6vq" path="res://gameplay/test_gameplay/mech_rigid_container.tscn" id="2_c218m"]
 [ext_resource type="PackedScene" uid="uid://b7xh4xs3xnw5s" path="res://levels/level/level_npc_manager.tscn" id="2_nhtre"]
 [ext_resource type="PackedScene" uid="uid://c6i07ptlrlywv" path="res://utils/pooling/variant_pool.tscn" id="3_71v84"]
-[ext_resource type="PackedScene" uid="uid://notg23vl4d5l" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test_gun.tscn" id="3_gyprs"]
-[ext_resource type="PackedScene" uid="uid://cbi836x5vwgeo" path="res://utils/remote_node_projector.tscn" id="3_j6thb"]
-[ext_resource type="PackedScene" uid="uid://dfr0bhmu4861s" path="res://mechbody_systems/dynamic_tools/tools/mech_grabbable_test.tscn" id="3_wckym"]
 [ext_resource type="PackedScene" uid="uid://civy0ur1ttmlm" path="res://gameplay/combat/stupid/poolbullet.tscn" id="4_o3udm"]
-[ext_resource type="PackedScene" uid="uid://bgks2vibbp02y" path="res://npc/npcs/turret/turret_enemy.tscn" id="7_l8xye"]
+[ext_resource type="PackedScene" uid="uid://y42lo23eelhe" path="res://levels/level/level_trackable_manager.tscn" id="5_dnhri"]
 [ext_resource type="PackedScene" uid="uid://bsat3wi2pmp18" path="res://levels/props/cruiser_sliceable.tscn" id="9_jljoq"]
 [ext_resource type="PackedScene" uid="uid://bdhc7mn7fx7jt" path="res://gameplay/test_gameplay/bot_spawner.tscn" id="9_voekk"]
 [ext_resource type="PackedScene" uid="uid://7ws1vu7utnp6" path="res://my_xr_tools/playspace_recenterer.tscn" id="11_agqa7"]
 [ext_resource type="PackedScene" uid="uid://bwg23bgh03qe6" path="res://levels/clouds/cloudsmesh.tscn" id="11_yyhlv"]
 [ext_resource type="PackedScene" uid="uid://cchgruq25tsm" path="res://levels/clouds/sky_dome.tscn" id="12_d33gl"]
 [ext_resource type="PackedScene" uid="uid://cdgfmtvu50t1c" path="res://gameplay/test_gameplay/training_bot_ground.tscn" id="14_ddrce"]
-[ext_resource type="Script" path="res://gameplay/damage/damage_area.gd" id="16_7cmqt"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bk1f"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8beeg"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_h1v16"]
-size = Vector3(5, 5, 5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_spnvm"]
-size = Vector3(5, 5, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bj6t"]
 transparency = 2
@@ -33,11 +19,12 @@ alpha_scissor_threshold = 1.0
 alpha_antialiasing_mode = 0
 albedo_color = Color(1, 1, 1, 0)
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("player_body", "bullet_pool", "npc_manager")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("player_body", "bullet_pool", "npc_manager", "trackable_manager")]
 script = ExtResource("1_fneys")
 player_body = NodePath("MechRigidContainer/Mechbody")
 bullet_pool = NodePath("Level/VariantPool")
 npc_manager = NodePath("Level/LevelNpcManager")
+trackable_manager = NodePath("Level/LevelTrackableManager")
 
 [node name="Level" type="Node3D" parent="."]
 
@@ -47,6 +34,9 @@ level = NodePath("../..")
 [node name="VariantPool" parent="Level" instance=ExtResource("3_71v84")]
 packed_scene = ExtResource("4_o3udm")
 
+[node name="LevelTrackableManager" parent="Level" node_paths=PackedStringArray("level") instance=ExtResource("5_dnhri")]
+level = NodePath("../..")
+
 [node name="MechRigidContainer" parent="." instance=ExtResource("2_c218m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, 0)
 
@@ -55,27 +45,8 @@ visible = false
 
 [node name="Base" type="Node3D" parent="."]
 
-[node name="RemoteNodeProjector" parent="Base" node_paths=PackedStringArray("projection_reference", "project_children") instance=ExtResource("3_j6thb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 174.715, -385.115, -12.7265)
-projection_reference = NodePath("Marker3D")
-project_children = [NodePath("GrabbableGun")]
-
-[node name="Marker3D" type="Marker3D" parent="Base/RemoteNodeProjector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.424, 10.2539, 0)
-
-[node name="GrabbableGun" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11469, -17.7271, 30.7921)
-
-[node name="GrabbableGun2" parent="Base/RemoteNodeProjector" instance=ExtResource("3_gyprs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55338, -17.7271, 30.7921)
-
 [node name="SliceableBody" parent="Base" instance=ExtResource("9_jljoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.016, -380.972, -1592.27)
-
-[node name="TurretEnemy" parent="Base" instance=ExtResource("7_l8xye")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.016, -380.972, -20.9185)
-
-[node name="MechGrabbable" parent="Base" instance=ExtResource("3_wckym")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.148, -380.431, -672.192)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Base"]
 transform = Transform3D(-0.0602297, -0.587268, 0.807149, 0, 0.808617, 0.588336, -0.998185, 0.0354353, -0.0487027, 0, 0, 0)
@@ -94,61 +65,9 @@ bot_template = ExtResource("14_ddrce")
 bot_target = NodePath("../../MechRigidContainer/Mechbody")
 enabled = true
 
-[node name="RigidBody3D" type="RigidBody3D" parent="Base"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 165.284, -363.017, -10.3958)
-visible = false
-collision_layer = 41
-collision_mask = 41
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/RigidBody3D"]
-shape = SubResource("CapsuleShape3D_1bk1f")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base/RigidBody3D"]
-mesh = SubResource("CapsuleMesh_8beeg")
-
-[node name="RigidBody3D2" type="RigidBody3D" parent="Base"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 168.216, -363.017, -10.3958)
-visible = false
-collision_layer = 41
-collision_mask = 41
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/RigidBody3D2"]
-shape = SubResource("CapsuleShape3D_1bk1f")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base/RigidBody3D2"]
-mesh = SubResource("CapsuleMesh_8beeg")
-
-[node name="RigidBody3D3" type="RigidBody3D" parent="Base"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.103, -363.017, -10.3958)
-visible = false
-collision_layer = 41
-collision_mask = 41
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/RigidBody3D3"]
-shape = SubResource("CapsuleShape3D_1bk1f")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base/RigidBody3D3"]
-mesh = SubResource("CapsuleMesh_8beeg")
-
-[node name="RigidBody3D4" type="RigidBody3D" parent="Base"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.719, -385.724, -10.3958)
-collision_layer = 41
-collision_mask = 41
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/RigidBody3D4"]
-shape = SubResource("BoxShape3D_h1v16")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base/RigidBody3D4"]
-mesh = SubResource("BoxMesh_spnvm")
-
-[node name="DamageArea" type="Area3D" parent="Base/RigidBody3D4" groups=["laser"]]
-script = ExtResource("16_7cmqt")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/RigidBody3D4/DamageArea"]
-shape = SubResource("BoxShape3D_h1v16")
-
 [node name="Cloudsmesh" parent="." instance=ExtResource("11_yyhlv")]
 transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
+visible = false
 
 [node name="Currents" parent="Cloudsmesh" index="0"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 6.03321, -264.274, 9.14228)
@@ -172,6 +91,4 @@ default_head_reference = NodePath("../MechRigidContainer/Mechbody/TorsoDolly/Coc
 [editable path="MechRigidContainer/HandBitLeft/Hand/LimbRotator"]
 [editable path="MechRigidContainer/HandBitRight"]
 [editable path="MechRigidContainer/HandBitRight/Hand/LimbRotator"]
-[editable path="Base/RemoteNodeProjector/GrabbableGun"]
-[editable path="Base/RemoteNodeProjector/GrabbableGun/BasicGun"]
 [editable path="Cloudsmesh"]

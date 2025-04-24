@@ -1,10 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://c38fl22da0jew"]
+[gd_scene load_steps=16 format=3 uid="uid://c38fl22da0jew"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/training_bot.gd" id="1_qefqv"]
 [ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_7u7ub"]
 [ext_resource type="ArrayMesh" uid="uid://bsrxmndxpa0gm" path="res://assets/gunmech_actual.obj" id="3_pxub6"]
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_j6s1e"]
-[ext_resource type="Material" uid="uid://byl3yi4rdb1c0" path="res://materials/smoke_cloud_material.tres" id="4_w4uku"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="6_f3m75"]
 [ext_resource type="PackedScene" uid="uid://dyycpms0kxsgm" path="res://gameplay/damage/health_module.tscn" id="8_27lgs"]
 [ext_resource type="PackedScene" uid="uid://c8k6oppug00w8" path="res://gameplay/test_gameplay/damage_fx.tscn" id="9_s1n2a"]
@@ -12,24 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="11_6hi4e"]
 [ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="11_oegaf"]
 [ext_resource type="PackedScene" uid="uid://bucnla8x27yb0" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.tscn" id="12_k4fmq"]
+[ext_resource type="PackedScene" uid="uid://c6s483834v703" path="res://gameplay/combat/weapons_detection/weapons/smartbullet_shooter.tscn" id="12_t5gte"]
 [ext_resource type="PackedScene" uid="uid://2cpstgfnw41v" path="res://gameplay/damage/slicing/sliceable_component.tscn" id="13_f5gqh"]
 [ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="14_innue"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
 radius = 3.0
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wigt3"]
-inherit_velocity_ratio = 0.818
-spread = 180.0
-initial_velocity_min = 5.0
-initial_velocity_max = 10.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-
-[sub_resource type="SphereMesh" id="SphereMesh_ciiej"]
-material = ExtResource("4_w4uku")
-
-[node name="TrainingBot" type="RigidBody3D" node_paths=PackedStringArray("gun") groups=["SensorDetect"]]
+[node name="TrainingBot" type="RigidBody3D" node_paths=PackedStringArray("gun") groups=["SensorDetect", "enemy"]]
 collision_layer = 2
 collision_mask = 2
 mass = 100.0
@@ -39,7 +28,6 @@ script = ExtResource("1_qefqv")
 impulse = 1000.0
 slerp_speed = 10
 gun = NodePath("GunBase")
-faction = 1
 
 [node name="explosionFX" parent="." instance=ExtResource("2_7u7ub")]
 boom_delay = 0.0
@@ -51,28 +39,6 @@ shape = SubResource("SphereShape3D_2g2oc")
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 2.28429)
 mesh = ExtResource("3_pxub6")
 surface_material_override/0 = ExtResource("4_j6s1e")
-
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
-[node name="Timer2" type="Timer" parent="."]
-autostart = true
-
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_2g2oc")
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00523853, 0.00969791, 0.0013938)
-emitting = false
-amount = 20
-explosiveness = 1.0
-randomness = 0.5
-process_material = SubResource("ParticleProcessMaterial_wigt3")
-draw_pass_1 = SubResource("SphereMesh_ciiej")
 
 [node name="looker" type="Node3D" parent="."]
 
@@ -92,6 +58,7 @@ text = "dasfe"
 font_size = 200
 
 [node name="HealthModule" parent="." instance=ExtResource("8_27lgs")]
+health = 10
 
 [node name="DamageFx" parent="." instance=ExtResource("9_s1n2a")]
 transform = Transform3D(0.000283132, 0.00794356, 0.999968, -0.00163949, 0.999967, -0.00794309, -0.999999, -0.00163718, 0.000296158, 0, 0, 0)
@@ -113,11 +80,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.52435)
 shooter = NodePath("PoolbulletShooter")
 launching_rigidbody = NodePath("..")
 muzzle = NodePath("Muzzle")
+cycle_time = 5.0
 
 [node name="Muzzle" type="Marker3D" parent="GunBase"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.61358)
 
 [node name="PoolbulletShooter" parent="GunBase" instance=ExtResource("12_k4fmq")]
+
+[node name="SmartbulletShooter" parent="GunBase" instance=ExtResource("12_t5gte")]
 
 [node name="SliceableComponent" parent="." node_paths=PackedStringArray("rigidbody", "meshinstance") instance=ExtResource("13_f5gqh")]
 rigidbody = NodePath("..")
@@ -130,7 +100,5 @@ health = NodePath("../HealthModule")
 shape = SubResource("SphereShape3D_2g2oc")
 
 [connection signal="explosion_ended" from="explosionFX" to="." method="_on_explosion_fx_explosion_ended"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="Timer2" to="." method="_on_shooter_timer_timeout"]
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="health_changed" from="HealthModule" to="." method="_on_health_module_health_changed"]
 [connection signal="health_zero" from="HealthModule" to="." method="_on_health_module_health_zero"]

@@ -20,8 +20,8 @@ config/icon="res://icon.svg"
 
 XRToolsUserSettings="*res://addons/godot-xr-tools/user_settings/user_settings.gd"
 XRPlayerGlobals="*res://globals/xr_player_globals.gd"
-LevelGlobals="*res://globals/level_globals.tscn"
 UtilityGlobals="*res://globals/utility_globals.gd"
+LevelGlobals="*res://globals/level_globals.gd"
 
 [editor_plugins]
 
@@ -30,10 +30,6 @@ enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 [filesystem]
 
 import/fbx/enabled=false
-
-[global_group]
-
-player_allied="for enemy detection"
 
 [layer_names]
 
