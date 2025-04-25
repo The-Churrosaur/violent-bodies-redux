@@ -112,12 +112,14 @@ func _power_on():
 	powered = true
 	damage_area.monitorable = true
 	grabbable_controller.controller.trigger_haptic_pulse("haptic", 5, 0.2, 0.4, 0)
-
+	#Engine.time_scale = 0.2
+	
 
 func _power_off():
 	for particle in particles : particle.emitting = false
 	powered = false
 	damage_area.monitorable = false
+	#Engine.time_scale = 1.0
 
 
 func _recoil():

@@ -34,7 +34,7 @@ func _ready() -> void:
 
 func _on_aimer_target_acquired():
 	if state == WS_STATE.TRACKING:
-		weapon_attacker.attack()
+		weapon_attacker.attack(target)
 		state == WS_STATE.ENGAGING
 
 
@@ -53,7 +53,7 @@ func engage_target(new_target : TargetTrack):
 	target = new_target
 	weapon_aimer.aim_target(target)
 	if attack_while_aiming:
-		weapon_attacker.attack()
+		weapon_attacker.attack(target)
 		state = WS_STATE.ENGAGING
 	else:
 		state = WS_STATE.TRACKING

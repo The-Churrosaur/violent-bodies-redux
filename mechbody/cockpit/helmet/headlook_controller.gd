@@ -31,7 +31,7 @@ extends Node3D
 @export var lean_roll_mult = 4.0
 @export var lean_input_mult = 1
 @export var lean_pitch_mult = 1.5
-@export var lean_boost_threshold = 0.1
+@export var lean_boost_threshold = 0.2
 
 @export var crouch_climb_mult = 1.5
 

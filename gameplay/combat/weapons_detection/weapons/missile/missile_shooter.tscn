@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvtc436kcfyvo"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons/missile/missile_shooter.gd" id="1_2h236"]
+[ext_resource type="PackedScene" uid="uid://y8emww2abwtj" path="res://gameplay/combat/weapons_detection/weapons/missile/missile.tscn" id="2_qg1t6"]
+
+[node name="MissileShooter" type="Node3D"]
+script = ExtResource("1_2h236")
+missile_scene = ExtResource("2_qg1t6")

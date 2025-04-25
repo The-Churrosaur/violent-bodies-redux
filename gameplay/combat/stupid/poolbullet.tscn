@@ -19,7 +19,6 @@ script = ExtResource("1_34w0g")
 
 [node name="hitFX" parent="." instance=ExtResource("2_fqvxt")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.516486, 0, 1, -2.25763e-08, 0.000318944, 0.00197834, 0.628824)
-visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.516486, 0, 1, -2.25763e-08, 0, 0, 0)

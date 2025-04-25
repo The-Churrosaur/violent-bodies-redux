@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://c38fl22da0jew"]
+[gd_scene load_steps=17 format=3 uid="uid://c38fl22da0jew"]
 
 [ext_resource type="Script" path="res://gameplay/test_gameplay/training_bot.gd" id="1_qefqv"]
-[ext_resource type="PackedScene" uid="uid://prpquffa8bgi" path="res://effects/explosion_fx.tscn" id="2_7u7ub"]
+[ext_resource type="PackedScene" uid="uid://c1rmwwn7hjq3i" path="res://effects/my_explosion_fx.tscn" id="2_3j0dd"]
 [ext_resource type="ArrayMesh" uid="uid://bsrxmndxpa0gm" path="res://assets/gunmech_actual.obj" id="3_pxub6"]
 [ext_resource type="Material" uid="uid://cr3o3nwa7xg1b" path="res://materials/generic_toon.tres" id="4_j6s1e"]
 [ext_resource type="PackedScene" uid="uid://bln8cdsrflypy" path="res://mechbody_systems/flight_module.tscn" id="6_f3m75"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c6s483834v703" path="res://gameplay/combat/weapons_detection/weapons/smartbullet_shooter.tscn" id="12_t5gte"]
 [ext_resource type="PackedScene" uid="uid://2cpstgfnw41v" path="res://gameplay/damage/slicing/sliceable_component.tscn" id="13_f5gqh"]
 [ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="14_innue"]
+[ext_resource type="PackedScene" uid="uid://bgks2vibbp02y" path="res://npc/npcs/turret/turret_enemy.tscn" id="15_ghbwf"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2g2oc"]
 radius = 3.0
@@ -26,11 +27,9 @@ gravity_scale = 0.0
 can_sleep = false
 script = ExtResource("1_qefqv")
 impulse = 1000.0
-slerp_speed = 10
 gun = NodePath("GunBase")
 
-[node name="explosionFX" parent="." instance=ExtResource("2_7u7ub")]
-boom_delay = 0.0
+[node name="explosion" parent="." instance=ExtResource("2_3j0dd")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["SensorDetect"]]
 shape = SubResource("SphereShape3D_2g2oc")
@@ -73,7 +72,7 @@ doppler_tracking = 2
 [node name="LeadComputer" parent="." node_paths=PackedStringArray("launching_body", "muzzle_reference") instance=ExtResource("11_6hi4e")]
 launching_body = NodePath("..")
 muzzle_reference = NodePath("../GunBase/Muzzle")
-projectile_velocity = 500.0
+projectile_velocity = 800.0
 
 [node name="GunBase" parent="." node_paths=PackedStringArray("shooter", "launching_rigidbody", "muzzle") instance=ExtResource("11_oegaf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.52435)
@@ -99,6 +98,8 @@ health = NodePath("../HealthModule")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 shape = SubResource("SphereShape3D_2g2oc")
 
-[connection signal="explosion_ended" from="explosionFX" to="." method="_on_explosion_fx_explosion_ended"]
+[node name="TurretEnemy" parent="." instance=ExtResource("15_ghbwf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.81061, 0.0500708)
+
 [connection signal="health_changed" from="HealthModule" to="." method="_on_health_module_health_changed"]
 [connection signal="health_zero" from="HealthModule" to="." method="_on_health_module_health_zero"]

@@ -1,6 +1,6 @@
 
 class_name ExplosionFX
-extends Node3D
+extends MyFX
 
 signal explosion_ended()
 @export var boom_delay = 5.0
@@ -13,7 +13,8 @@ signal explosion_ended()
 @export var audio : AudioStreamPlayer3D
 
 
-func start_explosion_sequence():
+func play_fx():
+	super()
 	bubbling.emitting = true
 	nova.emitting = true
 	gibs.emitting = true

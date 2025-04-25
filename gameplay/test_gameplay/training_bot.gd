@@ -32,7 +32,7 @@ func _ready():
 	#await get_tree().create_timer(5).timeout
 	#die()
 	
-	$GunBase.pull_trigger()
+	#$GunBase.pull_trigger()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,7 +48,7 @@ func _physics_process(delta):
 	$looker.look_at(player.global_position)
 	var target_pos = lead_computer.predict(player)
 	if target_pos != null: $looker.look_at(target_pos)
-	else: $looker.look_at(player.global_position)
+	#else: $looker.look_at(player.global_position)
 	
 	var a = Quaternion(transform.basis)
 	var b = Quaternion($looker.global_transform.basis)
@@ -71,7 +71,8 @@ func _physics_process(delta):
 
 
 func _on_shooter_timer_timeout():
-	gun.trigger()
+	#gun.trigger()
+	pass
 
 
 func explode():
@@ -84,7 +85,7 @@ func explode():
 	mechmesh.visible = false
 	gun.safety = true
 	audio_stream_player_3d.stop()
-	$explosionFX.start_explosion_sequence()
+	$explosion.play_fx()
 	player.destroyed_enemy(self)
 	
 	#var vec = Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)).normalized()
@@ -94,11 +95,10 @@ func explode():
 		Engine.time_scale = 0.2
 		await get_tree().create_timer(0.1).timeout
 		Engine.time_scale = 1.0
+	
+	cleanup()
 
 
-func _on_explosion_fx_explosion_ended():
-	mechmesh.visible = false
-	die()
 
 
 func _on_health_module_health_zero():

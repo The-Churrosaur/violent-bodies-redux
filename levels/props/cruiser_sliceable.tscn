@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bsat3wi2pmp18"]
+[gd_scene load_steps=10 format=3 uid="uid://bsat3wi2pmp18"]
 
 [ext_resource type="PackedScene" uid="uid://byyfuse4qxgkk" path="res://levels/props/sliceable_body_base.tscn" id="1_wmfow"]
 [ext_resource type="ArrayMesh" uid="uid://chx0afiwsqpj" path="res://assets/cruiser.obj" id="2_is5fs"]
 [ext_resource type="Material" uid="uid://t06cj015rp63" path="res://materials/ship_material.tres" id="3_2ryjh"]
+[ext_resource type="PackedScene" uid="uid://bgks2vibbp02y" path="res://npc/npcs/turret/turret_enemy.tscn" id="4_voejw"]
 
 [sub_resource type="Gradient" id="Gradient_81qch"]
 colors = PackedColorArray(1, 0.345098, 0, 1, 1, 0, 0, 1)
@@ -41,3 +42,9 @@ shape = SubResource("ConcavePolygonShape3D_gg8md")
 recursive_fx = []
 
 [node name="Turrets" type="Node3D" parent="." index="7"]
+
+[node name="TurretEnemy" parent="Turrets" index="0" instance=ExtResource("4_voejw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.3675, 0)
+
+[node name="TurretEnemy2" parent="Turrets" index="1" instance=ExtResource("4_voejw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -48.7009, 0)

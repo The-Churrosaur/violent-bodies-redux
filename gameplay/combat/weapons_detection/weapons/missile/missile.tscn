@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://y8emww2abwtj"]
+
+[ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons/missile/missile.gd" id="1_vrtvc"]
+[ext_resource type="PackedScene" uid="uid://d7shxo4pgi84" path="res://mechbody_systems/mech_rotator.tscn" id="2_bfbnp"]
+[ext_resource type="Script" path="res://gameplay/damage/damage_area.gd" id="3_cwpmd"]
+[ext_resource type="PackedScene" uid="uid://bl5dvsn5pdw0p" path="res://effects/hitFX.tscn" id="4_s22ia"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2xj17"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ke7i6"]
+top_radius = 2.0
+bottom_radius = 4.0
+height = 10.0
+radial_segments = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g3bq5"]
+
+[node name="Missile" type="RigidBody3D"]
+script = ExtResource("1_vrtvc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_2xj17")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ke7i6")
+
+[node name="MechRotator" parent="." instance=ExtResource("2_bfbnp")]
+
+[node name="LimbRotator" parent="MechRotator" index="0" node_paths=PackedStringArray("body")]
+body = NodePath("../..")
+max_torque_impulse = 0.01
+
+[node name="RotationalPidController" parent="MechRotator/LimbRotator" index="0"]
+p_tune = 0.01
+i_tune = 0.01
+d_tune = 0.01
+
+[node name="looker" type="Node3D" parent="."]
+
+[node name="DamageArea" type="Area3D" parent="."]
+script = ExtResource("3_cwpmd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+shape = SubResource("SphereShape3D_g3bq5")
+
+[node name="hitFX" parent="." instance=ExtResource("4_s22ia")]
+
+[connection signal="on_hit" from="DamageArea" to="." method="_on_damage_area_on_hit"]
+[connection signal="finished" from="hitFX" to="." method="_on_hit_fx_finished"]
+
+[editable path="MechRotator"]
+[editable path="MechRotator/LimbRotator"]

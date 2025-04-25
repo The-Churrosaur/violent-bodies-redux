@@ -21,7 +21,7 @@ func register():
 
 
 ## unsubscribes from npc manager etc
-func die():
+func cleanup():
 	print("npc die()ing...", self)
 	death.emit()
 	var level : Level = LevelGlobals.level

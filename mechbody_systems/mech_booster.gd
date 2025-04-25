@@ -1,7 +1,7 @@
 class_name MechBooster
 extends Node3D
 
-@export var boost_input = 3.0
+@export var boost_input = 1.5
 @export var boost_time = 0.5
 @export var cooldown_time = 2.0
 @export var mechbody : MechBody

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bgks2vibbp02y"]
+[gd_scene load_steps=22 format=3 uid="uid://bgks2vibbp02y"]
 
 [ext_resource type="Script" path="res://npc/npcs/turret/turret_enemy.gd" id="1_n5424"]
 [ext_resource type="PackedScene" uid="uid://btmle2vjn0n3f" path="res://npc/npcs/turret/turret_npc_controller.tscn" id="2_v0cfw"]
@@ -7,13 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://cwma8an75pj1" path="res://mechbody_systems/target_lead/lead_computer.tscn" id="5_7wmvp"]
 [ext_resource type="PackedScene" uid="uid://7qe4eplver8y" path="res://gameplay/combat/weapons_detection/fire_control/fire_control_manager.tscn" id="5_h81on"]
 [ext_resource type="Script" path="res://gameplay/combat/weapons_detection/weapons_systems/weapon_system.gd" id="6_lryg1"]
-[ext_resource type="PackedScene" uid="uid://bryga5x6s85wi" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_aimer_ball_turret.tscn" id="8_av2a4"]
+[ext_resource type="PackedScene" uid="uid://bryga5x6s85wi" path="res://gameplay/combat/weapons_detection/weapons_systems/weapons_systems/weapon_aimer_ball_turret.tscn" id="8_av2a4"]
 [ext_resource type="PackedScene" uid="uid://bp6d6l14j8723" path="res://gameplay/combat/weapons_detection/weapons_systems/target_prioritizer.tscn" id="8_ls3uk"]
 [ext_resource type="PackedScene" uid="uid://bv4k0w1hrn5fn" path="res://gameplay/combat/weapons_detection/sensor_detection/sensor.tscn" id="9_ehw2f"]
 [ext_resource type="PackedScene" uid="uid://crm8horlgc4d6" path="res://gameplay/combat/weapons_detection/weapons/gunbase.tscn" id="10_24laa"]
-[ext_resource type="PackedScene" uid="uid://d0shih875e1vq" path="res://gameplay/combat/weapons_detection/weapons_systems/inherited/weapon_attacker_gunbase.tscn" id="12_pm864"]
+[ext_resource type="PackedScene" uid="uid://d0shih875e1vq" path="res://gameplay/combat/weapons_detection/weapons_systems/weapons_systems/weapon_attacker_gunbase.tscn" id="12_pm864"]
 [ext_resource type="PackedScene" uid="uid://c6s483834v703" path="res://gameplay/combat/weapons_detection/weapons/smartbullet_shooter.tscn" id="14_hhi5v"]
 [ext_resource type="PackedScene" uid="uid://d4nagkjsstvji" path="res://npc/components/npc_death.tscn" id="15_c3at8"]
+[ext_resource type="PackedScene" uid="uid://bvtc436kcfyvo" path="res://gameplay/combat/weapons_detection/weapons/missile/missile_shooter.tscn" id="15_wrgbm"]
 [ext_resource type="PackedScene" uid="uid://bucnla8x27yb0" path="res://gameplay/combat/weapons_detection/weapons/poolbullet_shooter.tscn" id="15_yywte"]
 [ext_resource type="PackedScene" uid="uid://c1rmwwn7hjq3i" path="res://effects/my_explosion_fx.tscn" id="16_e0ypm"]
 
@@ -76,6 +77,7 @@ ws = NodePath("..")
 [node name="WeaponAimerBallTurret" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("turret_base", "lead_computer") instance=ExtResource("8_av2a4")]
 turret_base = NodePath("../../../TurretBase")
 lead_computer = NodePath("../../LeadComputer")
+lerp_coefficient = 20.0
 
 [node name="WeaponAttacker" parent="Weapon/WeaponSystemTurret" node_paths=PackedStringArray("gunbase") instance=ExtResource("12_pm864")]
 gunbase = NodePath("../../../TurretBase/GunBase")
@@ -86,14 +88,17 @@ gunbase = NodePath("../../../TurretBase/GunBase")
 shooter = NodePath("PoolbulletShooter")
 launching_rigidbody = NodePath("../..")
 muzzle = NodePath("Muzzle")
-cycle_time = 2.0
+cycle_time = 5.0
 
 [node name="Muzzle" type="Marker3D" parent="TurretBase/GunBase"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.98665)
 
 [node name="PoolbulletShooter" parent="TurretBase/GunBase" instance=ExtResource("15_yywte")]
+telegraph_shot = true
 
 [node name="SmartbulletShooter" parent="TurretBase/GunBase" instance=ExtResource("14_hhi5v")]
+
+[node name="MissileShooter" parent="TurretBase/GunBase" instance=ExtResource("15_wrgbm")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase"]
 mesh = SubResource("SphereMesh_7imrn")

@@ -38,6 +38,10 @@ func set_damage(damage):
 	damage_area.damage = damage
 
 
+func set_velocity(velocity):
+	bullet_velocity =velocity
+
+
 func _physics_process(delta):
 	if disabled: return
 	
@@ -45,7 +49,7 @@ func _physics_process(delta):
 	
 	current_lifetime += delta
 	if current_lifetime > lifetime: 
-		_explode()
+		disable()
 
 
 func _explode():

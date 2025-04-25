@@ -4,6 +4,7 @@
 
 [node name="HeadlookController" type="Node3D"]
 script = ExtResource("1_d0spx")
+lean_boost = true
 lean_assist = false
 
 [node name="HeadVelocityTracker" type="Timer" parent="."]

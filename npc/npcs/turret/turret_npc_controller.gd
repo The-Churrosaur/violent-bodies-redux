@@ -42,4 +42,4 @@ func _start_dying():
 	
 	print("done awaiting death anim")
 	
-	body.die()
+	body.cleanup()

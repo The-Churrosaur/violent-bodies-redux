@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://phcsceeqys7i"]
+
+[ext_resource type="Script" path="res://npc/npc_body.gd" id="1_lj2m8"]
+
+[node name="MissileNpc" type="RigidBody3D"]
+script = ExtResource("1_lj2m8")

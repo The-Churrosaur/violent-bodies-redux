@@ -67,6 +67,7 @@ mesh = SubResource("CylinderMesh_o2lxq")
 mesh = SubResource("BoxMesh_xb3rm")
 
 [node name="MuzzleFlash" parent="." index="5" instance=ExtResource("5_bg35x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.88036)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="6"]
 stream = ExtResource("6_inc6y")

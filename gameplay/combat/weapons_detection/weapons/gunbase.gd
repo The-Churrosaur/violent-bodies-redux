@@ -39,6 +39,8 @@ var current_state : GUN_STATE = GUN_STATE.OUT_BATTERY
 var trigger_down = false
 var is_empty = false ## set me! checked before and after cycling 
 
+var target = null
+
 
 # CALLBACKS  -------------------------------------------------------------------
 
@@ -99,6 +101,15 @@ func cycle():
 	current_state = GUN_STATE.CYCLING
 	cycle_timer.start(cycle_time)
 
+
+func set_target(target):
+	self.target = target
+	shooter.target = target
+
+
+func reset_target():
+	self.target = null
+	shooter.target = null
 
 
 # PRIVATE ----------------------------------------------------------------------

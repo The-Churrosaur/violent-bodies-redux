@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnlpm1f8k8x7h"]
+[gd_scene load_steps=6 format=3 uid="uid://cnlpm1f8k8x7h"]
 
 [ext_resource type="Script" path="res://gameplay/mechtools/shield.gd" id="1_kp0hk"]
 [ext_resource type="Material" uid="uid://1plhfefk2i6o" path="res://gameplay/mechtools/shield_shader_mat.tres" id="2_nvoy8"]
+[ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="3_0roxi"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_bodw4"]
 material = ExtResource("2_nvoy8")
@@ -25,4 +26,9 @@ mesh = SubResource("SphereMesh_bodw4")
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_53j1y")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_0roxi")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 shape = SubResource("CylinderShape3D_53j1y")

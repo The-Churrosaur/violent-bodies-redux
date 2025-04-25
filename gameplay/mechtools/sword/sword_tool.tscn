@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bak1wwgkoec2"]
+[gd_scene load_steps=27 format=3 uid="uid://bak1wwgkoec2"]
 
 [ext_resource type="Script" path="res://beamfx.gd" id="1_fst30"]
 [ext_resource type="Material" uid="uid://cyp6f6hs8t5rv" path="res://materials/sword_material.tres" id="2_lskif"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dq1qe8gd5124u" path="res://gameplay/mechtools/sword/cool_slicer.tscn" id="5_wmpid"]
 [ext_resource type="PackedScene" uid="uid://dg7cg8s4s4t4m" path="res://gameplay/damage/slicing/slicer_area_bigplane.tscn" id="6_ndio7"]
 [ext_resource type="PackedScene" uid="uid://w47g07iayk1o" path="res://gameplay/damage/damage_area.tscn" id="6_njitk"]
+[ext_resource type="PackedScene" uid="uid://c6xgg2ks7x84e" path="res://gameplay/damage/hurtbox.tscn" id="9_24ytp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktnmc"]
 shading_mode = 0
@@ -48,8 +49,7 @@ radial_segments = 4
 rings = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_41j2q"]
-radius = 0.1
-height = 10.0
+height = 5.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_j23q4"]
 
@@ -247,5 +247,11 @@ mesh = SubResource("BoxMesh_d8aai")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SlicerArea/SliceVisualMesh/MeshInstance3D/MeshInstance3D/MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2036.02, 0, -0.952736)
 mesh = SubResource("BoxMesh_d8aai")
+
+[node name="Hurtbox" parent="." instance=ExtResource("9_24ytp")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.71703, 0)
+shape = SubResource("CapsuleShape3D_41j2q")
 
 [connection signal="area_entered" from="DamageArea" to="." method="_on_area_3d_area_entered"]

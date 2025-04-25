@@ -8,11 +8,13 @@ extends WeaponAttacker
 @export var gunbase : GunBase
 
 
-func attack():
-	super()
+func attack(target):
+	super(target)
+	gunbase.set_target(target)
 	gunbase.pull_trigger()
 
 
 func stop_attack():
 	super()
+	gunbase.reset_target()
 	gunbase.release_trigger()
